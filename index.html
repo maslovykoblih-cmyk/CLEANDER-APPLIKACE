@@ -205,36 +205,36 @@
         .short-day { display: block; font-size: 16px; }
     }
 
-    /* ZÁLOŽKY BUDOV */
+    /* ZÁLOŽKY BUDOV - ZVÝRAZNĚNÉ */
     .building-tabs-wrapper {
-        background: linear-gradient(90deg, rgba(15, 23, 42, 0.7) 0%, rgba(30, 41, 59, 0.5) 100%);
-        border: 1px solid rgba(255,255,255,0.15);
+        background: linear-gradient(90deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
+        border: 1px solid rgba(255,255,255,0.2);
         border-radius: var(--radius-large);
-        padding: 16px 20px;
+        padding: 24px;
         margin-bottom: 24px;
-        box-shadow: 0 12px 32px rgba(0,0,0,0.4);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
     }
     .building-tabs-title {
-        font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--frosty-alt); 
-        margin-bottom: 12px; font-weight: 800; display: flex; align-items: center; gap: 8px;
+        font-size: 14px; text-transform: uppercase; letter-spacing: 2px; color: var(--frosty-alt); 
+        margin-bottom: 16px; font-weight: 800; display: flex; align-items: center; gap: 8px;
     }
     .building-tabs {
-        display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px;
+        display: flex; gap: 12px; overflow-x: auto; padding-bottom: 12px;
         scrollbar-width: thin; scrollbar-color: var(--frosty) transparent;
     }
     .building-tab {
-        padding: 12px 20px; border-radius: 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-        color: var(--text-muted); cursor: pointer; white-space: nowrap; font-weight: 600; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        display: flex; align-items: center; gap: 10px; font-size: 14px;
+        padding: 16px 28px; border-radius: 16px; background: rgba(0,0,0,0.4); border: 2px solid rgba(255,255,255,0.05);
+        color: var(--text-muted); cursor: pointer; white-space: nowrap; font-weight: 700; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex; align-items: center; gap: 12px; font-size: 16px;
     }
-    .building-tab:hover { background: rgba(255,255,255,0.1); color: var(--text-main); transform: translateY(-2px); }
+    .building-tab:hover { background: rgba(255,255,255,0.1); color: var(--text-main); transform: translateY(-3px); border-color: rgba(255,255,255,0.2); }
     .building-tab.active {
         background: linear-gradient(135deg, var(--frosty) 0%, #1e40af 100%);
-        color: #ffffff; border-color: rgba(255,255,255,0.3);
-        box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
-        transform: translateY(-2px);
+        color: #ffffff; border-color: rgba(255,255,255,0.5);
+        box-shadow: 0 8px 24px rgba(59, 130, 246, 0.5);
+        transform: translateY(-3px);
     }
 
     /* EMPTY STATE */
@@ -249,7 +249,7 @@
 
     /* Formuláře a tlačítka */
     input[type=text], input[type=email], input[type=password], select {
-        padding: 14px 16px; border-radius: 12px; /* Zvětšeno pro dotyk */
+        padding: 14px 16px; border-radius: 12px;
         background: rgba(0, 0, 0, 0.3); border: 1px solid var(--glass-border);
         color: var(--text-main); font-size: 15px; outline: none;
         transition: all 0.3s ease; width: 100%;
@@ -307,7 +307,7 @@
     /* PURE CSS GRID */
     #calendarContainer {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Zmenšeno pro mobily */
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
         gap: 20px;
     }
 
@@ -333,7 +333,7 @@
         cursor: pointer; padding: 4px 0; appearance: none; -webkit-appearance: none;
     }
 
-    /* PODÚKOLY A PLÁNOVÁNÍ (Mobile optimized) */
+    /* PODÚKOLY A PLÁNOVÁNÍ */
     .tasks-wrapper {
         display: flex; flex-direction: column; gap: 10px; margin-top: 4px;
     }
@@ -341,12 +341,12 @@
         display: flex; align-items: center; justify-content: space-between; gap: 12px;
         background: rgba(0, 0, 0, 0.2); border-radius: 14px; padding: 12px 14px;
         border: 1px solid rgba(255,255,255,0.03); transition: all 0.2s ease;
-        flex-wrap: wrap; /* Umožní zalomení na velmi úzkých displejích */
+        flex-wrap: wrap; 
     }
     .task-left-group { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 200px; }
 
     .task-check {
-        width: 32px; height: 32px; /* Zvětšeno pro touch */
+        width: 32px; height: 32px; 
         border-radius: 8px; border: 2px solid var(--text-muted);
         cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(0,0,0,0.2);
@@ -362,25 +362,41 @@
         width: 100%; border: none; background: transparent; font-weight: 500; color: #e2e8f0; outline: none; font-size: 15px; padding: 0;
     }
     .task-name-label.done { text-decoration: line-through; opacity: 0.5; }
+    
+    /* POZNÁMKY K ÚKOLŮM */
+    .task-note-display {
+        font-size: 13px; color: #fbbf24; background: rgba(251, 191, 36, 0.1); 
+        padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(251, 191, 36, 0.2);
+        display: flex; align-items: center; gap: 6px; font-weight: 500;
+    }
+    .task-note-btn {
+        cursor: pointer; font-size: 18px; color: var(--text-muted); background: rgba(255,255,255,0.05);
+        border-radius: 10px; width: 40px; height: 40px; 
+        display: flex; align-items: center; justify-content: center; border: 1px solid transparent; margin: 0; flex-shrink:0;
+        transition: 0.2s;
+    }
+    .task-note-btn:hover { background: rgba(255,255,255,0.1); color: #fbbf24; border-color: var(--glass-border); }
+    .task-note-btn.has-note { color: #fbbf24; background: rgba(251, 191, 36, 0.15); border-color: rgba(251, 191, 36, 0.3); }
 
-    /* Bubliny pro plánování dnů - ZVĚTŠENO A OPTIMALIZOVÁNO */
-    .task-schedule-bubbles { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
+    /* Bubliny pro plánování dnů - OBROVSKÉ PRO MOBILY */
+    .task-schedule-bubbles { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
     .day-bubble {
-        width: 28px; height: 28px; /* Výrazně větší pro touch */
-        border-radius: 50%; font-size: 12px; font-weight: 700;
+        width: 38px; height: 38px; /* Obrovské pro snadný dotyk */
+        border-radius: 50%; font-size: 14px; font-weight: 700;
         display: flex; align-items: center; justify-content: center;
         background: rgba(255,255,255,0.05); color: var(--text-muted); cursor: pointer;
-        border: 1px solid rgba(255,255,255,0.05); transition: 0.2s; user-select: none;
+        border: 2px solid rgba(255,255,255,0.05); transition: 0.2s; user-select: none;
     }
-    .day-bubble.active { background: var(--frosty); color: #fff; border-color: var(--frosty-alt); box-shadow: 0 0 8px var(--frosty-glow); }
+    .day-bubble:hover { background: rgba(255,255,255,0.15); color: var(--text-main); }
+    .day-bubble.active { background: var(--frosty); color: #fff; border-color: var(--frosty-alt); box-shadow: 0 0 10px var(--frosty-glow); }
 
     /* FOTOAPARÁT */
     .camera-btn {
         cursor: pointer; font-size: 18px; color: var(--text-muted); background: rgba(255,255,255,0.05);
-        border-radius: 10px; width: 40px; height: 40px; /* Zvětšeno */
+        border-radius: 10px; width: 40px; height: 40px; 
         display: flex; align-items: center; justify-content: center; border: 1px solid transparent; margin: 0; flex-shrink:0;
     }
-    .camera-btn:hover { background: rgba(255,255,255,0.1); color: var(--text-main); }
+    .camera-btn:hover { background: rgba(255,255,255,0.1); color: var(--text-main); border-color: var(--glass-border); }
     .task-thumbnail { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; border: 1px solid var(--glass-border); }
 
     /* Přidávání podúkolu form */
@@ -545,7 +561,7 @@ const adminEmails = [
 // ---------- Globální proměnné ----------
 let user = null;
 let isDevMode = false;
-let isAdmin = false; // Nová premenná na kontrolu Roly
+let isAdmin = false; 
 let buildings = []; 
 let currentBuildingId = null; 
 let sections = [];
@@ -570,7 +586,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   document.getElementById('btnDevSkip').addEventListener('click', () => {
       isDevMode = true;
-      isAdmin = true; // Vo vývojárskom režime sme vždy admini
+      isAdmin = true; 
       user = { email: 'Vývojář (Lokální režim)' };
       updateAuthUI();
       render();
@@ -633,7 +649,6 @@ function updateAuthUI(){
   if(user){
     welcomeScreen.style.display = 'none';
     btnOut.style.display = 'flex';
-    // Admin tlačidlo sa ukáže iba ak je prihlásený Admin
     btnAdmin.style.display = isAdmin ? 'flex' : 'none'; 
     info.innerHTML = `<i class="fa-regular fa-circle-user"></i> ${user.email} ${isAdmin ? '<span style="color:#fbbf24; margin-left:4px;">(Admin)</span>' : ''}`;
   } else {
@@ -651,8 +666,6 @@ async function signIn(){
 
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   if(error) return alert("Chyba přihlášení: " + error.message);
-  
-  // Tí, ktorí nie sú v zozname adminEmails sa normálne prihlásia, ale nebudú mať admin práva.
 }
 
 async function signOut(){
@@ -978,7 +991,6 @@ function renderBuildings() {
         tab.className = "building-tab" + (bld.id === currentBuildingId ? " active" : "");
         tab.innerHTML = `<i class="fa-solid fa-building"></i> ${bld.name}`;
         
-        // Zmazať budovu môže len ADMIN
         if(isAdmin && bld.id === currentBuildingId) {
             const delBtn = document.createElement("span");
             delBtn.innerHTML = "<i class='fa-solid fa-trash-can'></i>";
@@ -1097,7 +1109,6 @@ function renderTasksList(section, container){
     nameInput.className = "task-name-label" + (state === "done" ? " done" : "");
     nameInput.value = task.name;
     
-    // ZAMKNUTIE ÚPRAVY TEXTU PRE UPRATOVAČOV
     if (!isAdmin) nameInput.disabled = true;
     
     nameInput.addEventListener("change", async()=>{
@@ -1111,6 +1122,14 @@ function renderTasksList(section, container){
     });
 
     nameCol.appendChild(nameInput);
+
+    // Zobrazenie existujúcej poznámky
+    if (task.note) {
+        const noteDisplay = document.createElement("div");
+        noteDisplay.className = "task-note-display";
+        noteDisplay.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${task.note}`;
+        nameCol.appendChild(noteDisplay);
+    }
 
     if (isAdmin) {
         const scheduleWrap = document.createElement("div");
@@ -1168,6 +1187,28 @@ function renderTasksList(section, container){
         await upsertTaskState(task.id, currentDayIndex, nextState);
     });
 
+    // Tlačidlo pre pridanie/úpravu poznámky
+    const noteBtn = document.createElement("div");
+    noteBtn.className = "task-note-btn" + (task.note ? " has-note" : "");
+    noteBtn.title = "Přidat poznámku / nahlásit problém";
+    noteBtn.innerHTML = '<i class="fa-solid fa-comment-dots"></i>';
+    
+    noteBtn.addEventListener("click", async () => {
+        if(!user) return;
+        const currentNote = task.note || "";
+        const newNote = prompt("Zadejte poznámku nebo nahlaste problém k tomuto úkolu:", currentNote);
+        
+        if (newNote !== null) { // null znamená že používateľ stlačil Zrušiť
+            if (isDevMode) {
+                task.note = newNote;
+            } else {
+                task.note = newNote; // Optimistic UI
+                await supabase.from("tasks").update({ note: newNote }).eq("id", task.id);
+            }
+            render();
+        }
+    });
+
     const cameraLabel = document.createElement("label");
     cameraLabel.className = "camera-btn";
     cameraLabel.title = "Vyfotit splněný úkol";
@@ -1187,11 +1228,17 @@ function renderTasksList(section, container){
     leftGroup.appendChild(checkBtn);
     leftGroup.appendChild(iconSpan);
     leftGroup.appendChild(nameCol);
-    leftGroup.appendChild(cameraLabel);
-    leftGroup.appendChild(thumbContainer);
+    
+    const actionGroup = document.createElement("div");
+    actionGroup.style.display = "flex"; actionGroup.style.gap = "6px";
+    
+    actionGroup.appendChild(noteBtn);
+    actionGroup.appendChild(cameraLabel);
+    actionGroup.appendChild(thumbContainer);
+    
+    leftGroup.appendChild(actionGroup);
     t.appendChild(leftGroup);
 
-    // KONTROLNÉ TLAČIDLÁ MÔŽE VIDIEŤ LEN ADMIN
     if(isAdmin){
       const controls = document.createElement("div");
       controls.style.display = "flex";
@@ -1254,7 +1301,6 @@ function renderSections(){
     nameInput.value = sec.name;
     nameInput.className = "section-title";
     
-    // ZAMKNUTIE ÚPRAVY TEXTU PRE UPRATOVAČOV
     if (!isAdmin) nameInput.disabled = true;
     
     nameInput.addEventListener("change", async()=>{
@@ -1267,7 +1313,6 @@ function renderSections(){
     });
     titleWrap.appendChild(nameInput);
 
-    // KONTROLNÉ TLAČIDLÁ MÔŽE VIDIEŤ LEN ADMIN
     if(isAdmin){
       const controlsWrap = document.createElement("div");
       controlsWrap.style.display = "flex"; controlsWrap.style.gap = "4px";
@@ -1294,7 +1339,6 @@ function renderSections(){
     personSelect.className = "section-person";
     personSelect.innerHTML = '<option value="">👤 Nepřiřazeno...</option>';
     
-    // ZAMKNUTIE ZMENY OSOBY PRE UPRATOVAČOV
     if (!isAdmin) personSelect.disabled = true;
     
     employees.forEach(emp => {
@@ -1329,7 +1373,6 @@ function renderSections(){
     renderTasksList(sec, tasksContainer);
     wrap.appendChild(tasksContainer);
 
-    // PRIDÁVANIE ÚLOH MOŽNÉ IBA PRE ADMINOV
     if(isAdmin){
         wrap.appendChild(createTaskForm(sec.id));
     }
