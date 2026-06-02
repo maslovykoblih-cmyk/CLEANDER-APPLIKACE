@@ -1,0 +1,52 @@
+{
+  "name": "CLEANDER APP",
+  "short_name": "Cleander",
+  "description": "Profesionální aplikace pro úklidové týmy.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+3. **Vytvor `sw.js` (Service Worker)**: Opäť v rovnakej zložke vytvor tento súbor. Vďaka nemu pobeží PWA aj v oflline režime:
+```javascript
+const CACHE_NAME = 'cleander-cache-v1';
+const urlsToCache = [
+  './index.html',
+  './manifest.json',
+  'https://cdn.tailwindcss.com',
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        return cache.addAll(urlsToCache);
+      })
+  );
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        if (response) {
+          return response; 
+        }
+        return fetch(event.request);
+      })
+  );
+});
+4. **Pridaj ikony**: Stiahni si 2 grafiky (napr. metlu) alebo loga aplikácie a pomenuj ich presne `icon-192.png` a `icon-512.png` a daj ich do rovnakej zložky.

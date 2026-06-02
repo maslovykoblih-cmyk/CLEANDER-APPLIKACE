@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+<meta name="theme-color" content="#0f172a" />
+<title>CLEANDER APP</title>
+
+<!-- PWA Manifest a nastavení -->
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Cleander">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<!-- Supabase a nástroje pro PDF -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm" type="module"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- FontAwesome pro moderní ikony -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    /* ========== KOMPLETNÍ STYLY - FROSTY BLUE GLASSMORPHISM V3 ========== */
+    :root {
+        --bg-dark: #0f172a;
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-bg-hover: rgba(255, 255, 255, 0.08);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --glass-border-top: 1px solid rgba(255, 255, 255, 0.15);
+        
+        --frosty: #3b82f6; 
+        --frosty-alt: #60a5fa;
+        --frosty-glow: rgba(59, 130, 246, 0.5);
+        
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --radius-large: 24px;
+        --radius-medium: 16px;
+    }
+
+    * {
+        box-sizing: border-box;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+        background-color: var(--bg-dark);
+        margin: 0;
+        color: var(--text-main);
+        padding: 20px;
+        min-height: 100vh;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Rozmazané pozadí - frosty modré kruhy s animací */
+    .bg-blobs {
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+    }
+    .bg-blobs::before, .bg-blobs::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(140px);
+        animation: pulseBlob 10s infinite alternate ease-in-out;
+    }
+    .bg-blobs::before {
+        width: 600px; height: 600px;
+        background: var(--frosty);
+        top: -150px; left: -200px;
+        opacity: 0.15;
+    }
+    .bg-blobs::after {
+        width: 500px; height: 500px;
+        background: var(--frosty-alt);
+        bottom: -200px; right: -150px;
+        opacity: 0.1;
+        animation-delay: -5s;
+    }
+
+    @keyframes pulseBlob {
+        0% { transform: scale(1) translate(0, 0); opacity: 0.1; }
+        100% { transform: scale(1.1) translate(20px, -20px); opacity: 0.2; }
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        flex: 1;
+        width: 100%;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* FULLSCREEN WELCOME SCREEN */
+    #welcomeScreen {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: rgba(15, 23, 42, 0.7);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+    .welcome-card {
+        background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+        padding: 40px;
+        border-radius: var(--radius-large);
+        border: 1px solid var(--glass-border);
+        border-top: var(--glass-border-top);
+        box-shadow: 0 32px 64px rgba(0,0,0,0.5);
+        text-align: center;
+        max-width: 400px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: center; /* Vycentruje logo horizontálně */
+    }
+    .welcome-card img.logo-image {
+        width: 120px; /* Nastav šířku loga podle potřeby */
+        height: auto;
+        margin-bottom: 10px;
+        border-radius: 12px; /* Volitelně: zaoblené rohy loga */
+        /* Volitelně: Přidání lehkého stínu kolem loga pro lepší viditelnost na tmavém pozadí */
+        filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); 
+    }
+    .welcome-card h1 {
+        font-size: 28px;
+        margin-bottom: 8px;
+        color: var(--text-main);
+        text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        /* Skrytí nadpisu, pokud už je součástí loga, jinak nechat */
+        /* display: none; */ 
+    }
+
+    /* Hlavička a badge */
+    header {
+        display: flex; gap: 12px; align-items: center; justify-content: space-between;
+        margin-bottom: 24px;
+        background: linear-gradient(90deg, rgba(15,23,42,0.8) 0%, rgba(30,41,59,0.6) 100%);
+        padding: 16px 24px;
+        border-radius: var(--radius-large);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--glass-border);
+        border-top: var(--glass-border-top);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+
+    h1 { font-size: 22px; margin: 0; color: var(--text-main); font-weight: 800; letter-spacing: 0.5px; display: flex; align-items: center; gap: 10px; }
+    h1 i { color: var(--frosty-alt); }
+    
+    .controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+    /* DASHBOARD PANEL (Dnešní přehled) */
+    .dashboard-panel {
+        background: var(--glass-bg); border-radius: var(--radius-large); padding: 24px; margin-bottom: 24px;
+        backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border); border-top: var(--glass-border-top);
+    }
+    .progress-wrapper {
+        display: flex; flex-direction: column; gap: 12px;
+    }
+    .progress-text {
+        font-size: 15px; font-weight: 600; color: var(--frosty-alt); display: flex; align-items: center; gap: 8px;
+    }
+    .progress-track {
+        background: rgba(0, 0, 0, 0.4); border-radius: 20px; height: 12px; width: 100%;
+        border: 1px solid rgba(255,255,255,0.05); overflow: hidden;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+    }
+    .progress-fill {
+        background: linear-gradient(90deg, var(--frosty), #8ab4f8);
+        height: 100%; width: 0%; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
+        border-radius: 20px;
+    }
+
+    /* PŘEPÍNAČ DNŮ V TÝDNU (Krok 3) */
+    .day-switcher-wrapper { margin-bottom: 24px; }
+    .day-switcher {
+        display: flex; background: rgba(0,0,0,0.2); border-radius: 16px; padding: 6px;
+        border: 1px solid var(--glass-border); gap: 4px; overflow-x: auto;
+        scrollbar-width: none;
+    }
+    .day-switcher::-webkit-scrollbar { display: none; }
+    .day-tab {
+        flex: 1; text-align: center; padding: 12px 0; border-radius: 12px; cursor: pointer;
+        color: var(--text-muted); font-weight: 600; font-size: 14px; transition: 0.3s;
+        min-width: 45px;
+    }
+    .day-tab:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
+    .day-tab.active { background: var(--frosty); color: #fff; box-shadow: 0 4px 12px var(--frosty-glow); }
+    .short-day { display: none; }
+    @media (max-width: 768px) {
+        .full-day { display: none; }
+        .short-day { display: block; font-size: 16px; }
+        .day-tab { padding: 14px 0; }
+    }
+
+    /* VYLEPŠENÉ ZÁLOŽKY OBJEKTŮ / BUDOV */
+    .building-tabs-wrapper {
+        background: linear-gradient(90deg, rgba(15, 23, 42, 0.7) 0%, rgba(30, 41, 59, 0.5) 100%);
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: var(--radius-large);
+        padding: 18px 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+    }
+    .building-tabs-title {
+        font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--frosty-alt); 
+        margin-bottom: 14px; font-weight: 800; display: flex; align-items: center; gap: 8px;
+    }
+    .building-tabs {
+        display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px;
+        scrollbar-width: thin; scrollbar-color: var(--frosty) transparent;
+    }
+    .building-tab {
+        padding: 12px 24px; border-radius: 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+        color: var(--text-muted); cursor: pointer; white-space: nowrap; font-weight: 600; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex; align-items: center; gap: 10px; font-size: 15px;
+    }
+    .building-tab:hover { background: rgba(255,255,255,0.1); color: var(--text-main); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .building-tab.active {
+        background: linear-gradient(135deg, var(--frosty) 0%, #1e40af 100%);
+        color: #ffffff; border-color: rgba(255,255,255,0.3);
+        box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+        transform: translateY(-2px);
+    }
+
+    /* EMPTY STATE (Když nejsou úseky) */
+    .empty-state {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 60px 20px;
+        background: var(--glass-bg);
+        border-radius: var(--radius-large);
+        border: 1px dashed rgba(255,255,255,0.2);
+    }
+    .empty-state i {
+        font-size: 48px; color: var(--text-muted); margin-bottom: 16px; opacity: 0.5;
+    }
+    .empty-state h2 {
+        font-size: 22px; color: rgba(255, 255, 255, 0.9); margin-bottom: 8px;
+    }
+
+    /* Formuláře a tlačítka */
+    input[type=text], input[type=email], input[type=password], select {
+        padding: 12px 16px; border-radius: 12px;
+        background: rgba(0, 0, 0, 0.3); border: 1px solid var(--glass-border);
+        color: var(--text-main); font-size: 14px; outline: none;
+        transition: all 0.3s ease;
+    }
+    input::placeholder, select:invalid { color: var(--text-muted); }
+    input:focus, select:focus { border-color: var(--frosty); box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3); background: rgba(0,0,0,0.4); }
+    select option { background: var(--bg-dark); color: var(--text-main); }
+
+    button {
+        padding: 12px 18px; border-radius: 12px; border: none; cursor: pointer;
+        background: rgba(255,255,255,0.08); color: var(--text-main); font-size: 14px;
+        border: 1px solid var(--glass-border); transition: all 0.2s ease; font-weight: 600;
+        display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    button:hover { background: rgba(255,255,255,0.15); transform: translateY(-1px); }
+    button:active { transform: translateY(1px); }
+    
+    button.primary-btn {
+        background: linear-gradient(135deg, var(--frosty) 0%, #2563eb 100%); color: #fff; border: none;
+        box-shadow: 0 4px 12px var(--frosty-glow); text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+    button.primary-btn:hover { box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6); transform: translateY(-2px); filter: brightness(1.1); }
+    
+    button.subtle-btn {
+        background: transparent; border: none; color: var(--text-muted);
+        font-size: 13px; font-weight: 600; padding: 6px 12px;
+        transition: all 0.2s; margin-top: 8px; width: 100%; text-align: center;
+    }
+    button.subtle-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.05); border-radius: 8px;}
+
+    .small { padding: 8px 14px; font-size: 13px; border-radius: 10px; }
+    .icon-only { padding: 8px; font-size: 16px; border-radius: 50%; aspect-ratio: 1/1; }
+
+    /* Viditelný Admin Panel */
+    .admin-panel {
+        background: var(--glass-bg); border-radius: var(--radius-large); padding: 24px; margin-bottom: 32px;
+        backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border); border-top: var(--glass-border-top);
+        display: none;
+        animation: fadeInDown 0.3s ease-out forwards;
+    }
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--glass-border); padding-bottom: 16px; }
+    
+    .admin-grid { display: flex; gap: 24px; flex-wrap: wrap; }
+    .admin-half {
+        flex: 1; min-width: 300px; background: rgba(0,0,0,0.2); padding: 20px;
+        border-radius: var(--radius-medium); border: 1px solid var(--glass-border);
+        display: flex; flex-direction: column; gap: 12px;
+    }
+    .admin-half h3 { margin: 0; font-size: 16px; color: var(--frosty-alt); font-weight: 700; display: flex; align-items: center; gap: 8px;}
+
+    /* PURE CSS GRID */
+    #calendarContainer {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+        gap: 24px;
+    }
+
+    .section-row {
+        display: flex; flex-direction: column; gap: 16px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+        border-radius: var(--radius-large); padding: 24px;
+        backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border); border-top: var(--glass-border-top);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .section-row:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 0 32px rgba(59, 130, 246, 0.1);
+        border-color: rgba(255,255,255,0.2);
+    }
+
+    .section-header { display: flex; flex-direction: column; gap: 12px; margin-bottom: 8px; border-bottom: 1px solid var(--glass-border); padding-bottom: 16px; }
+    
+    .section-title-wrap { display: flex; justify-content: space-between; align-items: flex-start; }
+    .section-title {
+        font-weight: 800; font-size: 20px; color: var(--text-main);
+        width: 100%; border: none; background: transparent; outline: none;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.6); padding:0;
+    }
+    
+    .section-person {
+        font-weight: 600; font-size: 14px; color: var(--frosty-alt);
+        width: 100%; border: none; background: transparent; outline: none;
+        cursor: pointer; padding: 4px 0;
+        appearance: none; -webkit-appearance: none;
+    }
+    .section-person:focus { box-shadow: none; border-bottom: 1px solid var(--frosty); border-radius: 0; }
+
+    /* PODÚKOLY A PLÁNOVÁNÍ (Krok 3) */
+    .tasks-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 8px;
+    }
+    .task-item-detail {
+        display: flex; align-items: center; justify-content: space-between; gap: 12px;
+        background: rgba(0, 0, 0, 0.2); border-radius: 12px; padding: 10px 14px;
+        border: 1px solid rgba(255,255,255,0.03); transition: all 0.2s ease;
+    }
+    .task-item-detail:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255,255,255,0.1); }
+    
+    .task-left-group { display: flex; align-items: center; gap: 12px; flex: 1; overflow: hidden; }
+
+    .task-check {
+        width: 26px; height: 26px; border-radius: 8px;
+        border: 2px solid var(--text-muted);
+        cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+        background: rgba(0,0,0,0.2);
+    }
+    .task-check:hover { border-color: var(--frosty-alt); background: rgba(59, 130, 246, 0.1); }
+    .task-check.done {
+        background: #10b981; border-color: #10b981;
+        box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+        transform: scale(1.05);
+    }
+    .task-check.done i { color: white; font-size: 14px; }
+    
+    .task-icon {
+        width: 24px; text-align: center; font-size: 16px; flex-shrink: 0; opacity: 0.8;
+    }
+
+    .task-name-col { display: flex; flex-direction: column; flex: 1; gap: 4px; overflow: hidden; }
+    
+    .task-name-label {
+        width: 100%; border: none; background: transparent; font-weight: 500; color: #e2e8f0; outline: none; font-size: 15px;
+        transition: color 0.2s, opacity 0.2s;
+    }
+    .task-name-label.done { text-decoration: line-through; opacity: 0.5; }
+
+    /* Bubliny pro plánování dnů */
+    .task-schedule-bubbles { display: flex; gap: 4px; margin-top: 2px; }
+    .day-bubble {
+        width: 20px; height: 20px; border-radius: 50%; font-size: 10px; font-weight: 700;
+        display: flex; align-items: center; justify-content: center;
+        background: rgba(255,255,255,0.05); color: var(--text-muted); cursor: pointer;
+        border: 1px solid rgba(255,255,255,0.05); transition: 0.2s;
+        user-select: none;
+    }
+    .day-bubble:hover { background: rgba(255,255,255,0.15); color: var(--text-main); }
+    .day-bubble.active { background: var(--frosty); color: #fff; border-color: var(--frosty-alt); box-shadow: 0 0 6px var(--frosty-glow); }
+
+    /* FOTOAPARÁT */
+    .camera-btn {
+        cursor: pointer;
+        font-size: 16px;
+        color: var(--text-muted);
+        background: rgba(255,255,255,0.05);
+        border-radius: 8px;
+        width: 32px; height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+        border: 1px solid transparent;
+        margin: 0;
+    }
+    .camera-btn:hover { background: rgba(255,255,255,0.1); color: var(--text-main); border-color: var(--glass-border); }
+    
+    .task-thumbnail {
+        width: 32px; height: 32px;
+        border-radius: 6px;
+        object-fit: cover;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    /* Přidávání podúkolu form */
+    .add-task-form {
+        display: flex; flex-direction: column; gap: 10px;
+        margin-top: 12px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .templates-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .template-btn {
+        background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);
+        padding: 6px 10px; border-radius: 8px; font-size: 12px; color: var(--text-muted);
+        cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px;
+    }
+    .template-btn:hover { background: rgba(255,255,255,0.1); color: var(--text-main); border-color: var(--frosty); }
+
+    /* Tlačítko podpisu */
+    .signature-section {
+        margin-top: auto;
+        padding-top: 16px;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    /* MODÁL PRO DIGITÁLNÍ PODPIS */
+    #signatureModal {
+        display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(15, 23, 42, 0.85); z-index: 9999; align-items: center; justify-content: center;
+        backdrop-filter: blur(12px);
+    }
+    .modal-content {
+        background: var(--bg-dark); padding: 24px; border-radius: 20px;
+        border: 1px solid var(--frosty); box-shadow: 0 0 48px var(--frosty-glow);
+        display: flex; flex-direction: column; gap: 16px; width: 90%; max-width: 380px;
+    }
+    #sigCanvas {
+        background: #f8fafc; border-radius: 12px; touch-action: none; 
+        border: 2px solid #cbd5e1; width: 100%; height: 160px;
+    }
+    .signature-display {
+        background: #f8fafc; border-radius: 8px; padding: 4px;
+        max-width: 150px; border: 1px solid #cbd5e1; align-self: flex-start;
+    }
+    
+    .gps-link {
+        font-size: 12px;
+        color: var(--frosty-alt);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(59, 130, 246, 0.1);
+        padding: 4px 8px;
+        border-radius: 6px;
+        align-self: flex-start;
+        transition: 0.2s;
+    }
+    .gps-link:hover {
+        background: rgba(59, 130, 246, 0.2);
+    }
+
+    /* Patička */
+    footer {
+        text-align: center; font-size: 11px; letter-spacing: 1px; opacity: 0.4;
+        padding: 30px 20px; margin-top: auto; color: var(--text-main); font-weight: 600;
+    }
+</style>
+</head>
+<body>
+  <div class="bg-blobs"></div>
+  
+  <!-- WELCOME SCREEN (Fullscreen) -->
+  <div id="welcomeScreen">
+      <div class="welcome-card">
+          <!-- Přidané logo zde -->
+          <img src="cleander-logo.png" alt="Cleander Logo" class="logo-image" />
+          <!-- Nadpis můžeš případně smazat/zakomentovat, pokud ho máš už v logu -->
+          <h1>CLEANDER APP</h1>
+          <p style="color: var(--text-muted); font-size: 14px; margin-top: -10px; margin-bottom: 10px;">Přihlaste se ke svému účtu</p>
+          <input type="email" id="email" placeholder="Email" />
+          <input type="password" id="password" placeholder="Heslo" />
+          <button id="btnSignIn" class="primary-btn"><i class="fa-solid fa-right-to-bracket"></i> Přihlásit</button>
+          
+          <div style="margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+              <button id="btnDevSkip" class="subtle-btn" style="color: var(--frosty-alt); border: 1px solid rgba(255,255,255,0.1);"><i class="fa-solid fa-flask"></i> Přeskočit přihlášení (Vývojářský režim)</button>
+          </div>
+      </div>
+  </div>
+
+  <div class="container">
+    <header>
+      <div style="display:flex;gap:16px;align-items:center">
+        <h1><i class="fa-solid fa-sparkles"></i> CLEANDER APP</h1>
+      </div>
+      <div class="controls">
+        <button id="btnExport" class="small"><i class="fa-solid fa-file-pdf"></i> Export PDF</button>
+        <button id="btnSignOut" class="small" style="display:none; background:rgba(255,94,87,0.2); color:#ff5e57;"><i class="fa-solid fa-right-from-bracket"></i> Odhlásit</button>
+        <button id="btnToggleAdmin" class="small icon-only" style="background: transparent; border: none; display:none; cursor: pointer; color: var(--text-muted);" title="Nastavení / Admin Panel"><i class="fa-solid fa-gear"></i></button>
+      </div>
+    </header>
+
+    <!-- DASHBOARD PANEL -->
+    <section class="dashboard-panel" id="dashboardPanel">
+        <h2 style="margin: 0 0 16px 0; font-size: 18px; color: var(--text-main); display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-chart-pie" style="color: var(--frosty-alt)"></i> Dnešní přehled</h2>
+        <div class="progress-wrapper">
+            <div class="progress-text" id="progressText"><i class="fa-solid fa-spinner fa-spin"></i> Načítám úkoly...</div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PŘEPÍNAČ DNŮ V TÝDNU -->
+    <div id="daySwitcherWrapper" class="day-switcher-wrapper">
+        <div id="daySwitcher" class="day-switcher"></div>
+    </div>
+
+    <!-- ZÁLOŽKY OBJEKTŮ -->
+    <div id="buildingTabsWrapper" class="building-tabs-wrapper" style="display:none;">
+        <div class="building-tabs-title"><i class="fa-solid fa-map-location-dot"></i> Aktuální objekt úklidu</div>
+        <div id="buildingTabs" class="building-tabs"></div>
+    </div>
+
+    <!-- OVLÁDACÍ CENTRUM -->
+    <section class="admin-panel" id="adminPanel">
+      <div class="admin-header">
+          <div style="display:flex; gap:12px; align-items:center;">
+              <h2 style="margin:0; font-size:18px;"><i class="fa-solid fa-sliders"></i> Ovládací centrum</h2>
+              <div id="userInfo" style="color:var(--frosty-alt); font-size:13px; background:rgba(59,130,246,0.1); padding:4px 10px; border-radius:8px; font-weight: 500;"></div>
+          </div>
+          <div style="display:flex; gap: 8px; align-items:center;">
+            <button id="prevWeek" class="small"><i class="fa-solid fa-chevron-left"></i> Zpět</button>
+            <div id="currentWeekLabel" style="font-weight:700; color:var(--text-main); font-size:14px; margin: 0 8px; display: flex; align-items: center; gap: 6px;"><i class="fa-regular fa-calendar"></i> <span></span></div>
+            <button id="nextWeek" class="small">Vpřed <i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+      </div>
+
+      <div class="admin-grid">
+          <!-- Přidat Budovu/Objekt -->
+          <div class="admin-half" style="flex-basis: 100%;">
+              <h3><i class="fa-solid fa-building"></i> 1. Vytvořit nový objekt (Budovu)</h3>
+              <p style="font-size:13px; color:var(--text-muted); margin:0;">Nejprve vytvořte objekt (např. Kanceláře Agrofert), do kterého pak přidáte úseky.</p>
+              <div style="display: flex; gap: 10px; margin-top: 8px;">
+                  <input type="text" id="buildingName" placeholder="Název nového objektu..." style="flex:1;" />
+                  <button id="btnAddBuilding" class="primary-btn"><i class="fa-solid fa-plus"></i> Vytvořit objekt</button>
+              </div>
+          </div>
+
+          <!-- Přidat úsek -->
+          <div class="admin-half">
+              <h3><i class="fa-solid fa-layer-group"></i> 2. Vytvořit dlaždici (Úsek)</h3>
+              <input type="text" id="sectionName" placeholder="Zadejte název úseku (např. Kuchyňská zóna)..." />
+              <select id="sectionPersonSelect">
+                  <option value="">Nepřiřazeno (Vyberte osobu)...</option>
+              </select>
+              <button id="btnAddSection" class="primary-btn"><i class="fa-solid fa-plus"></i> Vytvořit dlaždici</button>
+          </div>
+
+          <!-- Správa zaměstnanců -->
+          <div class="admin-half">
+              <h3><i class="fa-solid fa-users"></i> Správa zaměstnanců</h3>
+              <p style="font-size:13px; color:var(--text-muted); margin:0;">Zadejte jméno pracovníka a přidejte jej do databáze.</p>
+              <input type="text" id="newEmployeeName" placeholder="Jméno a příjmení (např. Jan Novák)..." />
+              <button id="btnAddEmployee" class="primary-btn" style="margin-top:auto;"><i class="fa-solid fa-user-plus"></i> Přidat do databáze</button>
+          </div>
+      </div>
+    </section>
+
+    <!-- PURE CSS GRID PRO DLAŽDICE -->
+    <main id="calendarContainer"></main>
+  </div>
+
+  <!-- PATIČKA -->
+  <footer>
+      &copy; DEVELOPED BY JIRSTAN JAVADEVELOPING
+  </footer>
+
+  <!-- MODÁL PRO PODPIS -->
+  <div id="signatureModal">
+      <div class="modal-content">
+          <h3 style="margin:0; font-size:18px; color:var(--frosty-alt); display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-signature"></i> Podpis pracovníka</h3>
+          <p style="margin:0; font-size:13px; color:var(--text-muted);">Podepište se prstem nebo myší do pole níže:</p>
+          <canvas id="sigCanvas" width="300" height="150"></canvas>
+          <div style="font-size: 11px; color: #94a3b8; display: flex; align-items: center; gap: 6px;">
+              <i class="fa-solid fa-location-dot"></i> Při uložení bude zaznamenána vaše GPS poloha.
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-top:8px;">
+              <button id="btnCancelSig" class="small" style="background:rgba(255,255,255,0.1);"><i class="fa-solid fa-xmark"></i> Zrušit</button>
+              <button id="btnClearSig" class="small" style="background:rgba(255,94,87,0.2); color:#ff5e57;"><i class="fa-solid fa-eraser"></i> Vymazat</button>
+              <button id="btnSaveSig" class="primary-btn small"><i class="fa-solid fa-check"></i> Uložit podpis</button>
+          </div>
+      </div>
+  </div>
+
+<!-- Service Worker Registrace pro PWA -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js')
+        .then(registration => {
+          console.log('ServiceWorker zaregistrován s rozsahem: ', registration.scope);
+        })
+        .catch(err => {
+          console.log('Chyba registrace ServiceWorker: ', err);
+        });
+    });
+  }
+</script>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+// ---------- Supabase config ----------
+const SUPABASE_URL = 'https://hecqbxtmqjzhfxssmcxd.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_7u1-AZW1ModwAD-RdXltwQ_saz9YRGg';
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const allowedUsers = [
+  "maslovykoblih@gmail.com",
+  "kralmastah@gmail.com",
+  "doosan@dussman.cz"
+];
+
+// ---------- Globální proměnné ----------
+let user = null;
+let isDevMode = false;
+let buildings = []; // Objekty / Budovy
+let currentBuildingId = null; // Aktuálně vybraná budova
+let sections = [];
+let taskStates = [];
+let employees = []; 
+let currentWeekStart = getMonday(new Date());
+
+// Proměnná pro uchování aktuálně prohlíženého dne (0=Po, 1=Út... 6=Ne)
+let currentDayIndex = (new Date().getDay() + 6) % 7;
+const dayNamesFull = ['Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota', 'Neděle'];
+const dayNamesShort = ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'];
+
+const localTaskPhotos = {};
+
+let currentSignSectionId = null;
+let isDrawing = false;
+let ctx = null;
+let canvasEl = null;
+
+// ---------- DOM ready ----------
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('btnSignIn').addEventListener('click', signIn);
+  document.getElementById('btnSignOut').addEventListener('click', signOut);
+  
+  document.getElementById('btnDevSkip').addEventListener('click', () => {
+      isDevMode = true;
+      user = { email: 'Vývojář (Lokální režim)' };
+      updateAuthUI();
+      render();
+  });
+
+  document.getElementById('btnToggleAdmin').addEventListener('click', () => {
+      const cc = document.getElementById('adminPanel');
+      cc.style.display = (cc.style.display === 'none' || cc.style.display === '') ? 'block' : 'none';
+  });
+  
+  document.getElementById('btnAddBuilding').addEventListener('click', addBuildingHandler);
+  document.getElementById('btnAddSection').addEventListener('click', addSectionHandler);
+  document.getElementById('btnAddEmployee').addEventListener('click', addEmployeeHandler);
+  
+  document.getElementById('prevWeek').addEventListener('click', ()=> changeWeek(-1));
+  document.getElementById('nextWeek').addEventListener('click', ()=> changeWeek(1));
+  document.getElementById('btnExport').addEventListener('click', exportPDF);
+  
+  initSignaturePad();
+  initAuth();
+});
+
+// ---------- Pomocná fce pro ikony úkolů ----------
+function getTaskIcon(name) {
+    const n = name.toLowerCase();
+    if (n.includes('lux') || n.includes('vysava')) return '<i class="fa-solid fa-broom" style="color: #60a5fa;"></i>';
+    if (n.includes('třít') || n.includes('vytř') || n.includes('podlah') || n.includes('mop')) return '<i class="fa-solid fa-water" style="color: #38bdf8;"></i>';
+    if (n.includes('koš') || n.includes('odpad') || n.includes('pytl')) return '<i class="fa-solid fa-trash-can" style="color: #94a3b8;"></i>';
+    if (n.includes('prach') || n.includes('utřít')) return '<i class="fa-solid fa-feather" style="color: #cbd5e1;"></i>';
+    if (n.includes('mýdl') || n.includes('mydl') || n.includes('doplnit')) return '<i class="fa-solid fa-pump-soap" style="color: #f472b6;"></i>';
+    if (n.includes('okna') || n.includes('sklo') || n.includes('zrcad')) return '<i class="fa-solid fa-border-all" style="color: #7dd3fc;"></i>';
+    if (n.includes('wc') || n.includes('toalet') || n.includes('záchod')) return '<i class="fa-solid fa-toilet" style="color: #e2e8f0;"></i>';
+    if (n.includes('kuchy') || n.includes('nádob')) return '<i class="fa-solid fa-kitchen-set" style="color: #fbbf24;"></i>';
+    
+    // Default ikona
+    return '<i class="fa-solid fa-check-double" style="color: #475569;"></i>';
+}
+
+// ---------- Auth ----------
+async function initAuth(){
+  const { data:{session} } = await supabase.auth.getSession();
+  user = session?.user || null;
+  updateAuthUI();
+
+  supabase.auth.onAuthStateChange((event, session)=>{
+    if(isDevMode) return; 
+    user = session?.user || null;
+    if(user && !allowedUsers.includes(user.email)){
+      alert("Tento účet nemá oprávnění!");
+      supabase.auth.signOut();
+      user = null;
+    }
+    updateAuthUI();
+    if (!isDevMode) loadAll();
+  });
+
+  if (!isDevMode) loadAll();
+}
+
+function updateAuthUI(){
+  const welcomeScreen = document.getElementById('welcomeScreen');
+  const btnOut = document.getElementById('btnSignOut');
+  const btnAdmin = document.getElementById('btnToggleAdmin');
+  const info = document.getElementById('userInfo');
+
+  if(user){
+    welcomeScreen.style.display = 'none';
+    btnOut.style.display = 'flex';
+    btnAdmin.style.display = 'flex'; 
+    info.innerHTML = `<i class="fa-regular fa-circle-user"></i> ${user.email}`;
+  } else {
+    welcomeScreen.style.display = 'flex';
+    btnOut.style.display = 'none';
+    btnAdmin.style.display = 'none';
+    info.textContent = '';
+  }
+}
+
+async function signIn(){
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value.trim();
+  if(!email || !password) return alert("Vyplň email i heslo");
+
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if(error) return alert("Chyba přihlášení: " + error.message);
+
+  if(!allowedUsers.includes(email)){
+    alert("Účet nemá oprávnění!");
+    await supabase.auth.signOut();
+    return;
+  }
+}
+
+async function signOut(){
+  user = null; 
+  isDevMode = false;
+  await supabase.auth.signOut();
+  updateAuthUI();
+}
+
+// ---------- DATA LOAD ----------
+async function loadAll(){
+  if (isDevMode) return;
+  await loadEmployees(); 
+  await loadBuildings();
+  await loadSections();
+  await loadTaskStatesForWeek(currentWeekStart);
+  render();
+}
+
+async function loadBuildings() {
+  const { data, error } = await supabase.from('buildings').select('*').order('created_at');
+  if (!error && data) {
+      buildings = data;
+      // Pokud nemáme vybranou budovu a nějaké existují, vybereme první
+      if (!currentBuildingId && buildings.length > 0) {
+          currentBuildingId = buildings[0].id;
+      }
+  } else {
+      console.warn("Chyba načítání objektů:", error);
+  }
+}
+
+async function loadEmployees() {
+  const { data, error } = await supabase.from('employees').select('*').order('name');
+  if (!error && data) {
+      employees = data;
+  } else {
+      console.warn("Nepodařilo se načíst zaměstnance:", error);
+  }
+  updateEmployeeDropdowns();
+}
+
+function updateEmployeeDropdowns() {
+    const globalSelect = document.getElementById('sectionPersonSelect');
+    if(!globalSelect) return;
+    globalSelect.innerHTML = '<option value="">Nepřiřazeno (Vyberte osobu)...</option>';
+    employees.forEach(emp => {
+        const opt = document.createElement('option');
+        opt.value = emp.name; 
+        opt.textContent = emp.name;
+        globalSelect.appendChild(opt);
+    });
+}
+
+async function addEmployeeHandler() {
+    if(!user) return;
+    const name = document.getElementById('newEmployeeName').value.trim();
+    if(!name) return alert("Zadejte jméno pracovníka.");
+    
+    if (isDevMode) {
+        employees.push({ id: 'mock-'+Date.now(), name });
+    } else {
+        const { error } = await supabase.from('employees').insert({ name });
+        if(error) {
+            console.error(error);
+            return alert("Chyba databáze (nelze uložit zaměstnance). Možná chybí tabulka nebo práva. \n" + error.message);
+        }
+        await loadEmployees();
+    }
+    
+    document.getElementById('newEmployeeName').value = '';
+    render(); 
+}
+
+// ---------- VLOŽENÍ NOVÉHO OBJEKTU (Budovy) ----------
+async function addBuildingHandler() {
+  if(!user) return;
+  const nameInput = document.getElementById('buildingName');
+  const name = nameInput.value.trim();
+  
+  if(!name) return alert("Vyplň název objektu.");
+
+  if (isDevMode) {
+      const newId = 'mock-bld-' + Date.now();
+      buildings.push({ id: newId, name });
+      currentBuildingId = newId; 
+  } else {
+      const { data, error } = await supabase.from('buildings').insert({ name }).select();
+      if (error) {
+          return alert("Chyba databáze (nelze uložit objekt). Zkontroluj SQL tabulku 'buildings'.\n" + error.message);
+      }
+      if(data && data.length > 0) currentBuildingId = data[0].id;
+  }
+
+  nameInput.value = "";
+  alert("Objekt úspěšně vytvořen.");
+  if (isDevMode) render(); else await loadAll();
+}
+
+async function loadSections(){
+  const { data, error } = await supabase
+    .from('sections')
+    .select('*, tasks(*)')
+    .order('order_index', { ascending: true })
+    .order('id');
+
+  if(!error && data) {
+    sections = data.map(s => {
+      s.tasks = (s.tasks || []).sort((a,b)=> (a.order_index||0) - (b.order_index||0));
+      return s;
+    });
+  } else {
+      console.warn("Chyba při stahování dlaždic ze Supabase:", error);
+  }
+}
+
+async function loadTaskStatesForWeek(weekStart){
+  const iso = toIsoDate(weekStart);
+  const { data, error } = await supabase.from('task_states').select('*').eq('week_start', iso);
+  if (!error && data) taskStates = data;
+}
+
+// ---------- VLOŽENÍ NOVÉHO ÚSEKU ----------
+async function addSectionHandler() {
+  if(!user) return;
+  if(!currentBuildingId && buildings.length > 0) return alert("Nejprve vyberte objekt (v záložkách nahoře)!");
+
+  const nameInput = document.getElementById('sectionName');
+  const personInput = document.getElementById('sectionPersonSelect');
+  const name = nameInput.value.trim();
+  const person = personInput.value;
+  
+  if(!name) return alert("Vyplň název úseku.");
+
+  if (isDevMode) {
+      sections.push({
+          id: 'mock-sec-' + Date.now(),
+          name,
+          person_id: person,
+          building_id: currentBuildingId,
+          tasks: [],
+          order_index: Date.now()
+      });
+  } else {
+      const { error } = await supabase.from('sections').insert({
+        name,
+        person_id: person,
+        building_id: currentBuildingId,
+        days: [0,1,2,3,4,5,6], 
+        order_index: Date.now()
+      });
+      if (error) {
+          console.error(error);
+          return alert("Chyba při ukládání dlaždice do Supabase. Zkontroluj tabulku 'sections'. \n" + error.message);
+      }
+  }
+
+  nameInput.value = "";
+  personInput.value = "";
+  
+  if (isDevMode) render(); else await loadAll();
+}
+
+// ---------- FOTOAPARÁT (Nahrávání do Supabase Storage) ----------
+async function handlePhotoUpload(event, taskId) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const thumbDiv = document.getElementById(`thumb-${taskId}`);
+    if (thumbDiv) {
+        // Zobrazíme loading ikonu
+        thumbDiv.innerHTML = `<i class="fa-solid fa-spinner fa-spin" style="color: var(--frosty); font-size: 24px;"></i>`;
+    }
+
+    if (isDevMode) {
+        // V lokálním režimu nahrajeme jen do RAM jako Base64
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const dataUrl = e.target.result;
+            localTaskPhotos[taskId] = dataUrl; 
+            if (thumbDiv) {
+                thumbDiv.innerHTML = `<img src="${dataUrl}" class="task-thumbnail" alt="Náhled">`;
+            }
+        };
+        reader.readAsDataURL(file);
+        return;
+    }
+
+    // Skutečné nahrání do Supabase Storage
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${taskId}-${Date.now()}.${fileExt}`;
+    const filePath = `${fileName}`;
+
+    const { error: uploadError } = await supabase.storage
+        .from('task-photos')
+        .upload(filePath, file);
+
+    if (uploadError) {
+        console.error('Chyba nahrávání:', uploadError);
+        alert('Nepodařilo se nahrát fotku: ' + uploadError.message);
+        if (thumbDiv) thumbDiv.innerHTML = '';
+        return;
+    }
+
+    // Získání verejnej URL uloženej fotky
+    const { data: { publicUrl } } = supabase.storage
+        .from('task-photos')
+        .getPublicUrl(filePath);
+
+    // Uložíme túto URL do databázy k nášmu úkolu
+    const { error: updateError } = await supabase
+        .from('tasks')
+        .update({ photo_url: publicUrl })
+        .eq('id', taskId);
+
+    if (updateError) {
+        console.error('Chyba uložení URL do databáze:', updateError);
+        alert('Fotka se nahrála, ale nepodařilo se ji spojit s úkolem.');
+    } else {
+        // Okamžite aktualizujeme stav a UI
+        const sec = sections.find(s => s.tasks.some(t => t.id === taskId));
+        if (sec) {
+            const t = sec.tasks.find(t => t.id === taskId);
+            if (t) t.photo_url = publicUrl;
+        }
+        if (thumbDiv) {
+            thumbDiv.innerHTML = `<a href="${publicUrl}" target="_blank"><img src="${publicUrl}" class="task-thumbnail" alt="Náhled"></a>`;
+        }
+    }
+}
+
+// ---------- PODPIS A GPS ----------
+function initSignaturePad() {
+    canvasEl = document.getElementById('sigCanvas');
+    ctx = canvasEl.getContext('2d');
+    
+    canvasEl.addEventListener('mousedown', startPos);
+    canvasEl.addEventListener('mouseup', endPos);
+    canvasEl.addEventListener('mousemove', draw);
+    canvasEl.addEventListener('mouseleave', endPos);
+    
+    canvasEl.addEventListener('touchstart', (e) => { e.preventDefault(); startPos(e.touches[0]); }, {passive: false});
+    canvasEl.addEventListener('touchend', (e) => { e.preventDefault(); endPos(); }, {passive: false});
+    canvasEl.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e.touches[0]); }, {passive: false});
+
+    document.getElementById('btnCancelSig').addEventListener('click', closeSignatureModal);
+    document.getElementById('btnClearSig').addEventListener('click', clearSignature);
+    document.getElementById('btnSaveSig').addEventListener('click', saveSignature);
+}
+
+function startPos(e) { isDrawing = true; draw(e); }
+function endPos() { isDrawing = false; ctx.beginPath(); }
+function draw(e) {
+    if(!isDrawing) return;
+    const rect = canvasEl.getBoundingClientRect();
+    let x = (e.clientX || e.pageX) - rect.left;
+    let y = (e.clientY || e.pageY) - rect.top;
+    
+    ctx.lineWidth = 3; ctx.lineCap = 'round'; ctx.strokeStyle = '#0f172a';
+    ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y);
+}
+function clearSignature() { ctx.clearRect(0, 0, canvasEl.width, canvasEl.height); }
+function openSignatureModal(sectionId) {
+    currentSignSectionId = sectionId;
+    document.getElementById('signatureModal').style.display = 'flex';
+    clearSignature();
+}
+function closeSignatureModal() {
+    document.getElementById('signatureModal').style.display = 'none';
+    currentSignSectionId = null;
+}
+
+// Získání polohy přes API prohlížeče
+function getLocation() {
+    return new Promise((resolve, reject) => {
+        if (!navigator.geolocation) {
+            resolve({ lat: null, lng: null });
+        } else {
+            navigator.geolocation.getCurrentPosition(
+                (position) => resolve({ lat: position.coords.latitude, lng: position.coords.longitude }),
+                (error) => resolve({ lat: null, lng: null }), // V případě odmítnutí nebo chyby vrátí null
+                { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+            );
+        }
+    });
+}
+
+async function saveSignature() {
+    if(!currentSignSectionId) return;
+    
+    // Změna tlačítka na loading stav
+    const btn = document.getElementById('btnSaveSig');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Ukládám...`;
+    btn.disabled = true;
+
+    const base64Image = canvasEl.toDataURL("image/png");
+    const loc = await getLocation(); // Počkáme na souřadnice
+    
+    if (isDevMode) {
+        const sec = sections.find(s => s.id === currentSignSectionId);
+        if (sec) {
+            sec.signature = base64Image;
+            sec.signature_lat = loc.lat;
+            sec.signature_lng = loc.lng;
+            sec.signature_time = new Date().toISOString();
+        }
+    } else {
+        const { error } = await supabase.from("sections").update({ 
+            signature: base64Image,
+            signature_lat: loc.lat,
+            signature_lng: loc.lng,
+            signature_time: new Date().toISOString()
+        }).eq("id", currentSignSectionId);
+        
+        if(error) {
+            console.warn(error);
+            alert("Podpis se nepodařilo uložit.\n" + error.message);
+        }
+    }
+    
+    // Reset tlačítka a zavření
+    btn.innerHTML = originalText;
+    btn.disabled = false;
+    closeSignatureModal();
+    
+    if (isDevMode) render(); else loadAll();
+}
+
+// ---------- VÝPOČET PROGRESS BARU ----------
+function updateDashboardProgress() {
+    let totalTasksToday = 0;
+    let doneTasksToday = 0;
+
+    const activeSections = sections.filter(sec => sec.building_id === currentBuildingId || (!sec.building_id && buildings.length === 0));
+
+    activeSections.forEach(sec => {
+        sec.tasks.forEach(task => {
+            // Kontrola naplánování úkolu pro sledovaný den
+            if (!task.days || task.days.length === 0 || task.days.includes(currentDayIndex)) {
+                totalTasksToday++;
+                const st = taskStates.find(s => s.task_id === task.id && Number(s.day_index) === currentDayIndex && s.week_start === toIsoDate(currentWeekStart));
+                if (st && st.state === "done") {
+                    doneTasksToday++;
+                }
+            }
+        });
+    });
+
+    const progressText = document.getElementById("progressText");
+    const progressFill = document.getElementById("progressFill");
+
+    if (totalTasksToday === 0) {
+        progressText.innerHTML = `<i class='fa-solid fa-mug-hot'></i> Pro den ${dayNamesFull[currentDayIndex]} nejsou naplánované úkoly.`;
+        progressFill.style.width = "0%";
+    } else {
+        progressText.innerHTML = `<i class="fa-solid fa-list-check"></i> Hotovo (${dayNamesShort[currentDayIndex]}): ${doneTasksToday} ze ${totalTasksToday}`;
+        const percentage = (doneTasksToday / totalTasksToday) * 100;
+        progressFill.style.width = `${percentage}%`;
+    }
+}
+
+// ---------- RENDER DAY SWITCHER ----------
+function renderDaySwitcher() {
+    const container = document.getElementById("daySwitcher");
+    container.innerHTML = "";
+    
+    dayNamesFull.forEach((dayName, index) => {
+        const tab = document.createElement("div");
+        tab.className = "day-tab" + (index === currentDayIndex ? " active" : "");
+        tab.innerHTML = `<span class="full-day">${dayName}</span><span class="short-day">${dayNamesShort[index]}</span>`;
+        tab.addEventListener("click", () => {
+            currentDayIndex = index;
+            render();
+        });
+        container.appendChild(tab);
+    });
+}
+
+// ---------- RENDER BUILDINGS (ZÁLOŽKY) ----------
+function renderBuildings() {
+    const container = document.getElementById("buildingTabs");
+    const wrapper = document.getElementById("buildingTabsWrapper");
+    container.innerHTML = "";
+    
+    if (buildings.length === 0) {
+        wrapper.style.display = "none";
+        return;
+    }
+    
+    wrapper.style.display = "block";
+    
+    buildings.forEach(bld => {
+        const tab = document.createElement("div");
+        tab.className = "building-tab" + (bld.id === currentBuildingId ? " active" : "");
+        tab.innerHTML = `<i class="fa-solid fa-building"></i> ${bld.name}`;
+        
+        if(user && bld.id === currentBuildingId) {
+            const delBtn = document.createElement("span");
+            delBtn.innerHTML = "<i class='fa-solid fa-trash-can'></i>";
+            delBtn.style.marginLeft = "8px";
+            delBtn.style.color = "rgba(255,255,255,0.6)";
+            delBtn.style.cursor = "pointer";
+            delBtn.title = "Smazat celý objekt";
+            delBtn.addEventListener("click", async (e) => {
+                e.stopPropagation();
+                if(confirm(`Opravdu smazat objekt '${bld.name}' VČETNĚ všech úseků, fotek a podpisů uvnitř? Toto nelze vrátit.`)) {
+                    if (isDevMode) {
+                        buildings = buildings.filter(b => b.id !== bld.id);
+                        sections = sections.filter(s => s.building_id !== bld.id);
+                        currentBuildingId = buildings.length > 0 ? buildings[0].id : null;
+                    } else {
+                        await supabase.from("buildings").delete().eq("id", bld.id);
+                    }
+                    if(isDevMode) render(); else loadAll();
+                }
+            });
+            tab.appendChild(delBtn);
+        }
+
+        tab.addEventListener("click", () => {
+            currentBuildingId = bld.id;
+            render();
+        });
+        
+        container.appendChild(tab);
+    });
+}
+
+// ---------- RENDER ----------
+function render(){
+  renderDaySwitcher();
+  renderBuildings();
+  renderSections();
+  updateDashboardProgress();
+  document.querySelector("#currentWeekLabel span").textContent = formatWeekLabel(currentWeekStart);
+}
+
+// ---------- TASK FORM ----------
+function createTaskForm(sectionId){
+  const wrap = document.createElement("div");
+  wrap.className = "add-task-form";
+
+  const templatesRow = document.createElement("div");
+  templatesRow.className = "templates-row";
+  
+  const templates = [
+      { name: 'Vyluxovat', icon: 'fa-broom' },
+      { name: 'Vytřít', icon: 'fa-water' },
+      { name: 'Koše', icon: 'fa-trash-can' },
+      { name: 'Prach', icon: 'fa-feather' },
+      { name: 'Doplnit mýdlo', icon: 'fa-pump-soap' }
+  ];
+
+  const input = document.createElement("input");
+  input.type = "text"; input.placeholder = "Zadejte název úkolu…";
+
+  templates.forEach(t => {
+    const btnT = document.createElement("button");
+    btnT.className = "template-btn"; 
+    btnT.innerHTML = `<i class="fa-solid ${t.icon}"></i> ${t.name}`;
+    btnT.addEventListener("click", (e) => {
+      e.preventDefault();
+      input.value = t.name;
+    });
+    templatesRow.appendChild(btnT);
+  });
+
+  const btn = document.createElement("button");
+  btn.className = "primary-btn small"; 
+  btn.innerHTML = "<i class='fa-solid fa-plus'></i> Přidat úkol";
+  btn.style.alignSelf = "flex-start";
+  btn.addEventListener("click", async()=>{
+    if(!user) return;
+    const name = input.value.trim();
+    if(!name) return alert("Zadej název úkolu.");
+    await addTask(sectionId, name);
+    if(isDevMode) render(); else await loadAll();
+  });
+
+  wrap.appendChild(templatesRow);
+  wrap.appendChild(input);
+  wrap.appendChild(btn);
+  return wrap;
+}
+
+// ---------- RENDER TASKS ----------
+function renderTasksList(section, container){
+  container.innerHTML = "";
+
+  section.tasks.forEach(task=>{
+    // SKRYTÍ ÚKOLŮ, KTERÉ NEJSOU NA DNEŠEK NAPLÁNOVANÉ
+    // (Úkoly, které nemají zadaný den nebo je prázdné pole, se zobrazují raději vždy, aby nezmizely trvale)
+    const isScheduled = !task.days || task.days.length === 0 || task.days.includes(currentDayIndex);
+    if (!isScheduled) return;
+
+    const t = document.createElement("div");
+    t.className = "task-item-detail";
+    
+    const st = taskStates.find(s => s.task_id === task.id && Number(s.day_index) === currentDayIndex && s.week_start === toIsoDate(currentWeekStart));
+    const state = st ? st.state : "none";
+    
+    const leftGroup = document.createElement("div");
+    leftGroup.className = "task-left-group";
+
+    const checkBtn = document.createElement("div");
+    checkBtn.className = "task-check" + (state === "done" ? " done" : "");
+    if(state === "done") checkBtn.innerHTML = "<i class='fa-solid fa-check'></i>";
+    
+    const iconSpan = document.createElement("div");
+    iconSpan.className = "task-icon";
+    iconSpan.innerHTML = getTaskIcon(task.name);
+
+    // Sloupec pro název a bublinky plánování
+    const nameCol = document.createElement("div");
+    nameCol.className = "task-name-col";
+
+    const nameInput = document.createElement("input");
+    nameInput.className = "task-name-label" + (state === "done" ? " done" : "");
+    nameInput.value = task.name;
+    
+    nameInput.addEventListener("change", async()=>{
+      if(!user) return;
+      if (isDevMode) {
+          task.name = nameInput.value;
+      } else {
+          await supabase.from("tasks").update({ name: nameInput.value }).eq("id", task.id);
+      }
+      if(isDevMode) render(); else loadAll(); 
+    });
+
+    nameCol.appendChild(nameInput);
+
+    // Plánovač (Bubliny dnů) viditelný pouze pro přihlášeného admina
+    if (user) {
+        const scheduleWrap = document.createElement("div");
+        scheduleWrap.className = "task-schedule-bubbles";
+        
+        dayNamesShort.forEach((d, i) => {
+            const bub = document.createElement("div");
+            const isActive = !task.days || task.days.length === 0 || task.days.includes(i);
+            bub.className = "day-bubble" + (isActive ? " active" : "");
+            bub.textContent = d;
+            bub.title = "Kliknutím zapneš/vypneš zobrazení úkolu v tento den";
+            
+            bub.addEventListener("click", async (e) => {
+                e.stopPropagation();
+                let newDays = task.days ? [...task.days] : [0,1,2,3,4,5,6];
+                
+                if (newDays.includes(i)) {
+                    newDays = newDays.filter(x => x !== i);
+                } else {
+                    newDays.push(i);
+                }
+                
+                if (isDevMode) {
+                    task.days = newDays;
+                } else {
+                    task.days = newDays; // Optimistic UI
+                    await supabase.from("tasks").update({ days: newDays }).eq("id", task.id);
+                }
+                render(); 
+            });
+            scheduleWrap.appendChild(bub);
+        });
+        nameCol.appendChild(scheduleWrap);
+    }
+
+    checkBtn.addEventListener("click", async () => {
+        if(!user) return;
+        const nextState = checkBtn.classList.contains("done") ? "none" : "done";
+        
+        if (nextState === "done") {
+            checkBtn.classList.add("done");
+            checkBtn.innerHTML = "<i class='fa-solid fa-check'></i>";
+            nameInput.classList.add("done");
+        } else {
+            checkBtn.classList.remove("done");
+            checkBtn.innerHTML = "";
+            nameInput.classList.remove("done");
+        }
+        
+        let stIndex = taskStates.findIndex(s => s.task_id === task.id && Number(s.day_index) === currentDayIndex && s.week_start === toIsoDate(currentWeekStart));
+        if (stIndex > -1) taskStates[stIndex].state = nextState;
+        else taskStates.push({task_id: task.id, day_index: currentDayIndex, week_start: toIsoDate(currentWeekStart), state: nextState});
+        
+        updateDashboardProgress();
+        await upsertTaskState(task.id, currentDayIndex, nextState);
+    });
+
+    const cameraLabel = document.createElement("label");
+    cameraLabel.className = "camera-btn";
+    cameraLabel.title = "Vyfotit splněný úkol";
+    cameraLabel.innerHTML = `<i class="fa-solid fa-camera"></i><input type="file" accept="image/*" capture="environment" style="display:none;">`;
+    const fileInput = cameraLabel.querySelector('input');
+    
+    fileInput.addEventListener('change', (e) => handlePhotoUpload(e, task.id));
+
+    const thumbContainer = document.createElement("div");
+    thumbContainer.id = `thumb-${task.id}`;
+    if (localTaskPhotos[task.id]) {
+        thumbContainer.innerHTML = `<img src="${localTaskPhotos[task.id]}" class="task-thumbnail" alt="Náhled">`;
+    } else if (task.photo_url) {
+        // Tu sme fotku obalili odkazom, aby sa po kliknutí dala zväčšiť do novej karty
+        thumbContainer.innerHTML = `<a href="${task.photo_url}" target="_blank"><img src="${task.photo_url}" class="task-thumbnail" alt="Náhled"></a>`;
+    }
+
+    leftGroup.appendChild(checkBtn);
+    leftGroup.appendChild(iconSpan);
+    leftGroup.appendChild(nameCol);
+    leftGroup.appendChild(cameraLabel);
+    leftGroup.appendChild(thumbContainer);
+    t.appendChild(leftGroup);
+
+    if(user){
+      const controls = document.createElement("div");
+      controls.style.display = "flex";
+      controls.style.gap = "4px";
+      controls.style.alignItems = "flex-start";
+
+      const btnUp = document.createElement("button"); btnUp.className="small icon-only"; btnUp.innerHTML="<i class='fa-solid fa-arrow-up'></i>";
+      btnUp.addEventListener("click", ()=> moveTask(section.id, task.id, -1));
+      
+      const btnDown = document.createElement("button"); btnDown.className="small icon-only"; btnDown.innerHTML="<i class='fa-solid fa-arrow-down'></i>";
+      btnDown.addEventListener("click", ()=> moveTask(section.id, task.id, 1));
+      
+      const btnDel = document.createElement("button");
+      btnDel.className = "small icon-only"; btnDel.style.color = "#ff5e57"; btnDel.innerHTML = "<i class='fa-solid fa-trash-can'></i>";
+      btnDel.addEventListener("click", async()=>{
+        if(confirm("Smazat podúkol?")){ 
+            await deleteTask(task.id); 
+            if(isDevMode) render(); else loadAll(); 
+        }
+      });
+
+      controls.appendChild(btnUp);
+      controls.appendChild(btnDown);
+      controls.appendChild(btnDel);
+      t.appendChild(controls);
+    }
+    
+    container.appendChild(t);
+  });
+}
+
+// ---------- RENDER SECTIONS ----------
+function renderSections(){
+  const container = document.getElementById("calendarContainer");
+  container.innerHTML = "";
+
+  const activeSections = sections.filter(sec => sec.building_id === currentBuildingId || (!sec.building_id && buildings.length === 0));
+
+  if (activeSections.length === 0) {
+      container.innerHTML = `
+          <div class="empty-state">
+              <i class="fa-solid fa-box-open"></i>
+              <h2>Zatím tu nic není.</h2>
+              <p style="font-size: 14px; opacity: 0.8; margin: 0;">Klikněte na ozubené kolečko ⚙️ a vytvořte první úsek (nebo rovnou nový objekt).</p>
+          </div>
+      `;
+      return; 
+  }
+
+  activeSections.forEach((sec)=>{
+    const wrap = document.createElement("div");
+    wrap.className = "section-row";
+
+    const head = document.createElement("div");
+    head.className = "section-header";
+    
+    const titleWrap = document.createElement("div");
+    titleWrap.className = "section-title-wrap";
+    
+    const nameInput = document.createElement("input");
+    nameInput.value = sec.name;
+    nameInput.className = "section-title";
+    nameInput.addEventListener("change", async()=>{
+      if(!user) return;
+      if (isDevMode) {
+          sec.name = nameInput.value;
+      } else {
+          await supabase.from("sections").update({ name: nameInput.value }).eq("id", sec.id);
+      }
+    });
+    titleWrap.appendChild(nameInput);
+
+    if(user){
+      const controlsWrap = document.createElement("div");
+      controlsWrap.style.display = "flex"; controlsWrap.style.gap = "4px";
+      
+      const up = document.createElement("button"); up.className="small icon-only"; up.innerHTML="<i class='fa-solid fa-arrow-up'></i>";
+      up.addEventListener("click", ()=> moveSection(sec.id, -1));
+      const down = document.createElement("button"); down.className="small icon-only"; down.innerHTML="<i class='fa-solid fa-arrow-down'></i>";
+      down.addEventListener("click", ()=> moveSection(sec.id, 1));
+      const del = document.createElement("button"); del.className = "small icon-only"; del.style.color = "#ff5e57"; del.innerHTML = "<i class='fa-solid fa-trash-can'></i>";
+      del.addEventListener("click", async()=>{
+        if(confirm("Opravdu smazat celý úsek?")){ 
+            await deleteSection(sec.id); 
+            if(isDevMode) render(); else loadAll(); 
+        }
+      });
+      
+      controlsWrap.appendChild(up);
+      controlsWrap.appendChild(down);
+      controlsWrap.appendChild(del);
+      titleWrap.appendChild(controlsWrap);
+    }
+    
+    const personSelect = document.createElement("select");
+    personSelect.className = "section-person";
+    personSelect.innerHTML = '<option value="">👤 Nepřiřazeno...</option>';
+    employees.forEach(emp => {
+        const opt = document.createElement('option');
+        opt.value = emp.name;
+        opt.innerHTML = `👤 ${emp.name}`;
+        if (emp.name === sec.person_id) opt.selected = true;
+        personSelect.appendChild(opt);
+    });
+    if (sec.person_id && !employees.find(e => e.name === sec.person_id)) {
+        const opt = document.createElement('option');
+        opt.value = sec.person_id;
+        opt.innerHTML = `👤 ${sec.person_id}`;
+        opt.selected = true;
+        personSelect.appendChild(opt);
+    }
+    personSelect.addEventListener("change", async()=>{
+      if(!user) return;
+      if (isDevMode) {
+          sec.person_id = personSelect.value;
+      } else {
+          await supabase.from("sections").update({ person_id: personSelect.value }).eq("id", sec.id);
+      }
+    });
+
+    head.appendChild(titleWrap);
+    head.appendChild(personSelect);
+    wrap.appendChild(head);
+
+    const tasksContainer = document.createElement("div");
+    tasksContainer.className = "tasks-wrapper";
+    renderTasksList(sec, tasksContainer);
+    wrap.appendChild(tasksContainer);
+
+    if(user){
+        wrap.appendChild(createTaskForm(sec.id));
+    }
+
+    const signatureSection = document.createElement("div");
+    signatureSection.className = "signature-section";
+    
+    const btnSign = document.createElement("button");
+    btnSign.className = "small primary-btn"; 
+    btnSign.innerHTML = "<i class='fa-solid fa-pen-nib'></i> Podepsat dlaždici";
+    btnSign.style.alignSelf = "flex-start";
+    btnSign.addEventListener("click", () => openSignatureModal(sec.id));
+    
+    signatureSection.appendChild(btnSign);
+
+    if(sec.signature) {
+        // Skryjeme tlačítko "Podepsat", když už podpis existuje
+        btnSign.style.display = "none";
+        
+        const sigWrap = document.createElement("div");
+        sigWrap.style.display = "flex"; sigWrap.style.flexDirection = "column"; sigWrap.style.gap = "8px";
+        
+        const sigImg = document.createElement("img");
+        sigImg.src = sec.signature;
+        sigImg.className = "signature-display";
+        sigWrap.appendChild(sigImg);
+        
+        // Pokud jsme získali GPS, ukážeme link (Jen pokud je uživatel přihlášen, abys to viděl jen ty jako šéf)
+        if (user && sec.signature_lat && sec.signature_lng) {
+            const gpsLink = document.createElement("a");
+            gpsLink.href = `https://www.google.com/maps?q=${sec.signature_lat},${sec.signature_lng}`;
+            gpsLink.target = "_blank";
+            gpsLink.className = "gps-link";
+            
+            // Hezký formát času
+            const sigTime = sec.signature_time ? new Date(sec.signature_time).toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit' }) : '';
+            
+            gpsLink.innerHTML = `<i class="fa-solid fa-map-location-dot"></i> Ověřená poloha ${sigTime ? '(' + sigTime + ')' : ''}`;
+            sigWrap.appendChild(gpsLink);
+        } else if (user && sec.signature) {
+             const noGps = document.createElement("div");
+             noGps.style.fontSize = "11px"; noGps.style.color = "#ff5e57";
+             noGps.innerHTML = `<i class="fa-solid fa-location-crosshairs"></i> Poloha nebyla povolena`;
+             sigWrap.appendChild(noGps);
+        }
+
+        // Tlačítko na smazání podpisu (jen pro šéfa)
+        if (user) {
+            const btnDelSig = document.createElement("button");
+            btnDelSig.className = "subtle-btn";
+            btnDelSig.style.width = "auto"; btnDelSig.style.alignSelf = "flex-start"; btnDelSig.style.padding = "4px 8px"; btnDelSig.style.color = "#ff5e57";
+            btnDelSig.innerHTML = "<i class='fa-solid fa-trash-can'></i> Smazat podpis";
+            btnDelSig.addEventListener("click", async () => {
+                if(confirm("Opravdu smazat tento podpis?")) {
+                    if (isDevMode) {
+                        sec.signature = null; sec.signature_lat = null; sec.signature_lng = null;
+                    } else {
+                        await supabase.from("sections").update({ signature: null, signature_lat: null, signature_lng: null }).eq("id", sec.id);
+                    }
+                    if(isDevMode) render(); else loadAll();
+                }
+            });
+            sigWrap.appendChild(btnDelSig);
+        }
+        
+        signatureSection.appendChild(sigWrap);
+    }
+
+    wrap.appendChild(signatureSection);
+    container.appendChild(wrap);
+  });
+}
+
+// ---------- EDITS, STATES, SORTING ----------
+async function moveSection(sectionId, dir){
+  const i = sections.findIndex(s=>s.id===sectionId);
+  if(i<0) return;
+  const j = i + dir;
+  if(j<0 || j>=sections.length) return;
+
+  const a = sections[i], b = sections[j];
+  if (isDevMode) {
+      sections[i] = b;
+      sections[j] = a;
+  } else {
+      await supabase.from("sections").update({ order_index: b.order_index || 0 }).eq("id", a.id);
+      await supabase.from("sections").update({ order_index: a.order_index || 0 }).eq("id", b.id);
+  }
+  if(isDevMode) render(); else loadAll();
+}
+
+async function moveTask(sectionId, taskId, dir){
+  const sec = sections.find(s=>s.id===sectionId);
+  if(!sec) return;
+  const i = sec.tasks.findIndex(t=>t.id===taskId);
+  if(i<0) return;
+  const j = i + dir;
+  if(j<0 || j>=sec.tasks.length) return;
+
+  const a = sec.tasks[i], b = sec.tasks[j];
+  if (isDevMode) {
+      sec.tasks[i] = b;
+      sec.tasks[j] = a;
+  } else {
+      await supabase.from("tasks").update({ order_index: b.order_index || 0 }).eq("id", a.id);
+      await supabase.from("tasks").update({ order_index: a.order_index || 0 }).eq("id", b.id);
+  }
+  if(isDevMode) render(); else loadAll();
+}
+
+async function addTask(sectionId, name){
+  // Při vytvoření nového úkolu jej defaultně přiřadíme ke DNI, KTERÝ SI ZROVNA PROHLÍŽÍME (currentDayIndex)
+  if (isDevMode) {
+      const sec = sections.find(s => s.id === sectionId);
+      if (sec) sec.tasks.push({ id: 'mock-task-' + Date.now(), section_id: sectionId, name: name, days: [currentDayIndex], order_index: Date.now() });
+  } else {
+      const { error } = await supabase.from("tasks").insert({ section_id: sectionId, name: name, days: [currentDayIndex], order_index: Date.now() });
+      if (error) alert("Chyba DB: " + error.message);
+  }
+}
+
+async function deleteTask(id){
+    if (isDevMode) {
+        sections.forEach(s => s.tasks = s.tasks.filter(t => t.id !== id));
+    } else {
+        await supabase.from("tasks").delete().eq("id", id); 
+    }
+}
+
+async function deleteSection(id){ 
+    if (isDevMode) {
+        sections = sections.filter(s => s.id !== id);
+    } else {
+        await supabase.from("sections").delete().eq("id", id); 
+    }
+}
+
+async function upsertTaskState(taskId, dayIndex, state){
+  if (isDevMode) return; 
+  
+  const iso = toIsoDate(currentWeekStart);
+  if(state==="none"){
+    await supabase.from("task_states").delete().match({ task_id: taskId, week_start: iso, day_index: dayIndex });
+  } else {
+    await supabase.from("task_states").upsert({ task_id: taskId, week_start: iso, day_index: dayIndex, state: state }, { onConflict:["task_id","week_start","day_index"] });
+  }
+}
+
+// ---------- HELPERS ----------
+function getMonday(date){
+  const d = new Date(date);
+  const day = d.getDay()||7;
+  if(day!==1) d.setDate(d.getDate()-day+1);
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+}
+
+function toIsoDate(d){
+  const x = new Date(d);
+  return `${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,'0')}-${String(x.getDate()).padStart(2,'0')}`;
+}
+
+function formatWeekLabel(mon){
+  const d = new Date(mon);
+  const m = `${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()}`;
+  d.setDate(d.getDate()+6);
+  const n = `${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()}`;
+  return `${m} — ${n}`;
+}
+
+async function changeWeek(delta){
+  currentWeekStart.setDate(currentWeekStart.getDate() + delta*7);
+  currentWeekStart = getMonday(currentWeekStart);
+  if(!isDevMode) await loadTaskStatesForWeek(currentWeekStart);
+  render();
+}
+
+function exportPDF(){
+  html2canvas(document.body, { scale:2, backgroundColor: "#0f172a" }).then(canvas=>{
+    const img = canvas.toDataURL("image/png");
+    const pdf = new jspdf.jsPDF("p","pt","a4");
+    const w = pdf.internal.pageSize.getWidth();
+    const h = canvas.height * (w / canvas.width);
+    pdf.addImage(img, "PNG", 0, 0, w, h);
+    pdf.save("cleander_app.pdf");
+  });
+}
+</script>
+</body>
+</html>
