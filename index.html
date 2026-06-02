@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-    /* ========== KOMPLETNÍ STYLY - FROSTY BLUE GLASSMORPHISM V3 ========== */
+    /* ========== KOMPLETNÍ STYLY - FROSTY BLUE GLASSMORPHISM V3 (Mobile Optimized) ========== */
     :root {
         --bg-dark: #0f172a;
         --glass-bg: rgba(255, 255, 255, 0.05);
@@ -49,14 +49,14 @@
         background-color: var(--bg-dark);
         margin: 0;
         color: var(--text-main);
-        padding: 20px;
+        padding: 16px;
         min-height: 100vh;
         overflow-x: hidden;
         display: flex;
         flex-direction: column;
     }
 
-    /* Rozmazané pozadí - frosty modré kruhy s animací */
+    /* Rozmazané pozadí */
     .bg-blobs {
         position: fixed;
         top: 0; left: 0; width: 100vw; height: 100vh;
@@ -99,7 +99,7 @@
         z-index: 1;
     }
 
-    /* FULLSCREEN WELCOME SCREEN */
+    /* WELCOME SCREEN */
     #welcomeScreen {
         position: fixed;
         inset: 0;
@@ -114,7 +114,7 @@
     }
     .welcome-card {
         background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
-        padding: 40px;
+        padding: 40px 20px;
         border-radius: var(--radius-large);
         border: 1px solid var(--glass-border);
         border-top: var(--glass-border-top);
@@ -125,31 +125,28 @@
         display: flex;
         flex-direction: column;
         gap: 16px;
-        align-items: center; /* Vycentruje logo horizontálně */
+        align-items: center;
     }
     .welcome-card img.logo-image {
-        width: 120px; /* Nastav šířku loga podle potřeby */
+        width: 140px; 
         height: auto;
         margin-bottom: 10px;
-        border-radius: 12px; /* Volitelně: zaoblené rohy loga */
-        /* Volitelně: Přidání lehkého stínu kolem loga pro lepší viditelnost na tmavém pozadí */
-        filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); 
+        border-radius: 12px; 
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4)); 
     }
     .welcome-card h1 {
-        font-size: 28px;
+        font-size: 24px;
         margin-bottom: 8px;
         color: var(--text-main);
         text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-        /* Skrytí nadpisu, pokud už je součástí loga, jinak nechat */
-        /* display: none; */ 
     }
 
-    /* Hlavička a badge */
+    /* Hlavička */
     header {
-        display: flex; gap: 12px; align-items: center; justify-content: space-between;
+        display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap;
         margin-bottom: 24px;
         background: linear-gradient(90deg, rgba(15,23,42,0.8) 0%, rgba(30,41,59,0.6) 100%);
-        padding: 16px 24px;
+        padding: 16px 20px;
         border-radius: var(--radius-large);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
@@ -158,14 +155,14 @@
         box-shadow: 0 8px 32px rgba(0,0,0,0.2);
     }
 
-    h1 { font-size: 22px; margin: 0; color: var(--text-main); font-weight: 800; letter-spacing: 0.5px; display: flex; align-items: center; gap: 10px; }
+    h1 { font-size: 20px; margin: 0; color: var(--text-main); font-weight: 800; letter-spacing: 0.5px; display: flex; align-items: center; gap: 10px; }
     h1 i { color: var(--frosty-alt); }
     
-    .controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 
-    /* DASHBOARD PANEL (Dnešní přehled) */
+    /* DASHBOARD PANEL */
     .dashboard-panel {
-        background: var(--glass-bg); border-radius: var(--radius-large); padding: 24px; margin-bottom: 24px;
+        background: var(--glass-bg); border-radius: var(--radius-large); padding: 20px; margin-bottom: 24px;
         backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
         border: 1px solid var(--glass-border); border-top: var(--glass-border-top);
     }
@@ -176,7 +173,7 @@
         font-size: 15px; font-weight: 600; color: var(--frosty-alt); display: flex; align-items: center; gap: 8px;
     }
     .progress-track {
-        background: rgba(0, 0, 0, 0.4); border-radius: 20px; height: 12px; width: 100%;
+        background: rgba(0, 0, 0, 0.4); border-radius: 20px; height: 14px; width: 100%;
         border: 1px solid rgba(255,255,255,0.05); overflow: hidden;
         box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
     }
@@ -187,7 +184,7 @@
         border-radius: 20px;
     }
 
-    /* PŘEPÍNAČ DNŮ V TÝDNU (Krok 3) */
+    /* PŘEPÍNAČ DNŮ */
     .day-switcher-wrapper { margin-bottom: 24px; }
     .day-switcher {
         display: flex; background: rgba(0,0,0,0.2); border-radius: 16px; padding: 6px;
@@ -196,7 +193,7 @@
     }
     .day-switcher::-webkit-scrollbar { display: none; }
     .day-tab {
-        flex: 1; text-align: center; padding: 12px 0; border-radius: 12px; cursor: pointer;
+        flex: 1; text-align: center; padding: 14px 0; border-radius: 12px; cursor: pointer;
         color: var(--text-muted); font-weight: 600; font-size: 14px; transition: 0.3s;
         min-width: 45px;
     }
@@ -206,15 +203,14 @@
     @media (max-width: 768px) {
         .full-day { display: none; }
         .short-day { display: block; font-size: 16px; }
-        .day-tab { padding: 14px 0; }
     }
 
-    /* VYLEPŠENÉ ZÁLOŽKY OBJEKTŮ / BUDOV */
+    /* ZÁLOŽKY BUDOV */
     .building-tabs-wrapper {
         background: linear-gradient(90deg, rgba(15, 23, 42, 0.7) 0%, rgba(30, 41, 59, 0.5) 100%);
         border: 1px solid rgba(255,255,255,0.15);
         border-radius: var(--radius-large);
-        padding: 18px 24px;
+        padding: 16px 20px;
         margin-bottom: 24px;
         box-shadow: 0 12px 32px rgba(0,0,0,0.4);
         backdrop-filter: blur(20px);
@@ -222,18 +218,18 @@
     }
     .building-tabs-title {
         font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--frosty-alt); 
-        margin-bottom: 14px; font-weight: 800; display: flex; align-items: center; gap: 8px;
+        margin-bottom: 12px; font-weight: 800; display: flex; align-items: center; gap: 8px;
     }
     .building-tabs {
-        display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px;
+        display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px;
         scrollbar-width: thin; scrollbar-color: var(--frosty) transparent;
     }
     .building-tab {
-        padding: 12px 24px; border-radius: 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+        padding: 12px 20px; border-radius: 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
         color: var(--text-muted); cursor: pointer; white-space: nowrap; font-weight: 600; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        display: flex; align-items: center; gap: 10px; font-size: 15px;
+        display: flex; align-items: center; gap: 10px; font-size: 14px;
     }
-    .building-tab:hover { background: rgba(255,255,255,0.1); color: var(--text-main); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .building-tab:hover { background: rgba(255,255,255,0.1); color: var(--text-main); transform: translateY(-2px); }
     .building-tab.active {
         background: linear-gradient(135deg, var(--frosty) 0%, #1e40af 100%);
         color: #ffffff; border-color: rgba(255,255,255,0.3);
@@ -241,40 +237,31 @@
         transform: translateY(-2px);
     }
 
-    /* EMPTY STATE (Když nejsou úseky) */
+    /* EMPTY STATE */
     .empty-state {
         grid-column: 1 / -1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 60px 20px;
-        background: var(--glass-bg);
-        border-radius: var(--radius-large);
-        border: 1px dashed rgba(255,255,255,0.2);
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        text-align: center; padding: 50px 20px; background: var(--glass-bg);
+        border-radius: var(--radius-large); border: 1px dashed rgba(255,255,255,0.2);
     }
-    .empty-state i {
-        font-size: 48px; color: var(--text-muted); margin-bottom: 16px; opacity: 0.5;
-    }
-    .empty-state h2 {
-        font-size: 22px; color: rgba(255, 255, 255, 0.9); margin-bottom: 8px;
-    }
+    .empty-state i { font-size: 42px; color: var(--text-muted); margin-bottom: 16px; opacity: 0.5; }
+    .empty-state h2 { font-size: 20px; color: rgba(255, 255, 255, 0.9); margin-bottom: 8px; }
 
     /* Formuláře a tlačítka */
     input[type=text], input[type=email], input[type=password], select {
-        padding: 12px 16px; border-radius: 12px;
+        padding: 14px 16px; border-radius: 12px; /* Zvětšeno pro dotyk */
         background: rgba(0, 0, 0, 0.3); border: 1px solid var(--glass-border);
-        color: var(--text-main); font-size: 14px; outline: none;
-        transition: all 0.3s ease;
+        color: var(--text-main); font-size: 15px; outline: none;
+        transition: all 0.3s ease; width: 100%;
     }
     input::placeholder, select:invalid { color: var(--text-muted); }
     input:focus, select:focus { border-color: var(--frosty); box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3); background: rgba(0,0,0,0.4); }
+    input:disabled, select:disabled { opacity: 0.7; cursor: not-allowed; border-color: transparent; }
     select option { background: var(--bg-dark); color: var(--text-main); }
 
     button {
-        padding: 12px 18px; border-radius: 12px; border: none; cursor: pointer;
-        background: rgba(255,255,255,0.08); color: var(--text-main); font-size: 14px;
+        padding: 14px 20px; border-radius: 12px; border: none; cursor: pointer;
+        background: rgba(255,255,255,0.08); color: var(--text-main); font-size: 15px;
         border: 1px solid var(--glass-border); transition: all 0.2s ease; font-weight: 600;
         display: flex; align-items: center; justify-content: center; gap: 8px;
     }
@@ -285,21 +272,20 @@
         background: linear-gradient(135deg, var(--frosty) 0%, #2563eb 100%); color: #fff; border: none;
         box-shadow: 0 4px 12px var(--frosty-glow); text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
-    button.primary-btn:hover { box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6); transform: translateY(-2px); filter: brightness(1.1); }
+    button.primary-btn:hover { box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6); filter: brightness(1.1); }
     
     button.subtle-btn {
         background: transparent; border: none; color: var(--text-muted);
-        font-size: 13px; font-weight: 600; padding: 6px 12px;
+        font-size: 13px; font-weight: 600; padding: 8px 12px;
         transition: all 0.2s; margin-top: 8px; width: 100%; text-align: center;
     }
-    button.subtle-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.05); border-radius: 8px;}
 
-    .small { padding: 8px 14px; font-size: 13px; border-radius: 10px; }
-    .icon-only { padding: 8px; font-size: 16px; border-radius: 50%; aspect-ratio: 1/1; }
+    .small { padding: 10px 16px; font-size: 14px; border-radius: 10px; }
+    .icon-only { padding: 10px; font-size: 16px; border-radius: 50%; aspect-ratio: 1/1; }
 
-    /* Viditelný Admin Panel */
+    /* Admin Panel */
     .admin-panel {
-        background: var(--glass-bg); border-radius: var(--radius-large); padding: 24px; margin-bottom: 32px;
+        background: var(--glass-bg); border-radius: var(--radius-large); padding: 20px; margin-bottom: 32px;
         backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
         border: 1px solid var(--glass-border); border-top: var(--glass-border-top);
         display: none;
@@ -309,12 +295,10 @@
         from { opacity: 0; transform: translateY(-10px); }
         to { opacity: 1; transform: translateY(0); }
     }
-
-    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; border-bottom: 1px solid var(--glass-border); padding-bottom: 16px; }
-    
-    .admin-grid { display: flex; gap: 24px; flex-wrap: wrap; }
+    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 16px; flex-wrap: wrap; gap: 12px;}
+    .admin-grid { display: flex; gap: 20px; flex-wrap: wrap; }
     .admin-half {
-        flex: 1; min-width: 300px; background: rgba(0,0,0,0.2); padding: 20px;
+        flex: 1; min-width: 280px; background: rgba(0,0,0,0.2); padding: 20px;
         border-radius: var(--radius-medium); border: 1px solid var(--glass-border);
         display: flex; flex-direction: column; gap: 12px;
     }
@@ -323,199 +307,112 @@
     /* PURE CSS GRID */
     #calendarContainer {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-        gap: 24px;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Zmenšeno pro mobily */
+        gap: 20px;
     }
 
     .section-row {
         display: flex; flex-direction: column; gap: 16px;
         background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
-        border-radius: var(--radius-large); padding: 24px;
+        border-radius: var(--radius-large); padding: 20px;
         backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
         border: 1px solid var(--glass-border); border-top: var(--glass-border-top);
         box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease;
-    }
-    .section-row:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 0 32px rgba(59, 130, 246, 0.1);
-        border-color: rgba(255,255,255,0.2);
+        transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
     }
 
-    .section-header { display: flex; flex-direction: column; gap: 12px; margin-bottom: 8px; border-bottom: 1px solid var(--glass-border); padding-bottom: 16px; }
-    
-    .section-title-wrap { display: flex; justify-content: space-between; align-items: flex-start; }
+    .section-header { display: flex; flex-direction: column; gap: 12px; margin-bottom: 8px; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px; }
+    .section-title-wrap { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
     .section-title {
-        font-weight: 800; font-size: 20px; color: var(--text-main);
-        width: 100%; border: none; background: transparent; outline: none;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.6); padding:0;
+        font-weight: 800; font-size: 18px; color: var(--text-main);
+        width: 100%; border: none; background: transparent; outline: none; padding:0;
     }
-    
     .section-person {
         font-weight: 600; font-size: 14px; color: var(--frosty-alt);
         width: 100%; border: none; background: transparent; outline: none;
-        cursor: pointer; padding: 4px 0;
-        appearance: none; -webkit-appearance: none;
+        cursor: pointer; padding: 4px 0; appearance: none; -webkit-appearance: none;
     }
-    .section-person:focus { box-shadow: none; border-bottom: 1px solid var(--frosty); border-radius: 0; }
 
-    /* PODÚKOLY A PLÁNOVÁNÍ (Krok 3) */
+    /* PODÚKOLY A PLÁNOVÁNÍ (Mobile optimized) */
     .tasks-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 8px;
+        display: flex; flex-direction: column; gap: 10px; margin-top: 4px;
     }
     .task-item-detail {
         display: flex; align-items: center; justify-content: space-between; gap: 12px;
-        background: rgba(0, 0, 0, 0.2); border-radius: 12px; padding: 10px 14px;
+        background: rgba(0, 0, 0, 0.2); border-radius: 14px; padding: 12px 14px;
         border: 1px solid rgba(255,255,255,0.03); transition: all 0.2s ease;
+        flex-wrap: wrap; /* Umožní zalomení na velmi úzkých displejích */
     }
-    .task-item-detail:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255,255,255,0.1); }
-    
-    .task-left-group { display: flex; align-items: center; gap: 12px; flex: 1; overflow: hidden; }
+    .task-left-group { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 200px; }
 
     .task-check {
-        width: 26px; height: 26px; border-radius: 8px;
-        border: 2px solid var(--text-muted);
+        width: 32px; height: 32px; /* Zvětšeno pro touch */
+        border-radius: 8px; border: 2px solid var(--text-muted);
         cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        display: flex; align-items: center; justify-content: center;
-        flex-shrink: 0;
-        background: rgba(0,0,0,0.2);
+        display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(0,0,0,0.2);
     }
-    .task-check:hover { border-color: var(--frosty-alt); background: rgba(59, 130, 246, 0.1); }
-    .task-check.done {
-        background: #10b981; border-color: #10b981;
-        box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
-        transform: scale(1.05);
-    }
-    .task-check.done i { color: white; font-size: 14px; }
+    .task-check.done { background: #10b981; border-color: #10b981; box-shadow: 0 0 12px rgba(16, 185, 129, 0.4); transform: scale(1.05); }
+    .task-check.done i { color: white; font-size: 16px; }
     
-    .task-icon {
-        width: 24px; text-align: center; font-size: 16px; flex-shrink: 0; opacity: 0.8;
-    }
+    .task-icon { width: 24px; text-align: center; font-size: 16px; flex-shrink: 0; opacity: 0.8; }
 
-    .task-name-col { display: flex; flex-direction: column; flex: 1; gap: 4px; overflow: hidden; }
+    .task-name-col { display: flex; flex-direction: column; flex: 1; gap: 6px; }
     
     .task-name-label {
-        width: 100%; border: none; background: transparent; font-weight: 500; color: #e2e8f0; outline: none; font-size: 15px;
-        transition: color 0.2s, opacity 0.2s;
+        width: 100%; border: none; background: transparent; font-weight: 500; color: #e2e8f0; outline: none; font-size: 15px; padding: 0;
     }
     .task-name-label.done { text-decoration: line-through; opacity: 0.5; }
 
-    /* Bubliny pro plánování dnů */
-    .task-schedule-bubbles { display: flex; gap: 4px; margin-top: 2px; }
+    /* Bubliny pro plánování dnů - ZVĚTŠENO A OPTIMALIZOVÁNO */
+    .task-schedule-bubbles { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
     .day-bubble {
-        width: 20px; height: 20px; border-radius: 50%; font-size: 10px; font-weight: 700;
+        width: 28px; height: 28px; /* Výrazně větší pro touch */
+        border-radius: 50%; font-size: 12px; font-weight: 700;
         display: flex; align-items: center; justify-content: center;
         background: rgba(255,255,255,0.05); color: var(--text-muted); cursor: pointer;
-        border: 1px solid rgba(255,255,255,0.05); transition: 0.2s;
-        user-select: none;
+        border: 1px solid rgba(255,255,255,0.05); transition: 0.2s; user-select: none;
     }
-    .day-bubble:hover { background: rgba(255,255,255,0.15); color: var(--text-main); }
-    .day-bubble.active { background: var(--frosty); color: #fff; border-color: var(--frosty-alt); box-shadow: 0 0 6px var(--frosty-glow); }
+    .day-bubble.active { background: var(--frosty); color: #fff; border-color: var(--frosty-alt); box-shadow: 0 0 8px var(--frosty-glow); }
 
     /* FOTOAPARÁT */
     .camera-btn {
-        cursor: pointer;
-        font-size: 16px;
-        color: var(--text-muted);
-        background: rgba(255,255,255,0.05);
-        border-radius: 8px;
-        width: 32px; height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: 0.2s;
-        border: 1px solid transparent;
-        margin: 0;
+        cursor: pointer; font-size: 18px; color: var(--text-muted); background: rgba(255,255,255,0.05);
+        border-radius: 10px; width: 40px; height: 40px; /* Zvětšeno */
+        display: flex; align-items: center; justify-content: center; border: 1px solid transparent; margin: 0; flex-shrink:0;
     }
-    .camera-btn:hover { background: rgba(255,255,255,0.1); color: var(--text-main); border-color: var(--glass-border); }
-    
-    .task-thumbnail {
-        width: 32px; height: 32px;
-        border-radius: 6px;
-        object-fit: cover;
-        border: 1px solid var(--glass-border);
-        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    }
+    .camera-btn:hover { background: rgba(255,255,255,0.1); color: var(--text-main); }
+    .task-thumbnail { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; border: 1px solid var(--glass-border); }
 
     /* Přidávání podúkolu form */
-    .add-task-form {
-        display: flex; flex-direction: column; gap: 10px;
-        margin-top: 12px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.05);
-    }
+    .add-task-form { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.05); }
     .templates-row { display: flex; gap: 8px; flex-wrap: wrap; }
     .template-btn {
         background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);
-        padding: 6px 10px; border-radius: 8px; font-size: 12px; color: var(--text-muted);
-        cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px;
-    }
-    .template-btn:hover { background: rgba(255,255,255,0.1); color: var(--text-main); border-color: var(--frosty); }
-
-    /* Tlačítko podpisu */
-    .signature-section {
-        margin-top: auto;
-        padding-top: 16px;
-        border-top: 1px solid rgba(255,255,255,0.05);
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
+        padding: 8px 12px; border-radius: 10px; font-size: 13px; color: var(--text-muted);
+        cursor: pointer; display: flex; align-items: center; gap: 6px;
     }
 
-    /* MODÁL PRO DIGITÁLNÍ PODPIS */
+    /* Modál pro podpis */
     #signatureModal {
         display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(15, 23, 42, 0.85); z-index: 9999; align-items: center; justify-content: center;
-        backdrop-filter: blur(12px);
+        background: rgba(15, 23, 42, 0.85); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(12px); padding: 16px;
     }
     .modal-content {
         background: var(--bg-dark); padding: 24px; border-radius: 20px;
         border: 1px solid var(--frosty); box-shadow: 0 0 48px var(--frosty-glow);
-        display: flex; flex-direction: column; gap: 16px; width: 90%; max-width: 380px;
+        display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 380px;
     }
-    #sigCanvas {
-        background: #f8fafc; border-radius: 12px; touch-action: none; 
-        border: 2px solid #cbd5e1; width: 100%; height: 160px;
-    }
-    .signature-display {
-        background: #f8fafc; border-radius: 8px; padding: 4px;
-        max-width: 150px; border: 1px solid #cbd5e1; align-self: flex-start;
-    }
+    #sigCanvas { background: #f8fafc; border-radius: 12px; touch-action: none; border: 2px solid #cbd5e1; width: 100%; height: 160px; }
     
-    .gps-link {
-        font-size: 12px;
-        color: var(--frosty-alt);
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        background: rgba(59, 130, 246, 0.1);
-        padding: 4px 8px;
-        border-radius: 6px;
-        align-self: flex-start;
-        transition: 0.2s;
-    }
-    .gps-link:hover {
-        background: rgba(59, 130, 246, 0.2);
-    }
-
-    /* Patička */
-    footer {
-        text-align: center; font-size: 11px; letter-spacing: 1px; opacity: 0.4;
-        padding: 30px 20px; margin-top: auto; color: var(--text-main); font-weight: 600;
-    }
+    footer { text-align: center; font-size: 11px; letter-spacing: 1px; opacity: 0.4; padding: 30px 20px; margin-top: auto; color: var(--text-main); font-weight: 600; }
 </style>
 </head>
 <body>
   <div class="bg-blobs"></div>
   
-  <!-- WELCOME SCREEN (Fullscreen) -->
   <div id="welcomeScreen">
       <div class="welcome-card">
-          <!-- Přidané logo zde -->
           <img src="cleander-logo.png" alt="Cleander Logo" class="logo-image" />
-          <!-- Nadpis můžeš případně smazat/zakomentovat, pokud ho máš už v logu -->
           <h1>CLEANDER APP</h1>
           <p style="color: var(--text-muted); font-size: 14px; margin-top: -10px; margin-bottom: 10px;">Přihlaste se ke svému účtu</p>
           <input type="email" id="email" placeholder="Email" />
@@ -523,7 +420,7 @@
           <button id="btnSignIn" class="primary-btn"><i class="fa-solid fa-right-to-bracket"></i> Přihlásit</button>
           
           <div style="margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
-              <button id="btnDevSkip" class="subtle-btn" style="color: var(--frosty-alt); border: 1px solid rgba(255,255,255,0.1);"><i class="fa-solid fa-flask"></i> Přeskočit přihlášení (Vývojářský režim)</button>
+              <button id="btnDevSkip" class="subtle-btn" style="color: var(--frosty-alt);"><i class="fa-solid fa-flask"></i> Přeskočit přihlášení (Vývojářský režim)</button>
           </div>
       </div>
   </div>
@@ -536,11 +433,10 @@
       <div class="controls">
         <button id="btnExport" class="small"><i class="fa-solid fa-file-pdf"></i> Export PDF</button>
         <button id="btnSignOut" class="small" style="display:none; background:rgba(255,94,87,0.2); color:#ff5e57;"><i class="fa-solid fa-right-from-bracket"></i> Odhlásit</button>
-        <button id="btnToggleAdmin" class="small icon-only" style="background: transparent; border: none; display:none; cursor: pointer; color: var(--text-muted);" title="Nastavení / Admin Panel"><i class="fa-solid fa-gear"></i></button>
+        <button id="btnToggleAdmin" class="small icon-only" style="background: transparent; border: none; display:none; color: var(--text-muted);"><i class="fa-solid fa-gear"></i></button>
       </div>
     </header>
 
-    <!-- DASHBOARD PANEL -->
     <section class="dashboard-panel" id="dashboardPanel">
         <h2 style="margin: 0 0 16px 0; font-size: 18px; color: var(--text-main); display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-chart-pie" style="color: var(--frosty-alt)"></i> Dnešní přehled</h2>
         <div class="progress-wrapper">
@@ -551,23 +447,20 @@
         </div>
     </section>
 
-    <!-- PŘEPÍNAČ DNŮ V TÝDNU -->
     <div id="daySwitcherWrapper" class="day-switcher-wrapper">
         <div id="daySwitcher" class="day-switcher"></div>
     </div>
 
-    <!-- ZÁLOŽKY OBJEKTŮ -->
     <div id="buildingTabsWrapper" class="building-tabs-wrapper" style="display:none;">
         <div class="building-tabs-title"><i class="fa-solid fa-map-location-dot"></i> Aktuální objekt úklidu</div>
         <div id="buildingTabs" class="building-tabs"></div>
     </div>
 
-    <!-- OVLÁDACÍ CENTRUM -->
     <section class="admin-panel" id="adminPanel">
       <div class="admin-header">
           <div style="display:flex; gap:12px; align-items:center;">
               <h2 style="margin:0; font-size:18px;"><i class="fa-solid fa-sliders"></i> Ovládací centrum</h2>
-              <div id="userInfo" style="color:var(--frosty-alt); font-size:13px; background:rgba(59,130,246,0.1); padding:4px 10px; border-radius:8px; font-weight: 500;"></div>
+              <div id="userInfo" style="color:var(--frosty-alt); font-size:13px; background:rgba(59,130,246,0.1); padding:6px 12px; border-radius:8px; font-weight: 500;"></div>
           </div>
           <div style="display:flex; gap: 8px; align-items:center;">
             <button id="prevWeek" class="small"><i class="fa-solid fa-chevron-left"></i> Zpět</button>
@@ -577,51 +470,42 @@
       </div>
 
       <div class="admin-grid">
-          <!-- Přidat Budovu/Objekt -->
           <div class="admin-half" style="flex-basis: 100%;">
               <h3><i class="fa-solid fa-building"></i> 1. Vytvořit nový objekt (Budovu)</h3>
               <p style="font-size:13px; color:var(--text-muted); margin:0;">Nejprve vytvořte objekt (např. Kanceláře Agrofert), do kterého pak přidáte úseky.</p>
-              <div style="display: flex; gap: 10px; margin-top: 8px;">
-                  <input type="text" id="buildingName" placeholder="Název nového objektu..." style="flex:1;" />
-                  <button id="btnAddBuilding" class="primary-btn"><i class="fa-solid fa-plus"></i> Vytvořit objekt</button>
+              <div style="display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap;">
+                  <input type="text" id="buildingName" placeholder="Název nového objektu..." style="flex:1; min-width: 200px;" />
+                  <button id="btnAddBuilding" class="primary-btn" style="flex-shrink:0;"><i class="fa-solid fa-plus"></i> Vytvořit objekt</button>
               </div>
           </div>
 
-          <!-- Přidat úsek -->
           <div class="admin-half">
               <h3><i class="fa-solid fa-layer-group"></i> 2. Vytvořit dlaždici (Úsek)</h3>
-              <input type="text" id="sectionName" placeholder="Zadejte název úseku (např. Kuchyňská zóna)..." />
-              <select id="sectionPersonSelect">
-                  <option value="">Nepřiřazeno (Vyberte osobu)...</option>
-              </select>
+              <input type="text" id="sectionName" placeholder="Zadejte název úseku..." />
+              <select id="sectionPersonSelect"><option value="">Nepřiřazeno...</option></select>
               <button id="btnAddSection" class="primary-btn"><i class="fa-solid fa-plus"></i> Vytvořit dlaždici</button>
           </div>
 
-          <!-- Správa zaměstnanců -->
           <div class="admin-half">
               <h3><i class="fa-solid fa-users"></i> Správa zaměstnanců</h3>
-              <p style="font-size:13px; color:var(--text-muted); margin:0;">Zadejte jméno pracovníka a přidejte jej do databáze.</p>
-              <input type="text" id="newEmployeeName" placeholder="Jméno a příjmení (např. Jan Novák)..." />
+              <input type="text" id="newEmployeeName" placeholder="Jméno a příjmení..." />
               <button id="btnAddEmployee" class="primary-btn" style="margin-top:auto;"><i class="fa-solid fa-user-plus"></i> Přidat do databáze</button>
           </div>
       </div>
     </section>
 
-    <!-- PURE CSS GRID PRO DLAŽDICE -->
     <main id="calendarContainer"></main>
   </div>
 
-  <!-- PATIČKA -->
   <footer>
       &copy; DEVELOPED BY JIRSTAN JAVADEVELOPING
   </footer>
 
-  <!-- MODÁL PRO PODPIS -->
   <div id="signatureModal">
       <div class="modal-content">
           <h3 style="margin:0; font-size:18px; color:var(--frosty-alt); display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-signature"></i> Podpis pracovníka</h3>
           <p style="margin:0; font-size:13px; color:var(--text-muted);">Podepište se prstem nebo myší do pole níže:</p>
-          <canvas id="sigCanvas" width="300" height="150"></canvas>
+          <canvas id="sigCanvas" width="300" height="160"></canvas>
           <div style="font-size: 11px; color: #94a3b8; display: flex; align-items: center; gap: 6px;">
               <i class="fa-solid fa-location-dot"></i> Při uložení bude zaznamenána vaše GPS poloha.
           </div>
@@ -633,17 +517,12 @@
       </div>
   </div>
 
-<!-- Service Worker Registrace pro PWA -->
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('sw.js')
-        .then(registration => {
-          console.log('ServiceWorker zaregistrován s rozsahem: ', registration.scope);
-        })
-        .catch(err => {
-          console.log('Chyba registrace ServiceWorker: ', err);
-        });
+        .then(registration => { console.log('ServiceWorker zaregistrován'); })
+        .catch(err => { console.log('Chyba registrace SW: ', err); });
     });
   }
 </script>
@@ -656,7 +535,8 @@ const SUPABASE_URL = 'https://hecqbxtmqjzhfxssmcxd.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_7u1-AZW1ModwAD-RdXltwQ_saz9YRGg';
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const allowedUsers = [
+// E-maily, ktoré majú administrátorské práva (všetko vidia a môžu editovať/mazať)
+const adminEmails = [
   "maslovykoblih@gmail.com",
   "kralmastah@gmail.com",
   "doosan@dussman.cz"
@@ -665,14 +545,14 @@ const allowedUsers = [
 // ---------- Globální proměnné ----------
 let user = null;
 let isDevMode = false;
-let buildings = []; // Objekty / Budovy
-let currentBuildingId = null; // Aktuálně vybraná budova
+let isAdmin = false; // Nová premenná na kontrolu Roly
+let buildings = []; 
+let currentBuildingId = null; 
 let sections = [];
 let taskStates = [];
 let employees = []; 
 let currentWeekStart = getMonday(new Date());
 
-// Proměnná pro uchování aktuálně prohlíženého dne (0=Po, 1=Út... 6=Ne)
 let currentDayIndex = (new Date().getDay() + 6) % 7;
 const dayNamesFull = ['Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota', 'Neděle'];
 const dayNamesShort = ['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'];
@@ -684,13 +564,13 @@ let isDrawing = false;
 let ctx = null;
 let canvasEl = null;
 
-// ---------- DOM ready ----------
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btnSignIn').addEventListener('click', signIn);
   document.getElementById('btnSignOut').addEventListener('click', signOut);
   
   document.getElementById('btnDevSkip').addEventListener('click', () => {
       isDevMode = true;
+      isAdmin = true; // Vo vývojárskom režime sme vždy admini
       user = { email: 'Vývojář (Lokální režim)' };
       updateAuthUI();
       render();
@@ -713,7 +593,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initAuth();
 });
 
-// ---------- Pomocná fce pro ikony úkolů ----------
 function getTaskIcon(name) {
     const n = name.toLowerCase();
     if (n.includes('lux') || n.includes('vysava')) return '<i class="fa-solid fa-broom" style="color: #60a5fa;"></i>';
@@ -724,25 +603,20 @@ function getTaskIcon(name) {
     if (n.includes('okna') || n.includes('sklo') || n.includes('zrcad')) return '<i class="fa-solid fa-border-all" style="color: #7dd3fc;"></i>';
     if (n.includes('wc') || n.includes('toalet') || n.includes('záchod')) return '<i class="fa-solid fa-toilet" style="color: #e2e8f0;"></i>';
     if (n.includes('kuchy') || n.includes('nádob')) return '<i class="fa-solid fa-kitchen-set" style="color: #fbbf24;"></i>';
-    
-    // Default ikona
     return '<i class="fa-solid fa-check-double" style="color: #475569;"></i>';
 }
 
-// ---------- Auth ----------
 async function initAuth(){
   const { data:{session} } = await supabase.auth.getSession();
   user = session?.user || null;
+  isAdmin = user ? adminEmails.includes(user.email) : false;
+  
   updateAuthUI();
 
   supabase.auth.onAuthStateChange((event, session)=>{
     if(isDevMode) return; 
     user = session?.user || null;
-    if(user && !allowedUsers.includes(user.email)){
-      alert("Tento účet nemá oprávnění!");
-      supabase.auth.signOut();
-      user = null;
-    }
+    isAdmin = user ? adminEmails.includes(user.email) : false;
     updateAuthUI();
     if (!isDevMode) loadAll();
   });
@@ -759,8 +633,9 @@ function updateAuthUI(){
   if(user){
     welcomeScreen.style.display = 'none';
     btnOut.style.display = 'flex';
-    btnAdmin.style.display = 'flex'; 
-    info.innerHTML = `<i class="fa-regular fa-circle-user"></i> ${user.email}`;
+    // Admin tlačidlo sa ukáže iba ak je prihlásený Admin
+    btnAdmin.style.display = isAdmin ? 'flex' : 'none'; 
+    info.innerHTML = `<i class="fa-regular fa-circle-user"></i> ${user.email} ${isAdmin ? '<span style="color:#fbbf24; margin-left:4px;">(Admin)</span>' : ''}`;
   } else {
     welcomeScreen.style.display = 'flex';
     btnOut.style.display = 'none';
@@ -776,22 +651,18 @@ async function signIn(){
 
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   if(error) return alert("Chyba přihlášení: " + error.message);
-
-  if(!allowedUsers.includes(email)){
-    alert("Účet nemá oprávnění!");
-    await supabase.auth.signOut();
-    return;
-  }
+  
+  // Tí, ktorí nie sú v zozname adminEmails sa normálne prihlásia, ale nebudú mať admin práva.
 }
 
 async function signOut(){
   user = null; 
   isDevMode = false;
+  isAdmin = false;
   await supabase.auth.signOut();
   updateAuthUI();
 }
 
-// ---------- DATA LOAD ----------
 async function loadAll(){
   if (isDevMode) return;
   await loadEmployees(); 
@@ -805,12 +676,9 @@ async function loadBuildings() {
   const { data, error } = await supabase.from('buildings').select('*').order('created_at');
   if (!error && data) {
       buildings = data;
-      // Pokud nemáme vybranou budovu a nějaké existují, vybereme první
       if (!currentBuildingId && buildings.length > 0) {
           currentBuildingId = buildings[0].id;
       }
-  } else {
-      console.warn("Chyba načítání objektů:", error);
   }
 }
 
@@ -818,8 +686,6 @@ async function loadEmployees() {
   const { data, error } = await supabase.from('employees').select('*').order('name');
   if (!error && data) {
       employees = data;
-  } else {
-      console.warn("Nepodařilo se načíst zaměstnance:", error);
   }
   updateEmployeeDropdowns();
 }
@@ -845,10 +711,7 @@ async function addEmployeeHandler() {
         employees.push({ id: 'mock-'+Date.now(), name });
     } else {
         const { error } = await supabase.from('employees').insert({ name });
-        if(error) {
-            console.error(error);
-            return alert("Chyba databáze (nelze uložit zaměstnance). Možná chybí tabulka nebo práva. \n" + error.message);
-        }
+        if(error) return alert("Chyba databáze: \n" + error.message);
         await loadEmployees();
     }
     
@@ -856,7 +719,6 @@ async function addEmployeeHandler() {
     render(); 
 }
 
-// ---------- VLOŽENÍ NOVÉHO OBJEKTU (Budovy) ----------
 async function addBuildingHandler() {
   if(!user) return;
   const nameInput = document.getElementById('buildingName');
@@ -870,31 +732,21 @@ async function addBuildingHandler() {
       currentBuildingId = newId; 
   } else {
       const { data, error } = await supabase.from('buildings').insert({ name }).select();
-      if (error) {
-          return alert("Chyba databáze (nelze uložit objekt). Zkontroluj SQL tabulku 'buildings'.\n" + error.message);
-      }
+      if (error) return alert("Chyba databáze.\n" + error.message);
       if(data && data.length > 0) currentBuildingId = data[0].id;
   }
 
   nameInput.value = "";
-  alert("Objekt úspěšně vytvořen.");
   if (isDevMode) render(); else await loadAll();
 }
 
 async function loadSections(){
-  const { data, error } = await supabase
-    .from('sections')
-    .select('*, tasks(*)')
-    .order('order_index', { ascending: true })
-    .order('id');
-
+  const { data, error } = await supabase.from('sections').select('*, tasks(*)').order('order_index', { ascending: true }).order('id');
   if(!error && data) {
     sections = data.map(s => {
       s.tasks = (s.tasks || []).sort((a,b)=> (a.order_index||0) - (b.order_index||0));
       return s;
     });
-  } else {
-      console.warn("Chyba při stahování dlaždic ze Supabase:", error);
   }
 }
 
@@ -904,7 +756,6 @@ async function loadTaskStatesForWeek(weekStart){
   if (!error && data) taskStates = data;
 }
 
-// ---------- VLOŽENÍ NOVÉHO ÚSEKU ----------
 async function addSectionHandler() {
   if(!user) return;
   if(!currentBuildingId && buildings.length > 0) return alert("Nejprve vyberte objekt (v záložkách nahoře)!");
@@ -917,26 +768,10 @@ async function addSectionHandler() {
   if(!name) return alert("Vyplň název úseku.");
 
   if (isDevMode) {
-      sections.push({
-          id: 'mock-sec-' + Date.now(),
-          name,
-          person_id: person,
-          building_id: currentBuildingId,
-          tasks: [],
-          order_index: Date.now()
-      });
+      sections.push({ id: 'mock-sec-' + Date.now(), name, person_id: person, building_id: currentBuildingId, tasks: [], order_index: Date.now() });
   } else {
-      const { error } = await supabase.from('sections').insert({
-        name,
-        person_id: person,
-        building_id: currentBuildingId,
-        days: [0,1,2,3,4,5,6], 
-        order_index: Date.now()
-      });
-      if (error) {
-          console.error(error);
-          return alert("Chyba při ukládání dlaždice do Supabase. Zkontroluj tabulku 'sections'. \n" + error.message);
-      }
+      const { error } = await supabase.from('sections').insert({ name, person_id: person, building_id: currentBuildingId, days: [0,1,2,3,4,5,6], order_index: Date.now() });
+      if (error) return alert("Chyba při ukládání.\n" + error.message);
   }
 
   nameInput.value = "";
@@ -945,75 +780,51 @@ async function addSectionHandler() {
   if (isDevMode) render(); else await loadAll();
 }
 
-// ---------- FOTOAPARÁT (Nahrávání do Supabase Storage) ----------
 async function handlePhotoUpload(event, taskId) {
     const file = event.target.files[0];
     if (!file) return;
     
     const thumbDiv = document.getElementById(`thumb-${taskId}`);
     if (thumbDiv) {
-        // Zobrazíme loading ikonu
         thumbDiv.innerHTML = `<i class="fa-solid fa-spinner fa-spin" style="color: var(--frosty); font-size: 24px;"></i>`;
     }
 
     if (isDevMode) {
-        // V lokálním režimu nahrajeme jen do RAM jako Base64
         const reader = new FileReader();
         reader.onload = (e) => {
             const dataUrl = e.target.result;
             localTaskPhotos[taskId] = dataUrl; 
-            if (thumbDiv) {
-                thumbDiv.innerHTML = `<img src="${dataUrl}" class="task-thumbnail" alt="Náhled">`;
-            }
+            if (thumbDiv) thumbDiv.innerHTML = `<img src="${dataUrl}" class="task-thumbnail" alt="Náhled">`;
         };
         reader.readAsDataURL(file);
         return;
     }
 
-    // Skutečné nahrání do Supabase Storage
     const fileExt = file.name.split('.').pop();
-    const fileName = `${taskId}-${Date.now()}.${fileExt}`;
-    const filePath = `${fileName}`;
+    const filePath = `${taskId}-${Date.now()}.${fileExt}`;
 
-    const { error: uploadError } = await supabase.storage
-        .from('task-photos')
-        .upload(filePath, file);
+    const { error: uploadError } = await supabase.storage.from('task-photos').upload(filePath, file);
 
     if (uploadError) {
-        console.error('Chyba nahrávání:', uploadError);
         alert('Nepodařilo se nahrát fotku: ' + uploadError.message);
         if (thumbDiv) thumbDiv.innerHTML = '';
         return;
     }
 
-    // Získání verejnej URL uloženej fotky
-    const { data: { publicUrl } } = supabase.storage
-        .from('task-photos')
-        .getPublicUrl(filePath);
+    const { data: { publicUrl } } = supabase.storage.from('task-photos').getPublicUrl(filePath);
 
-    // Uložíme túto URL do databázy k nášmu úkolu
-    const { error: updateError } = await supabase
-        .from('tasks')
-        .update({ photo_url: publicUrl })
-        .eq('id', taskId);
+    const { error: updateError } = await supabase.from('tasks').update({ photo_url: publicUrl }).eq('id', taskId);
 
-    if (updateError) {
-        console.error('Chyba uložení URL do databáze:', updateError);
-        alert('Fotka se nahrála, ale nepodařilo se ji spojit s úkolem.');
-    } else {
-        // Okamžite aktualizujeme stav a UI
+    if (!updateError) {
         const sec = sections.find(s => s.tasks.some(t => t.id === taskId));
         if (sec) {
             const t = sec.tasks.find(t => t.id === taskId);
             if (t) t.photo_url = publicUrl;
         }
-        if (thumbDiv) {
-            thumbDiv.innerHTML = `<a href="${publicUrl}" target="_blank"><img src="${publicUrl}" class="task-thumbnail" alt="Náhled"></a>`;
-        }
+        if (thumbDiv) thumbDiv.innerHTML = `<a href="${publicUrl}" target="_blank"><img src="${publicUrl}" class="task-thumbnail" alt="Náhled"></a>`;
     }
 }
 
-// ---------- PODPIS A GPS ----------
 function initSignaturePad() {
     canvasEl = document.getElementById('sigCanvas');
     ctx = canvasEl.getContext('2d');
@@ -1054,7 +865,6 @@ function closeSignatureModal() {
     currentSignSectionId = null;
 }
 
-// Získání polohy přes API prohlížeče
 function getLocation() {
     return new Promise((resolve, reject) => {
         if (!navigator.geolocation) {
@@ -1062,7 +872,7 @@ function getLocation() {
         } else {
             navigator.geolocation.getCurrentPosition(
                 (position) => resolve({ lat: position.coords.latitude, lng: position.coords.longitude }),
-                (error) => resolve({ lat: null, lng: null }), // V případě odmítnutí nebo chyby vrátí null
+                (error) => resolve({ lat: null, lng: null }), 
                 { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
             );
         }
@@ -1072,14 +882,13 @@ function getLocation() {
 async function saveSignature() {
     if(!currentSignSectionId) return;
     
-    // Změna tlačítka na loading stav
     const btn = document.getElementById('btnSaveSig');
     const originalText = btn.innerHTML;
     btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Ukládám...`;
     btn.disabled = true;
 
     const base64Image = canvasEl.toDataURL("image/png");
-    const loc = await getLocation(); // Počkáme na souřadnice
+    const loc = await getLocation(); 
     
     if (isDevMode) {
         const sec = sections.find(s => s.id === currentSignSectionId);
@@ -1096,14 +905,8 @@ async function saveSignature() {
             signature_lng: loc.lng,
             signature_time: new Date().toISOString()
         }).eq("id", currentSignSectionId);
-        
-        if(error) {
-            console.warn(error);
-            alert("Podpis se nepodařilo uložit.\n" + error.message);
-        }
     }
     
-    // Reset tlačítka a zavření
     btn.innerHTML = originalText;
     btn.disabled = false;
     closeSignatureModal();
@@ -1111,7 +914,6 @@ async function saveSignature() {
     if (isDevMode) render(); else loadAll();
 }
 
-// ---------- VÝPOČET PROGRESS BARU ----------
 function updateDashboardProgress() {
     let totalTasksToday = 0;
     let doneTasksToday = 0;
@@ -1120,7 +922,6 @@ function updateDashboardProgress() {
 
     activeSections.forEach(sec => {
         sec.tasks.forEach(task => {
-            // Kontrola naplánování úkolu pro sledovaný den
             if (!task.days || task.days.length === 0 || task.days.includes(currentDayIndex)) {
                 totalTasksToday++;
                 const st = taskStates.find(s => s.task_id === task.id && Number(s.day_index) === currentDayIndex && s.week_start === toIsoDate(currentWeekStart));
@@ -1144,7 +945,6 @@ function updateDashboardProgress() {
     }
 }
 
-// ---------- RENDER DAY SWITCHER ----------
 function renderDaySwitcher() {
     const container = document.getElementById("daySwitcher");
     container.innerHTML = "";
@@ -1161,7 +961,6 @@ function renderDaySwitcher() {
     });
 }
 
-// ---------- RENDER BUILDINGS (ZÁLOŽKY) ----------
 function renderBuildings() {
     const container = document.getElementById("buildingTabs");
     const wrapper = document.getElementById("buildingTabsWrapper");
@@ -1179,7 +978,8 @@ function renderBuildings() {
         tab.className = "building-tab" + (bld.id === currentBuildingId ? " active" : "");
         tab.innerHTML = `<i class="fa-solid fa-building"></i> ${bld.name}`;
         
-        if(user && bld.id === currentBuildingId) {
+        // Zmazať budovu môže len ADMIN
+        if(isAdmin && bld.id === currentBuildingId) {
             const delBtn = document.createElement("span");
             delBtn.innerHTML = "<i class='fa-solid fa-trash-can'></i>";
             delBtn.style.marginLeft = "8px";
@@ -1211,7 +1011,6 @@ function renderBuildings() {
     });
 }
 
-// ---------- RENDER ----------
 function render(){
   renderDaySwitcher();
   renderBuildings();
@@ -1220,7 +1019,6 @@ function render(){
   document.querySelector("#currentWeekLabel span").textContent = formatWeekLabel(currentWeekStart);
 }
 
-// ---------- TASK FORM ----------
 function createTaskForm(sectionId){
   const wrap = document.createElement("div");
   wrap.className = "add-task-form";
@@ -1268,13 +1066,10 @@ function createTaskForm(sectionId){
   return wrap;
 }
 
-// ---------- RENDER TASKS ----------
 function renderTasksList(section, container){
   container.innerHTML = "";
 
   section.tasks.forEach(task=>{
-    // SKRYTÍ ÚKOLŮ, KTERÉ NEJSOU NA DNEŠEK NAPLÁNOVANÉ
-    // (Úkoly, které nemají zadaný den nebo je prázdné pole, se zobrazují raději vždy, aby nezmizely trvale)
     const isScheduled = !task.days || task.days.length === 0 || task.days.includes(currentDayIndex);
     if (!isScheduled) return;
 
@@ -1295,13 +1090,15 @@ function renderTasksList(section, container){
     iconSpan.className = "task-icon";
     iconSpan.innerHTML = getTaskIcon(task.name);
 
-    // Sloupec pro název a bublinky plánování
     const nameCol = document.createElement("div");
     nameCol.className = "task-name-col";
 
     const nameInput = document.createElement("input");
     nameInput.className = "task-name-label" + (state === "done" ? " done" : "");
     nameInput.value = task.name;
+    
+    // ZAMKNUTIE ÚPRAVY TEXTU PRE UPRATOVAČOV
+    if (!isAdmin) nameInput.disabled = true;
     
     nameInput.addEventListener("change", async()=>{
       if(!user) return;
@@ -1315,8 +1112,7 @@ function renderTasksList(section, container){
 
     nameCol.appendChild(nameInput);
 
-    // Plánovač (Bubliny dnů) viditelný pouze pro přihlášeného admina
-    if (user) {
+    if (isAdmin) {
         const scheduleWrap = document.createElement("div");
         scheduleWrap.className = "task-schedule-bubbles";
         
@@ -1340,7 +1136,7 @@ function renderTasksList(section, container){
                 if (isDevMode) {
                     task.days = newDays;
                 } else {
-                    task.days = newDays; // Optimistic UI
+                    task.days = newDays;
                     await supabase.from("tasks").update({ days: newDays }).eq("id", task.id);
                 }
                 render(); 
@@ -1385,7 +1181,6 @@ function renderTasksList(section, container){
     if (localTaskPhotos[task.id]) {
         thumbContainer.innerHTML = `<img src="${localTaskPhotos[task.id]}" class="task-thumbnail" alt="Náhled">`;
     } else if (task.photo_url) {
-        // Tu sme fotku obalili odkazom, aby sa po kliknutí dala zväčšiť do novej karty
         thumbContainer.innerHTML = `<a href="${task.photo_url}" target="_blank"><img src="${task.photo_url}" class="task-thumbnail" alt="Náhled"></a>`;
     }
 
@@ -1396,7 +1191,8 @@ function renderTasksList(section, container){
     leftGroup.appendChild(thumbContainer);
     t.appendChild(leftGroup);
 
-    if(user){
+    // KONTROLNÉ TLAČIDLÁ MÔŽE VIDIEŤ LEN ADMIN
+    if(isAdmin){
       const controls = document.createElement("div");
       controls.style.display = "flex";
       controls.style.gap = "4px";
@@ -1427,7 +1223,6 @@ function renderTasksList(section, container){
   });
 }
 
-// ---------- RENDER SECTIONS ----------
 function renderSections(){
   const container = document.getElementById("calendarContainer");
   container.innerHTML = "";
@@ -1458,6 +1253,10 @@ function renderSections(){
     const nameInput = document.createElement("input");
     nameInput.value = sec.name;
     nameInput.className = "section-title";
+    
+    // ZAMKNUTIE ÚPRAVY TEXTU PRE UPRATOVAČOV
+    if (!isAdmin) nameInput.disabled = true;
+    
     nameInput.addEventListener("change", async()=>{
       if(!user) return;
       if (isDevMode) {
@@ -1468,7 +1267,8 @@ function renderSections(){
     });
     titleWrap.appendChild(nameInput);
 
-    if(user){
+    // KONTROLNÉ TLAČIDLÁ MÔŽE VIDIEŤ LEN ADMIN
+    if(isAdmin){
       const controlsWrap = document.createElement("div");
       controlsWrap.style.display = "flex"; controlsWrap.style.gap = "4px";
       
@@ -1493,6 +1293,10 @@ function renderSections(){
     const personSelect = document.createElement("select");
     personSelect.className = "section-person";
     personSelect.innerHTML = '<option value="">👤 Nepřiřazeno...</option>';
+    
+    // ZAMKNUTIE ZMENY OSOBY PRE UPRATOVAČOV
+    if (!isAdmin) personSelect.disabled = true;
+    
     employees.forEach(emp => {
         const opt = document.createElement('option');
         opt.value = emp.name;
@@ -1525,7 +1329,8 @@ function renderSections(){
     renderTasksList(sec, tasksContainer);
     wrap.appendChild(tasksContainer);
 
-    if(user){
+    // PRIDÁVANIE ÚLOH MOŽNÉ IBA PRE ADMINOV
+    if(isAdmin){
         wrap.appendChild(createTaskForm(sec.id));
     }
 
@@ -1541,7 +1346,6 @@ function renderSections(){
     signatureSection.appendChild(btnSign);
 
     if(sec.signature) {
-        // Skryjeme tlačítko "Podepsat", když už podpis existuje
         btnSign.style.display = "none";
         
         const sigWrap = document.createElement("div");
@@ -1552,27 +1356,24 @@ function renderSections(){
         sigImg.className = "signature-display";
         sigWrap.appendChild(sigImg);
         
-        // Pokud jsme získali GPS, ukážeme link (Jen pokud je uživatel přihlášen, abys to viděl jen ty jako šéf)
-        if (user && sec.signature_lat && sec.signature_lng) {
+        if (isAdmin && sec.signature_lat && sec.signature_lng) {
             const gpsLink = document.createElement("a");
             gpsLink.href = `https://www.google.com/maps?q=${sec.signature_lat},${sec.signature_lng}`;
             gpsLink.target = "_blank";
             gpsLink.className = "gps-link";
             
-            // Hezký formát času
             const sigTime = sec.signature_time ? new Date(sec.signature_time).toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit' }) : '';
             
             gpsLink.innerHTML = `<i class="fa-solid fa-map-location-dot"></i> Ověřená poloha ${sigTime ? '(' + sigTime + ')' : ''}`;
             sigWrap.appendChild(gpsLink);
-        } else if (user && sec.signature) {
+        } else if (isAdmin && sec.signature) {
              const noGps = document.createElement("div");
              noGps.style.fontSize = "11px"; noGps.style.color = "#ff5e57";
              noGps.innerHTML = `<i class="fa-solid fa-location-crosshairs"></i> Poloha nebyla povolena`;
              sigWrap.appendChild(noGps);
         }
 
-        // Tlačítko na smazání podpisu (jen pro šéfa)
-        if (user) {
+        if (isAdmin) {
             const btnDelSig = document.createElement("button");
             btnDelSig.className = "subtle-btn";
             btnDelSig.style.width = "auto"; btnDelSig.style.alignSelf = "flex-start"; btnDelSig.style.padding = "4px 8px"; btnDelSig.style.color = "#ff5e57";
@@ -1598,7 +1399,6 @@ function renderSections(){
   });
 }
 
-// ---------- EDITS, STATES, SORTING ----------
 async function moveSection(sectionId, dir){
   const i = sections.findIndex(s=>s.id===sectionId);
   if(i<0) return;
@@ -1636,7 +1436,6 @@ async function moveTask(sectionId, taskId, dir){
 }
 
 async function addTask(sectionId, name){
-  // Při vytvoření nového úkolu jej defaultně přiřadíme ke DNI, KTERÝ SI ZROVNA PROHLÍŽÍME (currentDayIndex)
   if (isDevMode) {
       const sec = sections.find(s => s.id === sectionId);
       if (sec) sec.tasks.push({ id: 'mock-task-' + Date.now(), section_id: sectionId, name: name, days: [currentDayIndex], order_index: Date.now() });
@@ -1673,7 +1472,6 @@ async function upsertTaskState(taskId, dayIndex, state){
   }
 }
 
-// ---------- HELPERS ----------
 function getMonday(date){
   const d = new Date(date);
   const day = d.getDay()||7;
