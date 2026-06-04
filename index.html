@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-<meta name="theme-color" content="#0f172a" />
+<meta name="theme-color" content="#0a111a" />
 <title>CLEANDER APP</title>
 
 <!-- PWA Manifest a nastavení -->
@@ -22,22 +22,23 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-    /* ========== KOMPLETNÍ STYLY - FROSTY BLUE GLASSMORPHISM V4 (NEON GLOW) ========== */
+    /* ========== KOMPLETNÍ STYLY - INSPIROVÁNO "SADA CLEANDER" ========== */
     :root {
-        --bg-dark: #0f172a;
-        --glass-bg: rgba(15, 23, 42, 0.6);
-        --glass-bg-hover: rgba(30, 41, 59, 0.8);
-        --glass-border: rgba(59, 130, 246, 0.2);
-        --glass-border-top: 1px solid rgba(96, 165, 250, 0.3);
+        /* Hlubší, bohatší noční modrá podle návrhu */
+        --bg-dark: #0a111a; 
+        --glass-bg: rgba(18, 30, 48, 0.7);
+        --glass-bg-hover: rgba(28, 44, 68, 0.9);
+        --glass-border: rgba(96, 165, 250, 0.15);
+        --glass-border-top: 1px solid rgba(147, 197, 253, 0.25);
         
         --frosty: #3b82f6; 
-        --frosty-alt: #60a5fa;
-        --frosty-glow: rgba(59, 130, 246, 0.5);
+        --frosty-alt: #93c5fd; /* Světlejší modrá pro lepší kontrast */
+        --frosty-glow: rgba(59, 130, 246, 0.6);
         
         --text-main: #f8fafc;
         --text-muted: #94a3b8;
-        --radius-large: 24px;
-        --radius-medium: 16px;
+        --radius-large: 28px; /* Oblejší rohy jako na návrhu */
+        --radius-medium: 18px;
     }
 
     * {
@@ -46,7 +47,7 @@
     }
 
     body {
-        background-color: var(--bg-dark);
+        background: radial-gradient(circle at top center, #112035 0%, var(--bg-dark) 100%);
         margin: 0;
         color: var(--text-main);
         padding: 16px;
@@ -74,19 +75,19 @@
         width: 600px; height: 600px;
         background: var(--frosty);
         top: -150px; left: -200px;
-        opacity: 0.15;
+        opacity: 0.1;
     }
     .bg-blobs::after {
         width: 500px; height: 500px;
         background: var(--frosty-alt);
         bottom: -200px; right: -150px;
-        opacity: 0.1;
+        opacity: 0.05;
         animation-delay: -5s;
     }
 
     @keyframes pulseBlob {
-        0% { transform: scale(1) translate(0, 0); opacity: 0.1; }
-        100% { transform: scale(1.1) translate(20px, -20px); opacity: 0.2; }
+        0% { transform: scale(1) translate(0, 0); opacity: 0.08; }
+        100% { transform: scale(1.1) translate(20px, -20px); opacity: 0.12; }
     }
 
     .container {
@@ -102,7 +103,7 @@
         position: fixed;
         inset: 0;
         z-index: 9999;
-        background: rgba(15, 23, 42, 0.7);
+        background: rgba(10, 17, 26, 0.85);
         backdrop-filter: blur(24px);
         -webkit-backdrop-filter: blur(24px);
         display: flex;
@@ -111,12 +112,12 @@
         padding: 20px;
     }
     .welcome-card {
-        background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+        background: linear-gradient(145deg, rgba(30, 45, 70, 0.4) 0%, rgba(15, 25, 40, 0.8) 100%);
         padding: 40px 20px;
         border-radius: var(--radius-large);
         border: 1px solid var(--glass-border);
         border-top: var(--glass-border-top);
-        box-shadow: 0 32px 64px rgba(0,0,0,0.5), 0 0 40px rgba(59, 130, 246, 0.2);
+        box-shadow: 0 32px 64px rgba(0,0,0,0.6), 0 0 40px rgba(59, 130, 246, 0.15);
         text-align: center;
         max-width: 400px;
         width: 100%;
@@ -126,11 +127,10 @@
         align-items: center;
     }
     .welcome-card img.logo-image {
-        width: 140px; 
+        width: 160px; 
         height: auto;
         margin-bottom: 10px;
-        border-radius: 12px; 
-        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4)); 
+        filter: drop-shadow(0 4px 16px rgba(59, 130, 246, 0.3)); 
     }
     .welcome-card h1 {
         font-size: 24px;
@@ -142,20 +142,19 @@
     header {
         display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap;
         margin-bottom: 24px;
-        background: linear-gradient(90deg, rgba(15,23,42,0.8) 0%, rgba(30,41,59,0.6) 100%);
+        background: linear-gradient(90deg, rgba(20,35,55,0.8) 0%, rgba(15,25,40,0.6) 100%);
         padding: 16px 20px;
         border-radius: var(--radius-large);
         backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
         border: 1px solid var(--glass-border);
         border-top: var(--glass-border-top);
-        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
     }
 
     .header-logo {
-        height: 30px;
+        height: 36px;
         width: auto;
-        border-radius: 6px;
+        filter: drop-shadow(0 2px 8px rgba(255,255,255,0.1));
     }
 
     h1 { font-size: 20px; margin: 0; color: var(--text-main); font-weight: 800; letter-spacing: 0.5px; display: flex; align-items: center; gap: 10px; }
@@ -163,59 +162,60 @@
     
     .controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 
+    /* DASHBOARD PANEL S VYLEPŠENÝM GLOW EFEKTEM */
     .dashboard-panel {
-        background: var(--glass-bg); border-radius: var(--radius-large); padding: 20px; margin-bottom: 24px;
+        background: var(--glass-bg); border-radius: var(--radius-large); padding: 24px; margin-bottom: 24px;
         backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
         border: 1px solid var(--glass-border); border-top: var(--glass-border-top);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
     .progress-wrapper {
         display: flex; flex-direction: column; gap: 12px;
     }
     .progress-text {
         font-size: 15px; font-weight: 600; color: var(--frosty-alt); display: flex; align-items: center; gap: 8px;
+        text-shadow: 0 0 10px rgba(96, 165, 250, 0.3);
     }
     .progress-track {
-        background: rgba(0, 0, 0, 0.4); border-radius: 20px; height: 14px; width: 100%;
+        background: rgba(0, 0, 0, 0.5); border-radius: 20px; height: 16px; width: 100%;
         border: 1px solid rgba(255,255,255,0.05); overflow: hidden;
-        box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+        box-shadow: inset 0 2px 6px rgba(0,0,0,0.6);
     }
     .progress-fill {
-        background: linear-gradient(90deg, var(--frosty), #8ab4f8);
+        background: linear-gradient(90deg, #2563eb, #60a5fa);
         height: 100%; width: 0%; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
+        box-shadow: 0 0 15px rgba(96, 165, 250, 0.8);
         border-radius: 20px;
     }
 
     .day-switcher-wrapper { margin-bottom: 24px; }
     .day-switcher {
-        display: flex; background: rgba(0,0,0,0.2); border-radius: 16px; padding: 6px;
+        display: flex; background: rgba(0,0,0,0.3); border-radius: 18px; padding: 6px;
         border: 1px solid var(--glass-border); gap: 4px; overflow-x: auto;
         scrollbar-width: none;
     }
     .day-switcher::-webkit-scrollbar { display: none; }
     .day-tab {
-        flex: 1; text-align: center; padding: 14px 0; border-radius: 12px; cursor: pointer;
+        flex: 1; text-align: center; padding: 14px 0; border-radius: 14px; cursor: pointer;
         color: var(--text-muted); font-weight: 600; font-size: 14px; transition: 0.3s;
         min-width: 45px;
     }
-    .day-tab:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
-    .day-tab.active { background: var(--frosty); color: #fff; box-shadow: 0 4px 12px var(--frosty-glow); }
+    .day-tab:hover { color: var(--text-main); background: rgba(255,255,255,0.08); }
+    .day-tab.active { background: linear-gradient(135deg, var(--frosty), #1e40af); color: #fff; box-shadow: 0 4px 12px var(--frosty-glow); }
     .short-day { display: none; }
     @media (max-width: 768px) {
         .full-day { display: none; }
         .short-day { display: block; font-size: 16px; }
     }
 
-    /* ZÁLOŽKY BUDOV - ZVÝRAZNĚNÉ */
     .building-tabs-wrapper {
-        background: linear-gradient(90deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
+        background: linear-gradient(90deg, rgba(20, 35, 55, 0.8) 0%, rgba(15, 25, 40, 0.6) 100%);
         border: 1px solid var(--glass-border);
         border-radius: var(--radius-large);
         padding: 24px;
         margin-bottom: 24px;
         box-shadow: 0 16px 40px rgba(0,0,0,0.5);
         backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
     }
     .building-tabs-title {
         font-size: 14px; text-transform: uppercase; letter-spacing: 2px; color: var(--frosty-alt); 
@@ -226,7 +226,7 @@
         scrollbar-width: thin; scrollbar-color: var(--frosty) transparent;
     }
     .building-tab {
-        padding: 16px 28px; border-radius: 16px; background: rgba(0,0,0,0.4); border: 2px solid rgba(255,255,255,0.05);
+        padding: 16px 28px; border-radius: var(--radius-medium); background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08);
         color: var(--text-muted); cursor: pointer; white-space: nowrap; font-weight: 700; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         display: flex; align-items: center; gap: 12px; font-size: 16px;
     }
@@ -241,10 +241,10 @@
     .empty-state {
         grid-column: 1 / -1;
         display: flex; flex-direction: column; align-items: center; justify-content: center;
-        text-align: center; padding: 50px 20px; background: var(--glass-bg);
-        border-radius: var(--radius-large); border: 1px dashed rgba(255,255,255,0.2);
+        text-align: center; padding: 60px 20px; background: var(--glass-bg);
+        border-radius: var(--radius-large); border: 1px dashed rgba(96, 165, 250, 0.3);
     }
-    .empty-state i { font-size: 42px; color: var(--text-muted); margin-bottom: 16px; opacity: 0.5; }
+    .empty-state i { font-size: 48px; color: var(--text-muted); margin-bottom: 16px; opacity: 0.5; }
     .empty-state h2 { font-size: 20px; color: rgba(255, 255, 255, 0.9); margin-bottom: 8px; }
 
     input[type=text], input[type=email], input[type=password], select {
@@ -254,7 +254,7 @@
         transition: all 0.3s ease; width: 100%;
     }
     input::placeholder, select:invalid { color: var(--text-muted); }
-    input:focus, select:focus { border-color: var(--frosty); box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3); background: rgba(0,0,0,0.4); }
+    input:focus, select:focus { border-color: var(--frosty); box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3); background: rgba(0,0,0,0.5); }
     input:disabled, select:disabled { opacity: 0.7; cursor: not-allowed; border-color: transparent; }
     select option { background: var(--bg-dark); color: var(--text-main); }
 
@@ -268,8 +268,8 @@
     button:active { transform: translateY(1px); }
     
     button.primary-btn {
-        background: linear-gradient(135deg, var(--frosty) 0%, #2563eb 100%); color: #fff; border: none;
-        box-shadow: 0 4px 12px var(--frosty-glow); text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        background: linear-gradient(135deg, var(--frosty) 0%, #1e40af 100%); color: #fff; border: none;
+        box-shadow: 0 4px 15px var(--frosty-glow); text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
     button.primary-btn:hover { box-shadow: 0 6px 20px rgba(59, 130, 246, 0.8); filter: brightness(1.1); border-color: rgba(255,255,255,0.5); }
     
@@ -283,11 +283,12 @@
     .icon-only { padding: 10px; font-size: 16px; border-radius: 50%; aspect-ratio: 1/1; }
 
     .admin-panel {
-        background: var(--glass-bg); border-radius: var(--radius-large); padding: 20px; margin-bottom: 32px;
+        background: var(--glass-bg); border-radius: var(--radius-large); padding: 24px; margin-bottom: 32px;
         backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
         border: 1px solid var(--glass-border); border-top: var(--glass-border-top);
         display: none;
         animation: fadeInDown 0.3s ease-out forwards;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
     @keyframes fadeInDown {
         from { opacity: 0; transform: translateY(-10px); }
@@ -311,7 +312,7 @@
     .section-row {
         display: flex; flex-direction: column; gap: 16px;
         background: var(--glass-bg);
-        border-radius: var(--radius-large); padding: 20px;
+        border-radius: var(--radius-large); padding: 24px;
         backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
         border: 1px solid var(--glass-border); 
         border-top: var(--glass-border-top);
@@ -321,15 +322,16 @@
     
     .section-row:hover {
         transform: translateY(-4px);
-        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6), 0 0 25px rgba(59, 130, 246, 0.3);
-        border-color: rgba(96, 165, 250, 0.6);
+        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6), 0 0 25px rgba(59, 130, 246, 0.2);
+        border-color: rgba(96, 165, 250, 0.4);
     }
 
-    .section-header { display: flex; flex-direction: column; gap: 12px; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px; }
+    .section-header { display: flex; flex-direction: column; gap: 12px; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; }
     .section-title-wrap { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
     .section-title {
-        font-weight: 800; font-size: 18px; color: var(--text-main);
+        font-weight: 800; font-size: 20px; color: var(--text-main);
         width: 100%; border: none; background: transparent; outline: none; padding:0;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     }
     .section-person {
         font-weight: 600; font-size: 14px; color: var(--frosty-alt);
@@ -342,23 +344,26 @@
     }
     .task-item-detail {
         display: flex; align-items: center; justify-content: space-between; gap: 12px;
-        background: rgba(0, 0, 0, 0.2); border-radius: 14px; padding: 12px 14px;
-        border: 1px solid rgba(255,255,255,0.03); transition: all 0.2s ease;
+        background: rgba(0, 0, 0, 0.3); border-radius: 16px; padding: 14px 16px;
+        border: 1px solid rgba(255,255,255,0.05); transition: all 0.2s ease;
         flex-wrap: wrap; 
     }
-    .task-item-detail:hover { background: rgba(0,0,0,0.3); border-color: rgba(255,255,255,0.1); }
-    .task-left-group { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 200px; }
+    .task-item-detail:hover { background: rgba(0,0,0,0.4); border-color: rgba(255,255,255,0.15); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .task-left-group { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 200px; }
 
     .task-check {
         width: 32px; height: 32px; 
-        border-radius: 8px; border: 2px solid var(--text-muted);
+        border-radius: 10px; border: 2px solid var(--text-muted);
         cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(0,0,0,0.2);
     }
-    .task-check.done { background: #10b981; border-color: #10b981; box-shadow: 0 0 12px rgba(16, 185, 129, 0.4); transform: scale(1.05); }
+    .task-check.done { background: #10b981; border-color: #10b981; box-shadow: 0 0 16px rgba(16, 185, 129, 0.5); transform: scale(1.1); }
     .task-check.done i { color: white; font-size: 16px; }
     
-    .task-icon { width: 24px; text-align: center; font-size: 16px; flex-shrink: 0; opacity: 0.8; }
+    .task-icon { 
+        width: 28px; text-align: center; font-size: 18px; flex-shrink: 0; 
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    }
 
     .task-name-col { display: flex; flex-direction: column; flex: 1; gap: 6px; }
     
@@ -367,63 +372,67 @@
         font-weight: 600; color: #ffffff;
         outline: none; font-size: 16px; padding: 0;
         transition: color 0.2s, opacity 0.2s;
+        white-space: normal;
+        word-break: break-word;
+        line-height: 1.4;
+        min-height: 22px;
     }
     .task-name-label.done { text-decoration: line-through; opacity: 0.5; color: #e2e8f0; font-weight: 500; }
     
     .task-note-display {
         font-size: 13px; color: #fbbf24; background: rgba(251, 191, 36, 0.1); 
-        padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(251, 191, 36, 0.2);
-        display: flex; align-items: center; gap: 6px; font-weight: 500;
+        padding: 8px 12px; border-radius: 10px; border: 1px solid rgba(251, 191, 36, 0.2);
+        display: flex; align-items: center; gap: 8px; font-weight: 500;
     }
     .task-note-btn {
         cursor: pointer; font-size: 18px; color: var(--text-muted); background: rgba(255,255,255,0.05);
-        border-radius: 10px; width: 40px; height: 40px; 
+        border-radius: 12px; width: 44px; height: 44px; 
         display: flex; align-items: center; justify-content: center; border: 1px solid transparent; margin: 0; flex-shrink:0;
         transition: 0.2s;
     }
     .task-note-btn:hover { background: rgba(255,255,255,0.1); color: #fbbf24; border-color: rgba(251, 191, 36, 0.3); }
-    .task-note-btn.has-note { color: #fbbf24; background: rgba(251, 191, 36, 0.15); border-color: rgba(251, 191, 36, 0.3); }
+    .task-note-btn.has-note { color: #fbbf24; background: rgba(251, 191, 36, 0.15); border-color: rgba(251, 191, 36, 0.3); box-shadow: 0 0 10px rgba(251, 191, 36, 0.2); }
 
-    .task-schedule-bubbles { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
+    .task-schedule-bubbles { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
     .day-bubble {
-        width: 24px; height: 24px; 
-        border-radius: 50%; font-size: 10px; font-weight: 700;
+        width: 26px; height: 26px; 
+        border-radius: 50%; font-size: 11px; font-weight: 700;
         display: flex; align-items: center; justify-content: center;
-        background: rgba(255,255,255,0.05); color: var(--text-muted); cursor: pointer;
+        background: rgba(0,0,0,0.4); color: var(--text-muted); cursor: pointer;
         border: 1px solid rgba(255,255,255,0.05); transition: 0.2s; user-select: none;
     }
     .day-bubble:hover { background: rgba(255,255,255,0.15); color: var(--text-main); border-color: rgba(255,255,255,0.2); }
-    .day-bubble.active { background: var(--frosty); color: #fff; border-color: var(--frosty-alt); box-shadow: 0 0 8px var(--frosty-glow); }
+    .day-bubble.active { background: linear-gradient(135deg, var(--frosty), #1e40af); color: #fff; border-color: var(--frosty-alt); box-shadow: 0 0 10px var(--frosty-glow); }
 
     .camera-btn {
         cursor: pointer; font-size: 18px; color: var(--text-muted); background: rgba(255,255,255,0.05);
-        border-radius: 10px; width: 40px; height: 40px; 
+        border-radius: 12px; width: 44px; height: 44px; 
         display: flex; align-items: center; justify-content: center; border: 1px solid transparent; margin: 0; flex-shrink:0;
     }
     .camera-btn:hover { background: rgba(255,255,255,0.1); color: var(--text-main); border-color: rgba(255,255,255,0.2); }
-    .task-thumbnail { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; border: 1px solid rgba(255,255,255,0.2); }
+    .task-thumbnail { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; border: 1px solid rgba(255,255,255,0.2); }
 
-    .add-task-form { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .add-task-form { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); }
     .templates-row { display: flex; gap: 8px; flex-wrap: wrap; }
     .template-btn {
-        background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1);
-        padding: 8px 12px; border-radius: 10px; font-size: 13px; color: var(--text-muted);
-        cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s;
+        background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
+        padding: 8px 14px; border-radius: 10px; font-size: 13px; color: var(--text-muted);
+        cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s;
     }
     .template-btn:hover { background: rgba(255,255,255,0.1); color: var(--text-main); border-color: var(--frosty); }
 
     #signatureModal {
         display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(15, 23, 42, 0.85); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(12px); padding: 16px;
+        background: rgba(10, 17, 26, 0.85); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(12px); padding: 16px;
     }
     .modal-content {
-        background: var(--bg-dark); padding: 24px; border-radius: 20px;
-        border: 1px solid var(--frosty); box-shadow: 0 0 48px var(--frosty-glow);
-        display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 380px;
+        background: var(--bg-dark); padding: 24px; border-radius: 24px;
+        border: 1px solid var(--frosty); box-shadow: 0 0 60px var(--frosty-glow);
+        display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 400px;
     }
-    #sigCanvas { background: #f8fafc; border-radius: 12px; touch-action: none; border: 2px solid #cbd5e1; width: 100%; height: 160px; }
+    #sigCanvas { background: #f8fafc; border-radius: 16px; touch-action: none; border: 2px solid #cbd5e1; width: 100%; height: 180px; }
     
-    footer { text-align: center; font-size: 11px; letter-spacing: 1px; opacity: 0.4; padding: 30px 20px; margin-top: auto; color: var(--text-main); font-weight: 600; }
+    footer { text-align: center; font-size: 12px; letter-spacing: 1px; opacity: 0.4; padding: 40px 20px; margin-top: auto; color: var(--text-main); font-weight: 600; }
 </style>
 </head>
 <body>
@@ -431,16 +440,12 @@
   
   <div id="welcomeScreen">
       <div class="welcome-card">
-          <img src="cleander-logo.png" alt="Cleander Logo" class="logo-image" onerror="this.src='https://placehold.co/140x140/0f172a/60a5fa?text=CLEANDER';" />
+          <img src="cleander-logo.png" alt="Cleander Logo" class="logo-image" onerror="this.src='https://placehold.co/160x160/0f172a/60a5fa?text=CLEANDER';" />
           <h1>CLEANDER APP</h1>
-          <p style="color: var(--text-muted); font-size: 14px; margin-top: -10px; margin-bottom: 10px;">Přihlaste se ke svému účtu</p>
-          <input type="email" id="email" placeholder="Email" />
+          <p style="color: var(--text-muted); font-size: 15px; margin-top: -8px; margin-bottom: 12px;">Přihlaste se ke svému účtu</p>
+          <input type="email" id="email" placeholder="E-mail" />
           <input type="password" id="password" placeholder="Heslo" />
-          <button id="btnSignIn" class="primary-btn"><i class="fa-solid fa-right-to-bracket"></i> Přihlásit</button>
-          
-          <div style="margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
-              <button id="btnDevSkip" class="subtle-btn" style="color: var(--frosty-alt);"><i class="fa-solid fa-flask"></i> Přeskočit přihlášení (Vývojářský režim)</button>
-          </div>
+          <button id="btnSignIn" class="primary-btn" style="width: 100%; padding: 16px; margin-top: 8px;"><i class="fa-solid fa-right-to-bracket"></i> Přihlásit</button>
       </div>
   </div>
 
@@ -474,17 +479,22 @@
     <div id="buildingTabsWrapper" class="building-tabs-wrapper" style="display:none;">
         <div class="building-tabs-title"><i class="fa-solid fa-map-location-dot"></i> Aktuální objekt úklidu</div>
         <div id="buildingTabs" class="building-tabs"></div>
+        
+        <!-- PŘIDANÝ CHYTRÝ FILTR PRO DLAŽDICE -->
+        <div style="margin-top: 16px;">
+            <input type="text" id="sectionFilterInput" placeholder="🔍 Hledat úsek nebo pracovníka (např. Hala, Katka)..." style="background: rgba(0,0,0,0.5); border-color: rgba(255,255,255,0.1); border-radius: 16px; padding: 14px 18px; font-size: 15px;" />
+        </div>
     </div>
 
     <section class="admin-panel" id="adminPanel">
       <div class="admin-header">
           <div style="display:flex; gap:12px; align-items:center;">
               <h2 style="margin:0; font-size:18px;"><i class="fa-solid fa-sliders"></i> Ovládací centrum</h2>
-              <div id="userInfo" style="color:var(--frosty-alt); font-size:13px; background:rgba(59,130,246,0.1); padding:6px 12px; border-radius:8px; font-weight: 500;"></div>
+              <div id="userInfo" style="color:var(--frosty-alt); font-size:13px; background:rgba(59,130,246,0.15); padding:6px 14px; border-radius:10px; font-weight: 600;"></div>
           </div>
           <div style="display:flex; gap: 8px; align-items:center;">
             <button id="prevWeek" class="small"><i class="fa-solid fa-chevron-left"></i> Zpět</button>
-            <div id="currentWeekLabel" style="font-weight:700; color:var(--text-main); font-size:14px; margin: 0 8px; display: flex; align-items: center; gap: 6px;"><i class="fa-regular fa-calendar"></i> <span></span></div>
+            <div id="currentWeekLabel" style="font-weight:700; color:var(--text-main); font-size:14px; margin: 0 12px; display: flex; align-items: center; gap: 6px;"><i class="fa-regular fa-calendar"></i> <span></span></div>
             <button id="nextWeek" class="small">Vpřed <i class="fa-solid fa-chevron-right"></i></button>
           </div>
       </div>
@@ -514,7 +524,7 @@
                   <input type="email" id="newEmployeeEmail" placeholder="E-mail (pro přihlášení)..." style="flex:1;" />
                   <button id="btnAddEmployee" class="primary-btn" style="padding: 10px 14px;"><i class="fa-solid fa-plus"></i></button>
               </div>
-              <div id="employeeList" style="margin-top: 12px; display: flex; flex-direction: column; gap: 8px; max-height: 180px; overflow-y: auto;">
+              <div id="employeeList" style="margin-top: 12px; display: flex; flex-direction: column; gap: 8px; max-height: 200px; overflow-y: auto; padding-right: 4px;">
                   <!-- Zde se vygeneruje seznam zaměstnanců -->
               </div>
           </div>
@@ -532,11 +542,11 @@
       <div class="modal-content">
           <h3 style="margin:0; font-size:18px; color:var(--frosty-alt); display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-signature"></i> Podpis pracovníka</h3>
           <p style="margin:0; font-size:13px; color:var(--text-muted);">Podepište se prstem nebo myší do pole níže:</p>
-          <canvas id="sigCanvas" width="300" height="160"></canvas>
+          <canvas id="sigCanvas" width="300" height="180"></canvas>
           <div style="font-size: 11px; color: #94a3b8; display: flex; align-items: center; gap: 6px;">
               <i class="fa-solid fa-location-dot"></i> Při uložení bude zaznamenána vaše GPS poloha.
           </div>
-          <div style="display:flex; justify-content:space-between; margin-top:8px;">
+          <div style="display:flex; justify-content:space-between; margin-top:12px;">
               <button id="btnCancelSig" class="small" style="background:rgba(255,255,255,0.1);"><i class="fa-solid fa-xmark"></i> Zrušit</button>
               <button id="btnClearSig" class="small" style="background:rgba(255,94,87,0.2); color:#ff5e57; border-color: rgba(255,94,87,0.3);"><i class="fa-solid fa-eraser"></i> Vymazat</button>
               <button id="btnSaveSig" class="primary-btn small"><i class="fa-solid fa-check"></i> Uložit podpis</button>
@@ -570,7 +580,7 @@ const adminEmails = [
 
 // ---------- Globální proměnné ----------
 let user = null;
-let isDevMode = false;
+let isDevMode = false; // Trvale false, vývojářský režim odstraněn
 let isAdmin = false; 
 let buildings = []; 
 let currentBuildingId = null; 
@@ -594,13 +604,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btnSignIn').addEventListener('click', signIn);
   document.getElementById('btnSignOut').addEventListener('click', signOut);
   
-  document.getElementById('btnDevSkip').addEventListener('click', () => {
-      isDevMode = true;
-      isAdmin = true; 
-      user = { email: 'Vývojář (Lokální režim)' };
-      updateAuthUI();
-      render();
-  });
+  document.getElementById('sectionFilterInput').addEventListener('input', renderSections);
 
   document.getElementById('btnToggleAdmin').addEventListener('click', () => {
       const cc = document.getElementById('adminPanel');
@@ -620,6 +624,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function getTaskIcon(name) {
+    // POKUD BUDEŠ CHTÍT POUŽÍT SVÉ 3D IKONY Z "SADA CLEANDER", 
+    // Můžeš to udělat takto:
+    // if (n.includes('lux')) return '<img src="vysavac.png" style="width:24px;height:24px;">';
+    
     const n = name.toLowerCase();
     if (n.includes('lux') || n.includes('vysava')) return '<i class="fa-solid fa-broom" style="color: #60a5fa;"></i>';
     if (n.includes('třít') || n.includes('vytř') || n.includes('podlah') || n.includes('mop')) return '<i class="fa-solid fa-water" style="color: #38bdf8;"></i>';
@@ -640,14 +648,13 @@ async function initAuth(){
   updateAuthUI();
 
   supabase.auth.onAuthStateChange((event, session)=>{
-    if(isDevMode) return; 
     user = session?.user || null;
     isAdmin = user ? adminEmails.includes(user.email) : false;
     updateAuthUI();
-    if (!isDevMode) loadAll();
+    loadAll();
   });
 
-  if (!isDevMode) loadAll();
+  loadAll();
 }
 
 function updateAuthUI(){
@@ -680,14 +687,13 @@ async function signIn(){
 
 async function signOut(){
   user = null; 
-  isDevMode = false;
   isAdmin = false;
   await supabase.auth.signOut();
   updateAuthUI();
 }
 
 async function loadAll(){
-  if (isDevMode) return;
+  if (!user) return;
   await loadEmployees(); 
   await loadBuildings();
   await loadSections();
@@ -753,11 +759,7 @@ function renderEmployeeList() {
         delBtn.title = "Smazat pracovníka";
         delBtn.onclick = async () => {
             if(confirm(`Opravdu smazat pracovníka: ${emp.name}?`)) {
-                if(isDevMode) {
-                    employees = employees.filter(e => e.id !== emp.id);
-                } else {
-                    await supabase.from('employees').delete().eq('id', emp.id);
-                }
+                await supabase.from('employees').delete().eq('id', emp.id);
                 await loadEmployees();
                 render();
             }
@@ -775,13 +777,9 @@ async function addEmployeeHandler() {
     const emailInput = document.getElementById('newEmployeeEmail').value.trim().toLowerCase();
     if(!name) return alert("Zadejte jméno pracovníka.");
     
-    if (isDevMode) {
-        employees.push({ id: 'mock-'+Date.now(), name, email: emailInput });
-    } else {
-        const { error } = await supabase.from('employees').insert({ name, email: emailInput });
-        if(error) return alert("Chyba databáze: \n" + error.message);
-        await loadEmployees();
-    }
+    const { error } = await supabase.from('employees').insert({ name, email: emailInput });
+    if(error) return alert("Chyba databáze: \n" + error.message);
+    await loadEmployees();
     
     document.getElementById('newEmployeeName').value = '';
     document.getElementById('newEmployeeEmail').value = '';
@@ -795,18 +793,12 @@ async function addBuildingHandler() {
   
   if(!name) return alert("Vyplň název objektu.");
 
-  if (isDevMode) {
-      const newId = 'mock-bld-' + Date.now();
-      buildings.push({ id: newId, name });
-      currentBuildingId = newId; 
-  } else {
-      const { data, error } = await supabase.from('buildings').insert({ name }).select();
-      if (error) return alert("Chyba databáze.\n" + error.message);
-      if(data && data.length > 0) currentBuildingId = data[0].id;
-  }
+  const { data, error } = await supabase.from('buildings').insert({ name }).select();
+  if (error) return alert("Chyba databáze.\n" + error.message);
+  if(data && data.length > 0) currentBuildingId = data[0].id;
 
   nameInput.value = "";
-  if (isDevMode) render(); else await loadAll();
+  await loadAll();
 }
 
 async function loadSections(){
@@ -836,17 +828,12 @@ async function addSectionHandler() {
   
   if(!name) return alert("Vyplň název úseku.");
 
-  if (isDevMode) {
-      sections.push({ id: 'mock-sec-' + Date.now(), name, person_id: person, building_id: currentBuildingId, tasks: [], order_index: Date.now() });
-  } else {
-      const { error } = await supabase.from('sections').insert({ name, person_id: person, building_id: currentBuildingId, days: [0,1,2,3,4,5,6], order_index: Date.now() });
-      if (error) return alert("Chyba při ukládání.\n" + error.message);
-  }
+  const { error } = await supabase.from('sections').insert({ name, person_id: person, building_id: currentBuildingId, days: [0,1,2,3,4,5,6], order_index: Date.now() });
+  if (error) return alert("Chyba při ukládání.\n" + error.message);
 
   nameInput.value = "";
   personInput.value = "";
-  
-  if (isDevMode) render(); else await loadAll();
+  await loadAll();
 }
 
 async function handlePhotoUpload(event, taskId) {
@@ -856,17 +843,6 @@ async function handlePhotoUpload(event, taskId) {
     const thumbDiv = document.getElementById(`thumb-${taskId}`);
     if (thumbDiv) {
         thumbDiv.innerHTML = `<i class="fa-solid fa-spinner fa-spin" style="color: var(--frosty); font-size: 24px;"></i>`;
-    }
-
-    if (isDevMode) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const dataUrl = e.target.result;
-            localTaskPhotos[taskId] = dataUrl; 
-            if (thumbDiv) thumbDiv.innerHTML = `<img src="${dataUrl}" class="task-thumbnail" alt="Náhled">`;
-        };
-        reader.readAsDataURL(file);
-        return;
     }
 
     const fileExt = file.name.split('.').pop();
@@ -959,28 +935,17 @@ async function saveSignature() {
     const base64Image = canvasEl.toDataURL("image/png");
     const loc = await getLocation(); 
     
-    if (isDevMode) {
-        const sec = sections.find(s => s.id === currentSignSectionId);
-        if (sec) {
-            sec.signature = base64Image;
-            sec.signature_lat = loc.lat;
-            sec.signature_lng = loc.lng;
-            sec.signature_time = new Date().toISOString();
-        }
-    } else {
-        const { error } = await supabase.from("sections").update({ 
-            signature: base64Image,
-            signature_lat: loc.lat,
-            signature_lng: loc.lng,
-            signature_time: new Date().toISOString()
-        }).eq("id", currentSignSectionId);
-    }
+    const { error } = await supabase.from("sections").update({ 
+        signature: base64Image,
+        signature_lat: loc.lat,
+        signature_lng: loc.lng,
+        signature_time: new Date().toISOString()
+    }).eq("id", currentSignSectionId);
     
     btn.innerHTML = originalText;
     btn.disabled = false;
     closeSignatureModal();
-    
-    if (isDevMode) render(); else loadAll();
+    loadAll();
 }
 
 function updateDashboardProgress() {
@@ -1074,14 +1039,8 @@ function renderBuildings() {
             delBtn.addEventListener("click", async (e) => {
                 e.stopPropagation();
                 if(confirm(`Opravdu smazat objekt '${bld.name}' VČETNĚ všech úseků, fotek a podpisů uvnitř? Toto nelze vrátit.`)) {
-                    if (isDevMode) {
-                        buildings = buildings.filter(b => b.id !== bld.id);
-                        sections = sections.filter(s => s.building_id !== bld.id);
-                        currentBuildingId = buildings.length > 0 ? buildings[0].id : null;
-                    } else {
-                        await supabase.from("buildings").delete().eq("id", bld.id);
-                    }
-                    if(isDevMode) render(); else loadAll();
+                    await supabase.from("buildings").delete().eq("id", bld.id);
+                    loadAll();
                 }
             });
             tab.appendChild(delBtn);
@@ -1142,7 +1101,7 @@ function createTaskForm(sectionId){
     const name = input.value.trim();
     if(!name) return alert("Zadej název úkolu.");
     await addTask(sectionId, name);
-    if(isDevMode) render(); else await loadAll();
+    await loadAll();
   });
 
   wrap.appendChild(templatesRow);
@@ -1178,21 +1137,27 @@ function renderTasksList(section, container){
     const nameCol = document.createElement("div");
     nameCol.className = "task-name-col";
 
-    const nameInput = document.createElement("input");
+    const nameInput = document.createElement("div");
     nameInput.className = "task-name-label" + (state === "done" ? " done" : "");
-    nameInput.value = task.name;
+    nameInput.textContent = task.name;
     
-    if (!isAdmin) nameInput.disabled = true;
-    
-    nameInput.addEventListener("change", async()=>{
-      if(!user) return;
-      if (isDevMode) {
-          task.name = nameInput.value;
-      } else {
-          await supabase.from("tasks").update({ name: nameInput.value }).eq("id", task.id);
-      }
-      if(isDevMode) render(); else loadAll(); 
-    });
+    if (isAdmin) {
+        nameInput.contentEditable = "true";
+        nameInput.addEventListener("blur", async()=>{
+            if(!user) return;
+            const newName = nameInput.textContent.trim();
+            if (newName !== task.name) {
+                task.name = newName;
+                await supabase.from("tasks").update({ name: newName }).eq("id", task.id);
+            }
+        });
+        nameInput.addEventListener("keydown", (e) => {
+            if(e.key === "Enter") {
+                e.preventDefault();
+                nameInput.blur();
+            }
+        });
+    }
 
     nameCol.appendChild(nameInput);
 
@@ -1224,12 +1189,8 @@ function renderTasksList(section, container){
                     newDays.push(i);
                 }
                 
-                if (isDevMode) {
-                    task.days = newDays;
-                } else {
-                    task.days = newDays;
-                    await supabase.from("tasks").update({ days: newDays }).eq("id", task.id);
-                }
+                task.days = newDays;
+                await supabase.from("tasks").update({ days: newDays }).eq("id", task.id);
                 render(); 
             });
             scheduleWrap.appendChild(bub);
@@ -1270,12 +1231,8 @@ function renderTasksList(section, container){
         const newNote = prompt("Zadejte poznámku nebo nahlaste problém k tomuto úkolu:", currentNote);
         
         if (newNote !== null) { 
-            if (isDevMode) {
-                task.note = newNote;
-            } else {
-                task.note = newNote; 
-                await supabase.from("tasks").update({ note: newNote }).eq("id", task.id);
-            }
+            task.note = newNote; 
+            await supabase.from("tasks").update({ note: newNote }).eq("id", task.id);
             render();
         }
     });
@@ -1327,7 +1284,7 @@ function renderTasksList(section, container){
       btnDel.addEventListener("click", async()=>{
         if(confirm("Smazat podúkol?")){ 
             await deleteTask(task.id); 
-            if(isDevMode) render(); else loadAll(); 
+            await loadAll(); 
         }
       });
 
@@ -1345,6 +1302,8 @@ function renderSections(){
   const container = document.getElementById("calendarContainer");
   container.innerHTML = "";
 
+  const filterText = document.getElementById("sectionFilterInput") ? document.getElementById("sectionFilterInput").value.toLowerCase() : "";
+
   let activeSections = sections.filter(sec => sec.building_id === currentBuildingId || (!sec.building_id && buildings.length === 0));
 
   if (!isAdmin && user) {
@@ -1353,9 +1312,17 @@ function renderSections(){
       activeSections = activeSections.filter(sec => sec.person_id === myName);
   }
 
+  // APLIKACE NOVÉHO FILTRU (Vyhledávání)
+  if (filterText) {
+      activeSections = activeSections.filter(sec => 
+          sec.name.toLowerCase().includes(filterText) || 
+          (sec.person_id && sec.person_id.toLowerCase().includes(filterText))
+      );
+  }
+
   if (activeSections.length === 0) {
       const emptyText = isAdmin 
-        ? "Klikněte na ozubené kolečko ⚙️ vpravo nahoře a vytvořte první úsek." 
+        ? "Klikněte na ozubené kolečko ⚙️ vpravo nahoře a vytvořte první úsek, nebo upravte vyhledávání." 
         : "Zatím zde nejsou žádné úkoly k provedení.";
       
       container.innerHTML = `
@@ -1386,11 +1353,7 @@ function renderSections(){
     
     nameInput.addEventListener("change", async()=>{
       if(!user) return;
-      if (isDevMode) {
-          sec.name = nameInput.value;
-      } else {
-          await supabase.from("sections").update({ name: nameInput.value }).eq("id", sec.id);
-      }
+      await supabase.from("sections").update({ name: nameInput.value }).eq("id", sec.id);
     });
     titleWrap.appendChild(nameInput);
 
@@ -1406,7 +1369,7 @@ function renderSections(){
       del.addEventListener("click", async()=>{
         if(confirm("Opravdu smazat celý úsek?")){ 
             await deleteSection(sec.id); 
-            if(isDevMode) render(); else loadAll(); 
+            await loadAll(); 
         }
       });
       
@@ -1438,11 +1401,7 @@ function renderSections(){
     }
     personSelect.addEventListener("change", async()=>{
       if(!user) return;
-      if (isDevMode) {
-          sec.person_id = personSelect.value;
-      } else {
-          await supabase.from("sections").update({ person_id: personSelect.value }).eq("id", sec.id);
-      }
+      await supabase.from("sections").update({ person_id: personSelect.value }).eq("id", sec.id);
     });
 
     head.appendChild(titleWrap);
@@ -1504,12 +1463,8 @@ function renderSections(){
             btnDelSig.innerHTML = "<i class='fa-solid fa-trash-can'></i> Smazat podpis";
             btnDelSig.addEventListener("click", async () => {
                 if(confirm("Opravdu smazat tento podpis?")) {
-                    if (isDevMode) {
-                        sec.signature = null; sec.signature_lat = null; sec.signature_lng = null;
-                    } else {
-                        await supabase.from("sections").update({ signature: null, signature_lat: null, signature_lng: null }).eq("id", sec.id);
-                    }
-                    if(isDevMode) render(); else loadAll();
+                    await supabase.from("sections").update({ signature: null, signature_lat: null, signature_lng: null }).eq("id", sec.id);
+                    loadAll();
                 }
             });
             sigWrap.appendChild(btnDelSig);
@@ -1530,14 +1485,9 @@ async function moveSection(sectionId, dir){
   if(j<0 || j>=sections.length) return;
 
   const a = sections[i], b = sections[j];
-  if (isDevMode) {
-      sections[i] = b;
-      sections[j] = a;
-  } else {
-      await supabase.from("sections").update({ order_index: b.order_index || 0 }).eq("id", a.id);
-      await supabase.from("sections").update({ order_index: a.order_index || 0 }).eq("id", b.id);
-  }
-  if(isDevMode) render(); else loadAll();
+  await supabase.from("sections").update({ order_index: b.order_index || 0 }).eq("id", a.id);
+  await supabase.from("sections").update({ order_index: a.order_index || 0 }).eq("id", b.id);
+  loadAll();
 }
 
 async function moveTask(sectionId, taskId, dir){
@@ -1549,45 +1499,25 @@ async function moveTask(sectionId, taskId, dir){
   if(j<0 || j>=sec.tasks.length) return;
 
   const a = sec.tasks[i], b = sec.tasks[j];
-  if (isDevMode) {
-      sec.tasks[i] = b;
-      sec.tasks[j] = a;
-  } else {
-      await supabase.from("tasks").update({ order_index: b.order_index || 0 }).eq("id", a.id);
-      await supabase.from("tasks").update({ order_index: a.order_index || 0 }).eq("id", b.id);
-  }
-  if(isDevMode) render(); else loadAll();
+  await supabase.from("tasks").update({ order_index: b.order_index || 0 }).eq("id", a.id);
+  await supabase.from("tasks").update({ order_index: a.order_index || 0 }).eq("id", b.id);
+  loadAll();
 }
 
 async function addTask(sectionId, name){
-  if (isDevMode) {
-      const sec = sections.find(s => s.id === sectionId);
-      if (sec) sec.tasks.push({ id: 'mock-task-' + Date.now(), section_id: sectionId, name: name, days: [currentDayIndex], order_index: Date.now() });
-  } else {
-      const { error } = await supabase.from("tasks").insert({ section_id: sectionId, name: name, days: [currentDayIndex], order_index: Date.now() });
-      if (error) alert("Chyba DB: " + error.message);
-  }
+  const { error } = await supabase.from("tasks").insert({ section_id: sectionId, name: name, days: [currentDayIndex], order_index: Date.now() });
+  if (error) alert("Chyba DB: " + error.message);
 }
 
 async function deleteTask(id){
-    if (isDevMode) {
-        sections.forEach(s => s.tasks = s.tasks.filter(t => t.id !== id));
-    } else {
-        await supabase.from("tasks").delete().eq("id", id); 
-    }
+  await supabase.from("tasks").delete().eq("id", id); 
 }
 
 async function deleteSection(id){ 
-    if (isDevMode) {
-        sections = sections.filter(s => s.id !== id);
-    } else {
-        await supabase.from("sections").delete().eq("id", id); 
-    }
+  await supabase.from("sections").delete().eq("id", id); 
 }
 
 async function upsertTaskState(taskId, dayIndex, state){
-  if (isDevMode) return; 
-  
   const iso = toIsoDate(currentWeekStart);
   if(state==="none"){
     await supabase.from("task_states").delete().match({ task_id: taskId, week_start: iso, day_index: dayIndex });
@@ -1619,7 +1549,7 @@ function formatWeekLabel(mon){
 async function changeWeek(delta){
   currentWeekStart.setDate(currentWeekStart.getDate() + delta*7);
   currentWeekStart = getMonday(currentWeekStart);
-  if(!isDevMode) await loadTaskStatesForWeek(currentWeekStart);
+  await loadTaskStatesForWeek(currentWeekStart);
   render();
 }
 
