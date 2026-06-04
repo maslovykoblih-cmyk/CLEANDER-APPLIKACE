@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-<meta name="theme-color" content="#0a111a" />
+<meta name="theme-color" content="#0f172a" />
 <title>CLEANDER APP</title>
 
 <!-- PWA Manifest a nastavení -->
@@ -22,23 +22,22 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-    /* ========== KOMPLETNÍ STYLY - INSPIROVÁNO "SADA CLEANDER" ========== */
+    /* ========== KOMPLETNÍ STYLY - FROSTY BLUE GLASSMORPHISM V4 ========== */
     :root {
-        /* Hlubší, bohatší noční modrá podle návrhu */
-        --bg-dark: #0a111a; 
-        --glass-bg: rgba(18, 30, 48, 0.7);
-        --glass-bg-hover: rgba(28, 44, 68, 0.9);
-        --glass-border: rgba(96, 165, 250, 0.15);
-        --glass-border-top: 1px solid rgba(147, 197, 253, 0.25);
+        --bg-dark: #0f172a;
+        --glass-bg: rgba(15, 23, 42, 0.6);
+        --glass-bg-hover: rgba(30, 41, 59, 0.8);
+        --glass-border: rgba(59, 130, 246, 0.2);
+        --glass-border-top: 1px solid rgba(96, 165, 250, 0.3);
         
         --frosty: #3b82f6; 
-        --frosty-alt: #93c5fd; /* Světlejší modrá pro lepší kontrast */
-        --frosty-glow: rgba(59, 130, 246, 0.6);
+        --frosty-alt: #60a5fa;
+        --frosty-glow: rgba(59, 130, 246, 0.5);
         
         --text-main: #f8fafc;
         --text-muted: #94a3b8;
-        --radius-large: 28px; /* Oblejší rohy jako na návrhu */
-        --radius-medium: 18px;
+        --radius-large: 24px;
+        --radius-medium: 16px;
     }
 
     * {
@@ -47,7 +46,7 @@
     }
 
     body {
-        background: radial-gradient(circle at top center, #112035 0%, var(--bg-dark) 100%);
+        background-color: var(--bg-dark);
         margin: 0;
         color: var(--text-main);
         padding: 16px;
@@ -75,19 +74,19 @@
         width: 600px; height: 600px;
         background: var(--frosty);
         top: -150px; left: -200px;
-        opacity: 0.1;
+        opacity: 0.15;
     }
     .bg-blobs::after {
         width: 500px; height: 500px;
         background: var(--frosty-alt);
         bottom: -200px; right: -150px;
-        opacity: 0.05;
+        opacity: 0.1;
         animation-delay: -5s;
     }
 
     @keyframes pulseBlob {
-        0% { transform: scale(1) translate(0, 0); opacity: 0.08; }
-        100% { transform: scale(1.1) translate(20px, -20px); opacity: 0.12; }
+        0% { transform: scale(1) translate(0, 0); opacity: 0.1; }
+        100% { transform: scale(1.1) translate(20px, -20px); opacity: 0.2; }
     }
 
     .container {
@@ -103,7 +102,7 @@
         position: fixed;
         inset: 0;
         z-index: 9999;
-        background: rgba(10, 17, 26, 0.85);
+        background: rgba(15, 23, 42, 0.7);
         backdrop-filter: blur(24px);
         -webkit-backdrop-filter: blur(24px);
         display: flex;
@@ -112,12 +111,12 @@
         padding: 20px;
     }
     .welcome-card {
-        background: linear-gradient(145deg, rgba(30, 45, 70, 0.4) 0%, rgba(15, 25, 40, 0.8) 100%);
+        background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
         padding: 40px 20px;
         border-radius: var(--radius-large);
         border: 1px solid var(--glass-border);
         border-top: var(--glass-border-top);
-        box-shadow: 0 32px 64px rgba(0,0,0,0.6), 0 0 40px rgba(59, 130, 246, 0.15);
+        box-shadow: 0 32px 64px rgba(0,0,0,0.5), 0 0 40px rgba(59, 130, 246, 0.2);
         text-align: center;
         max-width: 400px;
         width: 100%;
@@ -127,10 +126,11 @@
         align-items: center;
     }
     .welcome-card img.logo-image {
-        width: 160px; 
+        width: 140px; 
         height: auto;
         margin-bottom: 10px;
-        filter: drop-shadow(0 4px 16px rgba(59, 130, 246, 0.3)); 
+        border-radius: 12px; 
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4)); 
     }
     .welcome-card h1 {
         font-size: 24px;
@@ -142,19 +142,20 @@
     header {
         display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap;
         margin-bottom: 24px;
-        background: linear-gradient(90deg, rgba(20,35,55,0.8) 0%, rgba(15,25,40,0.6) 100%);
+        background: linear-gradient(90deg, rgba(15,23,42,0.8) 0%, rgba(30,41,59,0.6) 100%);
         padding: 16px 20px;
         border-radius: var(--radius-large);
         backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         border: 1px solid var(--glass-border);
         border-top: var(--glass-border-top);
-        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
     }
 
     .header-logo {
-        height: 36px;
+        height: 30px;
         width: auto;
-        filter: drop-shadow(0 2px 8px rgba(255,255,255,0.1));
+        border-radius: 6px;
     }
 
     h1 { font-size: 20px; margin: 0; color: var(--text-main); font-weight: 800; letter-spacing: 0.5px; display: flex; align-items: center; gap: 10px; }
@@ -162,46 +163,43 @@
     
     .controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 
-    /* DASHBOARD PANEL S VYLEPŠENÝM GLOW EFEKTEM */
     .dashboard-panel {
-        background: var(--glass-bg); border-radius: var(--radius-large); padding: 24px; margin-bottom: 24px;
+        background: var(--glass-bg); border-radius: var(--radius-large); padding: 20px; margin-bottom: 24px;
         backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
         border: 1px solid var(--glass-border); border-top: var(--glass-border-top);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
     .progress-wrapper {
         display: flex; flex-direction: column; gap: 12px;
     }
     .progress-text {
         font-size: 15px; font-weight: 600; color: var(--frosty-alt); display: flex; align-items: center; gap: 8px;
-        text-shadow: 0 0 10px rgba(96, 165, 250, 0.3);
     }
     .progress-track {
-        background: rgba(0, 0, 0, 0.5); border-radius: 20px; height: 16px; width: 100%;
+        background: rgba(0, 0, 0, 0.4); border-radius: 20px; height: 14px; width: 100%;
         border: 1px solid rgba(255,255,255,0.05); overflow: hidden;
-        box-shadow: inset 0 2px 6px rgba(0,0,0,0.6);
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
     }
     .progress-fill {
-        background: linear-gradient(90deg, #2563eb, #60a5fa);
+        background: linear-gradient(90deg, var(--frosty), #8ab4f8);
         height: 100%; width: 0%; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 0 15px rgba(96, 165, 250, 0.8);
+        box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
         border-radius: 20px;
     }
 
     .day-switcher-wrapper { margin-bottom: 24px; }
     .day-switcher {
-        display: flex; background: rgba(0,0,0,0.3); border-radius: 18px; padding: 6px;
+        display: flex; background: rgba(0,0,0,0.2); border-radius: 16px; padding: 6px;
         border: 1px solid var(--glass-border); gap: 4px; overflow-x: auto;
         scrollbar-width: none;
     }
     .day-switcher::-webkit-scrollbar { display: none; }
     .day-tab {
-        flex: 1; text-align: center; padding: 14px 0; border-radius: 14px; cursor: pointer;
+        flex: 1; text-align: center; padding: 14px 0; border-radius: 12px; cursor: pointer;
         color: var(--text-muted); font-weight: 600; font-size: 14px; transition: 0.3s;
         min-width: 45px;
     }
-    .day-tab:hover { color: var(--text-main); background: rgba(255,255,255,0.08); }
-    .day-tab.active { background: linear-gradient(135deg, var(--frosty), #1e40af); color: #fff; box-shadow: 0 4px 12px var(--frosty-glow); }
+    .day-tab:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
+    .day-tab.active { background: var(--frosty); color: #fff; box-shadow: 0 4px 12px var(--frosty-glow); }
     .short-day { display: none; }
     @media (max-width: 768px) {
         .full-day { display: none; }
@@ -209,13 +207,14 @@
     }
 
     .building-tabs-wrapper {
-        background: linear-gradient(90deg, rgba(20, 35, 55, 0.8) 0%, rgba(15, 25, 40, 0.6) 100%);
-        border: 1px solid var(--glass-border);
+        background: linear-gradient(90deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
+        border: 1px solid rgba(255,255,255,0.2);
         border-radius: var(--radius-large);
         padding: 24px;
         margin-bottom: 24px;
         box-shadow: 0 16px 40px rgba(0,0,0,0.5);
         backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
     }
     .building-tabs-title {
         font-size: 14px; text-transform: uppercase; letter-spacing: 2px; color: var(--frosty-alt); 
@@ -226,52 +225,52 @@
         scrollbar-width: thin; scrollbar-color: var(--frosty) transparent;
     }
     .building-tab {
-        padding: 16px 28px; border-radius: var(--radius-medium); background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08);
+        padding: 16px 28px; border-radius: 16px; background: rgba(0,0,0,0.4); border: 2px solid rgba(255,255,255,0.05);
         color: var(--text-muted); cursor: pointer; white-space: nowrap; font-weight: 700; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         display: flex; align-items: center; gap: 12px; font-size: 16px;
     }
-    .building-tab:hover { background: rgba(255,255,255,0.1); color: var(--text-main); transform: translateY(-3px); border-color: rgba(96, 165, 250, 0.5); box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+    .building-tab:hover { background: rgba(255,255,255,0.1); color: var(--text-main); transform: translateY(-3px); border-color: rgba(255,255,255,0.2); }
     .building-tab.active {
         background: linear-gradient(135deg, var(--frosty) 0%, #1e40af 100%);
-        color: #ffffff; border-color: rgba(96, 165, 250, 0.8);
-        box-shadow: 0 8px 24px rgba(59, 130, 246, 0.6);
+        color: #ffffff; border-color: rgba(255,255,255,0.5);
+        box-shadow: 0 8px 24px rgba(59, 130, 246, 0.5);
         transform: translateY(-3px);
     }
 
     .empty-state {
         grid-column: 1 / -1;
         display: flex; flex-direction: column; align-items: center; justify-content: center;
-        text-align: center; padding: 60px 20px; background: var(--glass-bg);
-        border-radius: var(--radius-large); border: 1px dashed rgba(96, 165, 250, 0.3);
+        text-align: center; padding: 50px 20px; background: var(--glass-bg);
+        border-radius: var(--radius-large); border: 1px dashed rgba(255,255,255,0.2);
     }
-    .empty-state i { font-size: 48px; color: var(--text-muted); margin-bottom: 16px; opacity: 0.5; }
+    .empty-state i { font-size: 42px; color: var(--text-muted); margin-bottom: 16px; opacity: 0.5; }
     .empty-state h2 { font-size: 20px; color: rgba(255, 255, 255, 0.9); margin-bottom: 8px; }
 
     input[type=text], input[type=email], input[type=password], select {
         padding: 14px 16px; border-radius: 12px;
-        background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(0, 0, 0, 0.3); border: 1px solid var(--glass-border);
         color: var(--text-main); font-size: 15px; outline: none;
         transition: all 0.3s ease; width: 100%;
     }
     input::placeholder, select:invalid { color: var(--text-muted); }
-    input:focus, select:focus { border-color: var(--frosty); box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3); background: rgba(0,0,0,0.5); }
+    input:focus, select:focus { border-color: var(--frosty); box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3); background: rgba(0,0,0,0.4); }
     input:disabled, select:disabled { opacity: 0.7; cursor: not-allowed; border-color: transparent; }
     select option { background: var(--bg-dark); color: var(--text-main); }
 
     button {
         padding: 14px 20px; border-radius: 12px; border: none; cursor: pointer;
         background: rgba(255,255,255,0.08); color: var(--text-main); font-size: 15px;
-        border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s ease; font-weight: 600;
+        border: 1px solid var(--glass-border); transition: all 0.2s ease; font-weight: 600;
         display: flex; align-items: center; justify-content: center; gap: 8px;
     }
-    button:hover { background: rgba(255,255,255,0.15); transform: translateY(-1px); border-color: rgba(255,255,255,0.2); }
+    button:hover { background: rgba(255,255,255,0.15); transform: translateY(-1px); }
     button:active { transform: translateY(1px); }
     
     button.primary-btn {
-        background: linear-gradient(135deg, var(--frosty) 0%, #1e40af 100%); color: #fff; border: none;
-        box-shadow: 0 4px 15px var(--frosty-glow); text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        background: linear-gradient(135deg, var(--frosty) 0%, #2563eb 100%); color: #fff; border: none;
+        box-shadow: 0 4px 12px var(--frosty-glow); text-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
-    button.primary-btn:hover { box-shadow: 0 6px 20px rgba(59, 130, 246, 0.8); filter: brightness(1.1); border-color: rgba(255,255,255,0.5); }
+    button.primary-btn:hover { box-shadow: 0 6px 16px rgba(59, 130, 246, 0.6); filter: brightness(1.1); }
     
     button.subtle-btn {
         background: transparent; border: none; color: var(--text-muted);
@@ -283,55 +282,46 @@
     .icon-only { padding: 10px; font-size: 16px; border-radius: 50%; aspect-ratio: 1/1; }
 
     .admin-panel {
-        background: var(--glass-bg); border-radius: var(--radius-large); padding: 24px; margin-bottom: 32px;
+        background: var(--glass-bg); border-radius: var(--radius-large); padding: 20px; margin-bottom: 32px;
         backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
         border: 1px solid var(--glass-border); border-top: var(--glass-border-top);
         display: none;
         animation: fadeInDown 0.3s ease-out forwards;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
     @keyframes fadeInDown {
         from { opacity: 0; transform: translateY(-10px); }
         to { opacity: 1; transform: translateY(0); }
     }
-    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; flex-wrap: wrap; gap: 12px;}
+    .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 16px; flex-wrap: wrap; gap: 12px;}
     .admin-grid { display: flex; gap: 20px; flex-wrap: wrap; }
     .admin-half {
-        flex: 1; min-width: 280px; background: rgba(0,0,0,0.3); padding: 20px;
-        border-radius: var(--radius-medium); border: 1px solid rgba(255,255,255,0.05);
+        flex: 1; min-width: 280px; background: rgba(0,0,0,0.2); padding: 20px;
+        border-radius: var(--radius-medium); border: 1px solid var(--glass-border);
         display: flex; flex-direction: column; gap: 12px;
     }
     .admin-half h3 { margin: 0; font-size: 16px; color: var(--frosty-alt); font-weight: 700; display: flex; align-items: center; gap: 8px;}
 
     #calendarContainer {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-        gap: 24px;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+        gap: 20px;
     }
 
     .section-row {
         display: flex; flex-direction: column; gap: 16px;
-        background: var(--glass-bg);
-        border-radius: var(--radius-large); padding: 24px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+        border-radius: var(--radius-large); padding: 20px;
         backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-        border: 1px solid var(--glass-border); 
-        border-top: var(--glass-border-top);
-        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4), 0 0 15px rgba(59, 130, 246, 0.05);
+        border: 1px solid var(--glass-border); border-top: var(--glass-border-top);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
         transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
     }
-    
-    .section-row:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6), 0 0 25px rgba(59, 130, 246, 0.2);
-        border-color: rgba(96, 165, 250, 0.4);
-    }
 
-    .section-header { display: flex; flex-direction: column; gap: 12px; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; }
+    .section-header { display: flex; flex-direction: column; gap: 12px; margin-bottom: 8px; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px; }
     .section-title-wrap { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
     .section-title {
-        font-weight: 800; font-size: 20px; color: var(--text-main);
+        font-weight: 800; font-size: 18px; color: var(--text-main);
         width: 100%; border: none; background: transparent; outline: none; padding:0;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     }
     .section-person {
         font-weight: 600; font-size: 14px; color: var(--frosty-alt);
@@ -339,100 +329,94 @@
         cursor: pointer; padding: 4px 0; appearance: none; -webkit-appearance: none;
     }
 
+    /* PODÚKOLY A PLÁNOVÁNÍ */
     .tasks-wrapper {
         display: flex; flex-direction: column; gap: 10px; margin-top: 4px;
     }
     .task-item-detail {
         display: flex; align-items: center; justify-content: space-between; gap: 12px;
-        background: rgba(0, 0, 0, 0.3); border-radius: 16px; padding: 14px 16px;
-        border: 1px solid rgba(255,255,255,0.05); transition: all 0.2s ease;
+        background: rgba(0, 0, 0, 0.2); border-radius: 14px; padding: 12px 14px;
+        border: 1px solid rgba(255,255,255,0.03); transition: all 0.2s ease;
         flex-wrap: wrap; 
     }
-    .task-item-detail:hover { background: rgba(0,0,0,0.4); border-color: rgba(255,255,255,0.15); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-    .task-left-group { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 200px; }
+    .task-left-group { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 200px; }
 
     .task-check {
         width: 32px; height: 32px; 
-        border-radius: 10px; border: 2px solid var(--text-muted);
+        border-radius: 8px; border: 2px solid var(--text-muted);
         cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: rgba(0,0,0,0.2);
     }
-    .task-check.done { background: #10b981; border-color: #10b981; box-shadow: 0 0 16px rgba(16, 185, 129, 0.5); transform: scale(1.1); }
+    .task-check.done { background: #10b981; border-color: #10b981; box-shadow: 0 0 12px rgba(16, 185, 129, 0.4); transform: scale(1.05); }
     .task-check.done i { color: white; font-size: 16px; }
     
-    .task-icon { 
-        width: 28px; text-align: center; font-size: 18px; flex-shrink: 0; 
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-    }
+    .task-icon { width: 24px; text-align: center; font-size: 16px; flex-shrink: 0; opacity: 0.8; }
 
     .task-name-col { display: flex; flex-direction: column; flex: 1; gap: 6px; }
     
     .task-name-label {
         width: 100%; border: none; background: transparent; 
-        font-weight: 600; color: #ffffff;
-        outline: none; font-size: 16px; padding: 0;
+        font-weight: 600; 
+        color: #ffffff;   
+        outline: none; font-size: 16px; 
+        padding: 0;
         transition: color 0.2s, opacity 0.2s;
-        white-space: normal;
-        word-break: break-word;
-        line-height: 1.4;
-        min-height: 22px;
     }
     .task-name-label.done { text-decoration: line-through; opacity: 0.5; color: #e2e8f0; font-weight: 500; }
     
     .task-note-display {
         font-size: 13px; color: #fbbf24; background: rgba(251, 191, 36, 0.1); 
-        padding: 8px 12px; border-radius: 10px; border: 1px solid rgba(251, 191, 36, 0.2);
-        display: flex; align-items: center; gap: 8px; font-weight: 500;
+        padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(251, 191, 36, 0.2);
+        display: flex; align-items: center; gap: 6px; font-weight: 500;
     }
     .task-note-btn {
         cursor: pointer; font-size: 18px; color: var(--text-muted); background: rgba(255,255,255,0.05);
-        border-radius: 12px; width: 44px; height: 44px; 
+        border-radius: 10px; width: 40px; height: 40px; 
         display: flex; align-items: center; justify-content: center; border: 1px solid transparent; margin: 0; flex-shrink:0;
         transition: 0.2s;
     }
-    .task-note-btn:hover { background: rgba(255,255,255,0.1); color: #fbbf24; border-color: rgba(251, 191, 36, 0.3); }
-    .task-note-btn.has-note { color: #fbbf24; background: rgba(251, 191, 36, 0.15); border-color: rgba(251, 191, 36, 0.3); box-shadow: 0 0 10px rgba(251, 191, 36, 0.2); }
+    .task-note-btn:hover { background: rgba(255,255,255,0.1); color: #fbbf24; border-color: var(--glass-border); }
+    .task-note-btn.has-note { color: #fbbf24; background: rgba(251, 191, 36, 0.15); border-color: rgba(251, 191, 36, 0.3); }
 
-    .task-schedule-bubbles { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+    .task-schedule-bubbles { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
     .day-bubble {
-        width: 26px; height: 26px; 
-        border-radius: 50%; font-size: 11px; font-weight: 700;
+        width: 24px; height: 24px; 
+        border-radius: 50%; font-size: 10px; font-weight: 700;
         display: flex; align-items: center; justify-content: center;
-        background: rgba(0,0,0,0.4); color: var(--text-muted); cursor: pointer;
+        background: rgba(255,255,255,0.05); color: var(--text-muted); cursor: pointer;
         border: 1px solid rgba(255,255,255,0.05); transition: 0.2s; user-select: none;
     }
-    .day-bubble:hover { background: rgba(255,255,255,0.15); color: var(--text-main); border-color: rgba(255,255,255,0.2); }
-    .day-bubble.active { background: linear-gradient(135deg, var(--frosty), #1e40af); color: #fff; border-color: var(--frosty-alt); box-shadow: 0 0 10px var(--frosty-glow); }
+    .day-bubble:hover { background: rgba(255,255,255,0.15); color: var(--text-main); }
+    .day-bubble.active { background: var(--frosty); color: #fff; border-color: var(--frosty-alt); box-shadow: 0 0 6px var(--frosty-glow); }
 
     .camera-btn {
         cursor: pointer; font-size: 18px; color: var(--text-muted); background: rgba(255,255,255,0.05);
-        border-radius: 12px; width: 44px; height: 44px; 
+        border-radius: 10px; width: 40px; height: 40px; 
         display: flex; align-items: center; justify-content: center; border: 1px solid transparent; margin: 0; flex-shrink:0;
     }
-    .camera-btn:hover { background: rgba(255,255,255,0.1); color: var(--text-main); border-color: rgba(255,255,255,0.2); }
-    .task-thumbnail { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; border: 1px solid rgba(255,255,255,0.2); }
+    .camera-btn:hover { background: rgba(255,255,255,0.1); color: var(--text-main); border-color: var(--glass-border); }
+    .task-thumbnail { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; border: 1px solid var(--glass-border); }
 
-    .add-task-form { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .add-task-form { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.05); }
     .templates-row { display: flex; gap: 8px; flex-wrap: wrap; }
     .template-btn {
-        background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
-        padding: 8px 14px; border-radius: 10px; font-size: 13px; color: var(--text-muted);
-        cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s;
+        background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);
+        padding: 8px 12px; border-radius: 10px; font-size: 13px; color: var(--text-muted);
+        cursor: pointer; display: flex; align-items: center; gap: 6px;
     }
-    .template-btn:hover { background: rgba(255,255,255,0.1); color: var(--text-main); border-color: var(--frosty); }
 
     #signatureModal {
         display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(10, 17, 26, 0.85); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(12px); padding: 16px;
+        background: rgba(15, 23, 42, 0.85); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(12px); padding: 16px;
     }
     .modal-content {
-        background: var(--bg-dark); padding: 24px; border-radius: 24px;
-        border: 1px solid var(--frosty); box-shadow: 0 0 60px var(--frosty-glow);
-        display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 400px;
+        background: var(--bg-dark); padding: 24px; border-radius: 20px;
+        border: 1px solid var(--frosty); box-shadow: 0 0 48px var(--frosty-glow);
+        display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 380px;
     }
-    #sigCanvas { background: #f8fafc; border-radius: 16px; touch-action: none; border: 2px solid #cbd5e1; width: 100%; height: 180px; }
+    #sigCanvas { background: #f8fafc; border-radius: 12px; touch-action: none; border: 2px solid #cbd5e1; width: 100%; height: 160px; }
     
-    footer { text-align: center; font-size: 12px; letter-spacing: 1px; opacity: 0.4; padding: 40px 20px; margin-top: auto; color: var(--text-main); font-weight: 600; }
+    footer { text-align: center; font-size: 11px; letter-spacing: 1px; opacity: 0.4; padding: 30px 20px; margin-top: auto; color: var(--text-main); font-weight: 600; }
 </style>
 </head>
 <body>
@@ -440,12 +424,12 @@
   
   <div id="welcomeScreen">
       <div class="welcome-card">
-          <img src="cleander-logo.png" alt="Cleander Logo" class="logo-image" onerror="this.src='https://placehold.co/160x160/0f172a/60a5fa?text=CLEANDER';" />
+          <img src="cleander-logo.png" alt="Cleander Logo" class="logo-image" onerror="this.src='https://placehold.co/140x140/0f172a/60a5fa?text=CLEANDER';" />
           <h1>CLEANDER APP</h1>
-          <p style="color: var(--text-muted); font-size: 15px; margin-top: -8px; margin-bottom: 12px;">Přihlaste se ke svému účtu</p>
-          <input type="email" id="email" placeholder="E-mail" />
+          <p style="color: var(--text-muted); font-size: 14px; margin-top: -10px; margin-bottom: 10px;">Přihlaste se ke svému účtu</p>
+          <input type="email" id="email" placeholder="Email" />
           <input type="password" id="password" placeholder="Heslo" />
-          <button id="btnSignIn" class="primary-btn" style="width: 100%; padding: 16px; margin-top: 8px;"><i class="fa-solid fa-right-to-bracket"></i> Přihlásit</button>
+          <button id="btnSignIn" class="primary-btn" style="width: 100%; padding: 14px;"><i class="fa-solid fa-right-to-bracket"></i> Přihlásit</button>
       </div>
   </div>
 
@@ -457,7 +441,7 @@
       </div>
       <div class="controls">
         <button id="btnExport" class="small"><i class="fa-solid fa-file-pdf"></i> Export PDF</button>
-        <button id="btnSignOut" class="small" style="display:none; background:rgba(255,94,87,0.2); color:#ff5e57; border-color: rgba(255,94,87,0.3);"><i class="fa-solid fa-right-from-bracket"></i> Odhlásit</button>
+        <button id="btnSignOut" class="small" style="display:none; background:rgba(255,94,87,0.2); color:#ff5e57;"><i class="fa-solid fa-right-from-bracket"></i> Odhlásit</button>
         <button id="btnToggleAdmin" class="small icon-only" style="background: transparent; border: none; display:none; color: var(--text-muted);"><i class="fa-solid fa-gear"></i></button>
       </div>
     </header>
@@ -479,22 +463,17 @@
     <div id="buildingTabsWrapper" class="building-tabs-wrapper" style="display:none;">
         <div class="building-tabs-title"><i class="fa-solid fa-map-location-dot"></i> Aktuální objekt úklidu</div>
         <div id="buildingTabs" class="building-tabs"></div>
-        
-        <!-- PŘIDANÝ CHYTRÝ FILTR PRO DLAŽDICE -->
-        <div style="margin-top: 16px;">
-            <input type="text" id="sectionFilterInput" placeholder="🔍 Hledat úsek nebo pracovníka (např. Hala, Katka)..." style="background: rgba(0,0,0,0.5); border-color: rgba(255,255,255,0.1); border-radius: 16px; padding: 14px 18px; font-size: 15px;" />
-        </div>
     </div>
 
     <section class="admin-panel" id="adminPanel">
       <div class="admin-header">
           <div style="display:flex; gap:12px; align-items:center;">
               <h2 style="margin:0; font-size:18px;"><i class="fa-solid fa-sliders"></i> Ovládací centrum</h2>
-              <div id="userInfo" style="color:var(--frosty-alt); font-size:13px; background:rgba(59,130,246,0.15); padding:6px 14px; border-radius:10px; font-weight: 600;"></div>
+              <div id="userInfo" style="color:var(--frosty-alt); font-size:13px; background:rgba(59,130,246,0.1); padding:6px 12px; border-radius:8px; font-weight: 500;"></div>
           </div>
           <div style="display:flex; gap: 8px; align-items:center;">
             <button id="prevWeek" class="small"><i class="fa-solid fa-chevron-left"></i> Zpět</button>
-            <div id="currentWeekLabel" style="font-weight:700; color:var(--text-main); font-size:14px; margin: 0 12px; display: flex; align-items: center; gap: 6px;"><i class="fa-regular fa-calendar"></i> <span></span></div>
+            <div id="currentWeekLabel" style="font-weight:700; color:var(--text-main); font-size:14px; margin: 0 8px; display: flex; align-items: center; gap: 6px;"><i class="fa-regular fa-calendar"></i> <span></span></div>
             <button id="nextWeek" class="small">Vpřed <i class="fa-solid fa-chevron-right"></i></button>
           </div>
       </div>
@@ -542,13 +521,13 @@
       <div class="modal-content">
           <h3 style="margin:0; font-size:18px; color:var(--frosty-alt); display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-signature"></i> Podpis pracovníka</h3>
           <p style="margin:0; font-size:13px; color:var(--text-muted);">Podepište se prstem nebo myší do pole níže:</p>
-          <canvas id="sigCanvas" width="300" height="180"></canvas>
+          <canvas id="sigCanvas" width="300" height="160"></canvas>
           <div style="font-size: 11px; color: #94a3b8; display: flex; align-items: center; gap: 6px;">
               <i class="fa-solid fa-location-dot"></i> Při uložení bude zaznamenána vaše GPS poloha.
           </div>
-          <div style="display:flex; justify-content:space-between; margin-top:12px;">
+          <div style="display:flex; justify-content:space-between; margin-top:8px;">
               <button id="btnCancelSig" class="small" style="background:rgba(255,255,255,0.1);"><i class="fa-solid fa-xmark"></i> Zrušit</button>
-              <button id="btnClearSig" class="small" style="background:rgba(255,94,87,0.2); color:#ff5e57; border-color: rgba(255,94,87,0.3);"><i class="fa-solid fa-eraser"></i> Vymazat</button>
+              <button id="btnClearSig" class="small" style="background:rgba(255,94,87,0.2); color:#ff5e57;"><i class="fa-solid fa-eraser"></i> Vymazat</button>
               <button id="btnSaveSig" class="primary-btn small"><i class="fa-solid fa-check"></i> Uložit podpis</button>
           </div>
       </div>
@@ -580,7 +559,6 @@ const adminEmails = [
 
 // ---------- Globální proměnné ----------
 let user = null;
-let isDevMode = false; // Trvale false, vývojářský režim odstraněn
 let isAdmin = false; 
 let buildings = []; 
 let currentBuildingId = null; 
@@ -603,8 +581,6 @@ let canvasEl = null;
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btnSignIn').addEventListener('click', signIn);
   document.getElementById('btnSignOut').addEventListener('click', signOut);
-  
-  document.getElementById('sectionFilterInput').addEventListener('input', renderSections);
 
   document.getElementById('btnToggleAdmin').addEventListener('click', () => {
       const cc = document.getElementById('adminPanel');
@@ -624,10 +600,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function getTaskIcon(name) {
-    // POKUD BUDEŠ CHTÍT POUŽÍT SVÉ 3D IKONY Z "SADA CLEANDER", 
-    // Můžeš to udělat takto:
-    // if (n.includes('lux')) return '<img src="vysavac.png" style="width:24px;height:24px;">';
-    
     const n = name.toLowerCase();
     if (n.includes('lux') || n.includes('vysava')) return '<i class="fa-solid fa-broom" style="color: #60a5fa;"></i>';
     if (n.includes('třít') || n.includes('vytř') || n.includes('podlah') || n.includes('mop')) return '<i class="fa-solid fa-water" style="color: #38bdf8;"></i>';
@@ -643,13 +615,13 @@ function getTaskIcon(name) {
 async function initAuth(){
   const { data:{session} } = await supabase.auth.getSession();
   user = session?.user || null;
-  isAdmin = user ? adminEmails.includes(user.email) : false;
+  isAdmin = user ? adminEmails.some(email => email.toLowerCase() === user.email.toLowerCase()) : false;
   
   updateAuthUI();
 
   supabase.auth.onAuthStateChange((event, session)=>{
     user = session?.user || null;
-    isAdmin = user ? adminEmails.includes(user.email) : false;
+    isAdmin = user ? adminEmails.some(email => email.toLowerCase() === user.email.toLowerCase()) : false;
     updateAuthUI();
     loadAll();
   });
@@ -668,11 +640,17 @@ function updateAuthUI(){
     btnOut.style.display = 'flex';
     btnAdmin.style.display = isAdmin ? 'flex' : 'none'; 
     info.innerHTML = `<i class="fa-regular fa-circle-user"></i> ${user.email} ${isAdmin ? '<span style="color:#fbbf24; margin-left:4px;">(Admin)</span>' : ''}`;
+    
+    // Pojistka: Skryjeme admin panel pro uklízeče hned při loginu
+    if (!isAdmin) {
+        document.getElementById('adminPanel').style.display = 'none';
+    }
   } else {
     welcomeScreen.style.display = 'flex';
     btnOut.style.display = 'none';
     btnAdmin.style.display = 'none';
     info.textContent = '';
+    document.getElementById('adminPanel').style.display = 'none';
   }
 }
 
@@ -689,6 +667,7 @@ async function signOut(){
   user = null; 
   isAdmin = false;
   await supabase.auth.signOut();
+  document.getElementById('adminPanel').style.display = 'none';
   updateAuthUI();
 }
 
@@ -952,7 +931,15 @@ function updateDashboardProgress() {
     let totalTasksToday = 0;
     let doneTasksToday = 0;
 
-    const activeSections = sections.filter(sec => sec.building_id === currentBuildingId || (!sec.building_id && buildings.length === 0));
+    let activeSections = sections.filter(sec => sec.building_id === currentBuildingId || (!sec.building_id && buildings.length === 0));
+
+    // POJISTKA: Filtrování i pro progress bar, aby uklízeč neviděl cizí hotovou práci
+    if (!isAdmin && user) {
+        const myEmail = user.email.toLowerCase();
+        const me = employees.find(e => e.email && e.email.toLowerCase() === myEmail);
+        const myName = me ? me.name : null;
+        activeSections = activeSections.filter(sec => sec.person_id === myName);
+    }
 
     activeSections.forEach(sec => {
         sec.tasks.forEach(task => {
@@ -1003,7 +990,8 @@ function renderBuildings() {
     let visibleBuildings = buildings;
     
     if (!isAdmin && user) {
-        const me = employees.find(e => e.email === user.email);
+        const myEmail = user.email.toLowerCase();
+        const me = employees.find(e => e.email && e.email.toLowerCase() === myEmail);
         const myName = me ? me.name : null;
         if (myName) {
             const myBuildingIds = sections.filter(s => s.person_id === myName).map(s => s.building_id);
@@ -1137,6 +1125,7 @@ function renderTasksList(section, container){
     const nameCol = document.createElement("div");
     nameCol.className = "task-name-col";
 
+    // PŘEPRACOVÁNO PRO ZALAMOVÁNÍ TEXTU
     const nameInput = document.createElement("div");
     nameInput.className = "task-name-label" + (state === "done" ? " done" : "");
     nameInput.textContent = task.name;
@@ -1302,27 +1291,18 @@ function renderSections(){
   const container = document.getElementById("calendarContainer");
   container.innerHTML = "";
 
-  const filterText = document.getElementById("sectionFilterInput") ? document.getElementById("sectionFilterInput").value.toLowerCase() : "";
-
   let activeSections = sections.filter(sec => sec.building_id === currentBuildingId || (!sec.building_id && buildings.length === 0));
 
   if (!isAdmin && user) {
-      const me = employees.find(e => e.email === user.email);
+      const myEmail = user.email.toLowerCase();
+      const me = employees.find(e => e.email && e.email.toLowerCase() === myEmail);
       const myName = me ? me.name : null;
       activeSections = activeSections.filter(sec => sec.person_id === myName);
   }
 
-  // APLIKACE NOVÉHO FILTRU (Vyhledávání)
-  if (filterText) {
-      activeSections = activeSections.filter(sec => 
-          sec.name.toLowerCase().includes(filterText) || 
-          (sec.person_id && sec.person_id.toLowerCase().includes(filterText))
-      );
-  }
-
   if (activeSections.length === 0) {
       const emptyText = isAdmin 
-        ? "Klikněte na ozubené kolečko ⚙️ vpravo nahoře a vytvořte první úsek, nebo upravte vyhledávání." 
+        ? "Klikněte na ozubené kolečko ⚙️ vpravo nahoře a vytvořte první úsek." 
         : "Zatím zde nejsou žádné úkoly k provedení.";
       
       container.innerHTML = `
